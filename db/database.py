@@ -1,9 +1,12 @@
-from pymongo import MongoClient, database
-from pymongo.database import Database
-import os, logging
+import os
 from typing import Final
 
-CONST_MONGODB_URI: Final = os.environ.get("MONGO_DB_URI")
+from pymongo import MongoClient, database
+from pymongo.database import Database
+
+from helpers.constants import CONST_DB_SETTINGS
+
+CONST_MONGODB_URI: Final = CONST_DB_SETTINGS.get("MONGO_DB_URI")
 
 if CONST_MONGODB_URI is None:
     print("[ERROR] Please specifiy mongodb url")
@@ -15,10 +18,7 @@ class MongoDbConnection:
     def __init__(self):
         """Create the MongoDB connection."""
 
-        self.uri = os.environ.get(
-            "CONST_MONGODB_URI",
-            "mongodb+srv://aQuErMAS:iKNUDPcBQZ5aIY36@kz-blogs.vlcvt24.mongodb.net/?retryWrites=true&w=majority",
-        )
+        self.uri = CONST_MONGODB_URI
         self.db: Database
         self.client: MongoClient
 

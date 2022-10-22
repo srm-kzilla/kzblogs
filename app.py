@@ -1,7 +1,8 @@
 """Intialize Entry point of api's."""
 
-from fastapi import FastAPI, Response
 import json
+
+from fastapi import FastAPI, Response
 
 from db.database import MongoDbConnection
 
