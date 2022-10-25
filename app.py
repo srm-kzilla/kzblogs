@@ -2,7 +2,8 @@
 
 import json
 
-from fastapi import FastAPI, Response
+from bson import json_util
+from fastapi import FastAPI, Request, Response
 
 from db.database import MongoDbConnection
 
@@ -12,16 +13,26 @@ app = FastAPI()
 mongodb_con = MongoDbConnection()
 
 
-@app.route("/blog/all", methods=["GET"])
-async def get_all_blogs(request):
+@app.get("/blog/{query}")
+async def get_all_blogs(request: Request, query: str = "all"):
     """Endpoint for fetching all blogs."""
 
     try:
         collection = mongodb_con.db.get_collection("blogs")
-        data = list(collection.find())
+
+        if query == "all":
+            data = list(collection.find({"blog_publish_status": True}))
+
+            return Response(
+                json.dumps({"status": True, "data": data}, default=json_util.default),
+                200,
+                {"Content-Type": "application/json"},
+            )
+
+        data = collection.find_one({"slug": query, "blog_publish_status": True})
 
         return Response(
-            json.dumps({"status": True, "data": data}),
+            json.dumps({"status": True, "data": data}, default=json_util.default),
             200,
             {"Content-Type": "application/json"},
         )
@@ -35,14 +46,14 @@ async def get_all_blogs(request):
 
 
 @app.route("/health", methods=["GET"])
-async def healthcheck(request) -> Response:
+async def healthcheck(request: Request) -> Response:
     """Check whether kz-blogs is running."""
 
     return Response("OK", 200)
 
 
 @app.route("/", methods=["GET"])
-async def root(request) -> Response:
+async def root(request: Request) -> Response:
     """Root."""
 
     return Response("KZBLOGS API V1.0", 200)
