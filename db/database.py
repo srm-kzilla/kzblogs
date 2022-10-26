@@ -1,3 +1,4 @@
+import logging
 import os
 from typing import Final
 
@@ -5,7 +6,6 @@ from pymongo import MongoClient, database
 from pymongo.database import Database
 
 from helpers.constants import CONST_DB_SETTINGS
-import logging
 
 logger = logging.getLogger(__name__)
 
