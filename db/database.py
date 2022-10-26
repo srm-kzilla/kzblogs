@@ -38,7 +38,7 @@ class MongoDbConnection:
             if query == "all":
                 return list(db.find({"blog_publish_status": True}))
 
-            return list(db.find_one({"slug": query, "blog_publish_status": True}))
+            return dict(db.find_one({"slug": query, "blog_publish_status": True}))
 
         except Exception as e:
             raise {"status": False, "message": str(e)}
