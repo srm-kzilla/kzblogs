@@ -18,18 +18,7 @@ async def get_all_blogs(request: Request, query: str = "all"):
     """Endpoint for fetching all blogs."""
 
     try:
-        collection = mongodb_con.db.get_collection("blogs")
-
-        if query == "all":
-            data = list(collection.find({"blog_publish_status": True}))
-
-            return Response(
-                json.dumps({"status": True, "data": data}, default=json_util.default),
-                200,
-                {"Content-Type": "application/json"},
-            )
-
-        data = collection.find_one({"slug": query, "blog_publish_status": True})
+        data = mongodb_con.get_blogs(query)
 
         return Response(
             json.dumps({"status": True, "data": data}, default=json_util.default),
@@ -45,14 +34,14 @@ async def get_all_blogs(request: Request, query: str = "all"):
         )
 
 
-@app.route("/health", methods=["GET"])
+@app.get("/health")
 async def healthcheck(request: Request) -> Response:
     """Check whether kz-blogs is running."""
 
     return Response("OK", 200)
 
 
-@app.route("/", methods=["GET"])
+@app.get("/")
 async def root(request: Request) -> Response:
     """Root."""
 
