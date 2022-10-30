@@ -1,7 +1,7 @@
 import logging
 import os
 from typing import Final
-
+import datetime
 from pymongo import MongoClient, database
 from pymongo.database import Database
 
@@ -42,6 +42,13 @@ class MongoDbConnection:
 
         except Exception as e:
             raise {"status": False, "message": str(e)}
+
+    def add_blogs(self, author: str,title: str, blog: str):
+        new_blog = [{"author": author,
+              "Blog": blog,
+              "Title": title,
+              "Date": datetime.datetime.utcnow()}]
+        db = self.db.blogs.insert_one(new_blog)   
 
     def __del__(self):
         """Delete this instance."""

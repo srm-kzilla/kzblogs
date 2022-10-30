@@ -34,6 +34,26 @@ async def get_all_blogs(request: Request, query: str = "all"):
         )
 
 
+@app.get("/admin/add/blog/{query}")
+async def add_blogs(request: Request, author:str,title:str, blog:str):
+    """Endpoint for adding new blogs."""
+
+    try:
+        data = mongodb_con.add_blogs(author, title, blog)
+
+        return Response(
+            json.dumps({"status": True, "data": data}, default=json_util.default),
+            200,
+            {"Content-Type": "application/json"},
+        )
+
+    except Exception as e:
+        return Response(
+            json.dumps({"status": False, "message": str(e)}),
+            500,
+            {"Content-Type": "application/json"},
+        )
+
 @app.get("/health")
 async def healthcheck(request: Request) -> Response:
     """Check whether kz-blogs is running."""
