@@ -1,9 +1,12 @@
 """Intialize Entry point of api's."""
-
+from http.client import HTTPException
 import json
 
+from grpc import StatusCode
+
 from bson import json_util
-from fastapi import FastAPI, Request, Response
+from fastapi import FastAPI, Request, Response, Depends
+from helpers.dependencies.auth_dependency import bearer_auth_dependency
 
 from db.database import MongoDbConnection
 
