@@ -1,7 +1,7 @@
 import logging
 import os
 from typing import Final
-
+from helpers.schema import ABC
 from pymongo import MongoClient, database
 from pymongo.database import Database
 
@@ -26,7 +26,7 @@ class MongoDbConnection:
         self.db: Database
         self.client: MongoClient
 
-        self.client = MongoClient(self.uri)
+        self.client = MongoClient(self.uri,uuidRepresentation='standard')
         self.db = database.Database(self.client, "kzblogs")
 
         logger.info("MongoDB Connected!")
@@ -42,6 +42,13 @@ class MongoDbConnection:
 
         except Exception as e:
             raise {"status": False, "message": str(e)}
+
+    def add_blog(self, data: ABC):
+        try:
+            db = self.db.get_collection("blogs")
+            db.insert_one(data)
+        except Exception as e:
+            raise{"status": False, "message": str(e)}
 
     def __del__(self):
         """Delete this instance."""
