@@ -38,7 +38,6 @@ async def get_all_blogs(request: Request, query: str = "all"):
             {"Content-Type": "application/json"},
         )
 
-
 @app.post("/admin/add/blog/")
 async def add_blogs(request: BlogSchema):
     """Endpoint for adding new Blogs."""
@@ -67,6 +66,30 @@ async def add_blogs(request: BlogSchema):
             {"Content-Type": "application/json"},
         )
 
+    except Exception as e:
+        return Response(
+            json.dumps({"status": False, "message": str(e)}),
+            500,
+            {"Content-Type": "application/json"},
+        )
+
+@app.post("/admin/delete/blog/{query}")
+async def delete_blog(query: str):
+    """Endpoint for Deleting Blogs."""
+
+    try:
+        mongodb_con.delete_blog(query)
+        return Response(
+            json.dumps(
+                {
+                    "status": True,
+                    "message": f"Successfully deleted a blog slug {query}",
+                },
+                default=json_util.default,
+            ),
+            200,
+            {"Content-Type": "application/json"},
+        )
     except Exception as e:
         return Response(
             json.dumps({"status": False, "message": str(e)}),
