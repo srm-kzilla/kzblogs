@@ -77,7 +77,36 @@ async def add_blogs(request: BlogSchema):
             {"Content-Type": "application/json"},
         )
 
+@app.post("/admin/update/blog/")
+async def update_blog(query: str ,request: BlogSchema):
+    """Endpoint for Updating Blogs."""
+    
+    try:
+        data = dict(request)
+        data["slug"] = slugify(data.get("blog_title"))
+        data["date_modified"] = time.mktime(datetime.datetime.today().timetuple())
 
+        mongodb_con.update_blog(query, data)
+        
+        return Response(
+            json.dumps(
+                {
+                    "status": True,
+                    "message": f"Successful updated a blog slug {query} to new blog slug {data.get('slug')}",
+                },
+                default=json_util.default,
+            ),
+            200,
+            {"Content-Type": "application/json"},
+        )
+    except Exception as e:
+        return Response(
+            json.dumps({"status": False, "message": str(e)}),
+            500,
+            {"Content-Type": "application/json"},
+        )
+
+        
 @app.get("/health")
 async def healthcheck(request: Request) -> Response:
     """Check whether kz-blogs is running."""
