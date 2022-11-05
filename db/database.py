@@ -53,6 +53,14 @@ class MongoDbConnection:
         except Exception as e:
             raise {"status": False, "message": str(e)}
 
+    def update_blog(self, query:str , data: BlogSchema):
+        try:
+            db = self.db.get_collection("blogs")
+            db.update_one({"slug": query}, {"$set": data})
+        
+        except Exception as e:
+            raise {"status": False, "message": str(e)}
+
     def delete_blog(self, query: str):
         try:
             db = self.db.get_collection("blogs")
