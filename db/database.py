@@ -6,6 +6,7 @@ from pymongo import MongoClient, database
 from pymongo.database import Database
 
 from helpers.constants import CONST_DB_SETTINGS
+from helpers.schema import BlogSchema
 
 logger = logging.getLogger(__name__)
 
@@ -39,6 +40,15 @@ class MongoDbConnection:
                 return list(db.find({"blog_publish_status": True}))
 
             return dict(db.find_one({"slug": query, "blog_publish_status": True}))
+
+        except Exception as e:
+            raise {"status": False, "message": str(e)}
+
+    def add_blog(self, data: BlogSchema):
+        try:
+
+            db = self.db.get_collection("blogs")
+            db.insert_one(data)
 
         except Exception as e:
             raise {"status": False, "message": str(e)}
