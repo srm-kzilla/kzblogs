@@ -61,6 +61,13 @@ class MongoDbConnection:
         except Exception as e:
             raise {"status": False, "message": str(e)}
 
+    def delete_blog(self, query: str):
+        try:
+            db = self.db.get_collection("blogs")
+            db.delete_one({"slug": query})    
+
+        except Exception as e:
+            raise {"status": False, "message": str(e)}
 
     def __del__(self):
         """Delete this instance."""
