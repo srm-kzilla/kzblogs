@@ -1,5 +1,7 @@
-from fastapi import Header, HTTPException
 from os import environ
+
+from fastapi import Header, HTTPException
+
 
 class bearer_auth_dependency:
     async def auth_check(Authorization: str = Header(default = None)):
