@@ -75,13 +75,12 @@ async def add_blogs(request: BlogSchema):
             {"Content-Type": "application/json"},
         )
 
-@app.post("/admin/update/blog/")
+@app.put("/admin/update/blog/")
 async def update_blog(query: str ,request: BlogSchema):
     """Endpoint for Updating Blogs."""
     
     try:
         data = dict(request)
-        data["slug"] = slugify(data.get("blog_title"))
         data["date_modified"] = time.mktime(datetime.datetime.today().timetuple())
 
         mongodb_con.update_blog(query, data)
@@ -90,7 +89,7 @@ async def update_blog(query: str ,request: BlogSchema):
             json.dumps(
                 {
                     "status": True,
-                    "message": f"Successful updated a blog slug {query} to new blog slug {data.get('slug')}",
+                    "message": f"Successful updated a blog at {data.get('date_modified')}",
                 },
                 default=json_util.default,
             ),
