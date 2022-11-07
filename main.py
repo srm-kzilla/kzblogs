@@ -8,6 +8,12 @@ from fastapi import FastAPI, Request, Response
 from db.database import MongoDbConnection
 from helpers.dependencies.auth_dependency import bearer_auth_dependency
 
+import datetime
+import time
+import uuid
+from slugify import slugify
+from helpers.schema import BlogSchema
+
 app = FastAPI()
 
 # Initialize mongodb connection
@@ -34,7 +40,93 @@ async def get_all_blogs(request: Request, query: str = "all"):
             {"Content-Type": "application/json"},
         )
 
+@app.post("/admin/add/blog/")
+async def add_blogs(request: BlogSchema):
+    """Endpoint for adding new Blogs."""
 
+    try:
+
+        data = dict(request)
+
+        data["likes_count"] = 0
+        data["slug"] = slugify(data.get("blog_title"))
+        data["date_published"] = time.mktime(datetime.datetime.today().timetuple())
+        data["date_modified"] = time.mktime(datetime.datetime.today().timetuple())
+        data["uuid"] = str(uuid.uuid4())
+
+        mongodb_con.add_blog(data)
+
+        return Response(
+            json.dumps(
+                {
+                    "status": True,
+                    "message": f"Successful added a blog slug {data.get('slug')}",
+                },
+                default=json_util.default,
+            ),
+            200,
+            {"Content-Type": "application/json"},
+        )
+
+    except Exception as e:
+        return Response(
+            json.dumps({"status": False, "message": str(e)}),
+            500,
+            {"Content-Type": "application/json"},
+        )
+
+@app.put("/admin/update/blog/")
+async def update_blog(query: str ,request: BlogSchema):
+    """Endpoint for Updating Blogs."""
+    
+    try:
+        data = dict(request)
+        data["date_modified"] = time.mktime(datetime.datetime.today().timetuple())
+
+        mongodb_con.update_blog(query, data)
+        
+        return Response(
+            json.dumps(
+                {
+                    "status": True,
+                    "message": f"Successful updated a blog at {data.get('date_modified')}",
+                },
+                default=json_util.default,
+            ),
+            200,
+            {"Content-Type": "application/json"},
+        )
+    except Exception as e:
+        return Response(
+            json.dumps({"status": False, "message": str(e)}),
+            500,
+            {"Content-Type": "application/json"},
+        )
+
+@app.post("/admin/delete/blog/{query}")
+async def delete_blog(query: str):
+    """Endpoint for Deleting Blogs."""
+
+    try:
+        mongodb_con.delete_blog(query)
+        return Response(
+            json.dumps(
+                {
+                    "status": True,
+                    "message": f"Successfully deleted a blog slug {query}",
+                },
+                default=json_util.default,
+            ),
+            200,
+            {"Content-Type": "application/json"},
+        )
+    except Exception as e:
+        return Response(
+            json.dumps({"status": False, "message": str(e)}),
+            500,
+            {"Content-Type": "application/json"},
+        )
+        
 @app.get("/health")
 async def healthcheck(request: Request) -> Response:
     """Check whether kz-blogs is running."""
