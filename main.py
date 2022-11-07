@@ -1,17 +1,16 @@
 """Intialize Entry point of api's."""
+import datetime
 import json
+import time
+import uuid
 from http.client import HTTPException
 
 from bson import json_util
 from fastapi import FastAPI, Request, Response
+from slugify import slugify
 
 from db.database import MongoDbConnection
 from helpers.dependencies.auth_dependency import bearer_auth_dependency
-
-import datetime
-import time
-import uuid
-from slugify import slugify
 from helpers.schema import BlogSchema
 
 app = FastAPI()
@@ -40,6 +39,7 @@ async def get_all_blogs(request: Request, query: str = "all"):
             {"Content-Type": "application/json"},
         )
 
+
 @app.post("/admin/add/blog/")
 async def add_blogs(request: BlogSchema):
     """Endpoint for adding new Blogs."""
@@ -49,7 +49,7 @@ async def add_blogs(request: BlogSchema):
         data = dict(request)
 
         data["likes_count"] = 0
-        data["slug"] = slugify(data.get("blog_title"))
+        data["slug"] = slugify(str(data.get("blog_title")))
         data["date_published"] = time.mktime(datetime.datetime.today().timetuple())
         data["date_modified"] = time.mktime(datetime.datetime.today().timetuple())
         data["uuid"] = str(uuid.uuid4())
@@ -75,16 +75,17 @@ async def add_blogs(request: BlogSchema):
             {"Content-Type": "application/json"},
         )
 
+
 @app.put("/admin/update/blog/")
-async def update_blog(query: str ,request: BlogSchema):
+async def update_blog(query: str, request: BlogSchema):
     """Endpoint for Updating Blogs."""
-    
+
     try:
         data = dict(request)
         data["date_modified"] = time.mktime(datetime.datetime.today().timetuple())
 
         mongodb_con.update_blog(query, data)
-        
+
         return Response(
             json.dumps(
                 {
@@ -102,6 +103,7 @@ async def update_blog(query: str ,request: BlogSchema):
             500,
             {"Content-Type": "application/json"},
         )
+
 
 @app.post("/admin/delete/blog/{query}")
 async def delete_blog(query: str):
@@ -126,7 +128,8 @@ async def delete_blog(query: str):
             500,
             {"Content-Type": "application/json"},
         )
-        
+
+
 @app.get("/health")
 async def healthcheck(request: Request) -> Response:
     """Check whether kz-blogs is running."""

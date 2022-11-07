@@ -42,7 +42,7 @@ class MongoDbConnection:
             return dict(db.find_one({"slug": query, "blog_publish_status": True}))
 
         except Exception as e:
-            raise {"status": False, "message": str(e)}
+            raise Exception({"status": False, "message": str(e)})
 
     def add_blog(self, data: BlogSchema):
         try:
@@ -51,29 +51,39 @@ class MongoDbConnection:
             db.insert_one(data)
 
         except Exception as e:
-            raise {"status": False, "message": str(e)}
+            raise Exception({"status": False, "message": str(e)})
 
-    def update_blog(self, query:str , data: BlogSchema):
+    def update_blog(self, query: str, data: BlogSchema):
         try:
             db = self.db.get_collection("blogs")
-            if db.count_documents({"slug": query}, limit = 1) != 0:
+            if db.count_documents({"slug": query}, limit=1) != 0:
                 db.update_one({"slug": query}, {"$set": data})
             else:
-                raise Exception({"status": False, "message": "The blog is not present in the database."})
-            
-        except Exception as e:
-            raise {"status": False, "message": str(e)}
+                raise Exception(
+                    {
+                        "status": False,
+                        "message": "The blog is not present in the database.",
+                    }
+                )
 
-    def delete_blog(self, query: str):    
+        except Exception as e:
+            raise Exception({"status": False, "message": str(e)})
+
+    def delete_blog(self, query: str):
         try:
             db = self.db.get_collection("blogs")
-            if db.count_documents({"slug": query}, limit = 1) != 0:
-                db.delete_one({"slug": query}) 
+            if db.count_documents({"slug": query}, limit=1) != 0:
+                db.delete_one({"slug": query})
             else:
-                raise Exception({"status": False, "message": "The blog is not present in the database."})
-            
+                raise Exception(
+                    {
+                        "status": False,
+                        "message": "The blog is not present in the database.",
+                    }
+                )
+
         except Exception as e:
-            raise {"status": False, "message": str(e)}
+            raise Exception({"status": False, "message": str(e)})
 
     def __del__(self):
         """Delete this instance."""
