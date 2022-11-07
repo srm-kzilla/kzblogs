@@ -11,7 +11,7 @@ from slugify import slugify
 
 from db.database import MongoDbConnection
 from helpers.dependencies.auth_dependency import bearer_auth_dependency
-from helpers.schema import BlogSchema
+from helpers.schema import BlogSchema, UpdateSchema
 
 app = FastAPI()
 
@@ -40,7 +40,7 @@ async def get_all_blogs(request: Request, query: str = "all"):
         )
 
 
-@app.post("/admin/add/blog/")
+@app.post("/admin/blog/add/")
 async def add_blogs(request: BlogSchema):
     """Endpoint for adding new Blogs."""
 
@@ -76,8 +76,8 @@ async def add_blogs(request: BlogSchema):
         )
 
 
-@app.put("/admin/update/blog/")
-async def update_blog(query: str, request: BlogSchema):
+@app.put("/admin/blog/update/")
+async def update_blog(query: str, request: UpdateSchema):
     """Endpoint for Updating Blogs."""
 
     try:
@@ -105,7 +105,7 @@ async def update_blog(query: str, request: BlogSchema):
         )
 
 
-@app.post("/admin/delete/blog/{query}")
+@app.post("/admin/blog/delete/{query}")
 async def delete_blog(query: str):
     """Endpoint for Deleting Blogs."""
 
