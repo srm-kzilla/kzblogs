@@ -6,6 +6,7 @@ from pymongo import MongoClient, database
 from pymongo.database import Database
 
 from helpers.constants import CONST_DB_SETTINGS
+from helpers.schema import BlogSchema
 
 logger = logging.getLogger(__name__)
 
@@ -41,7 +42,48 @@ class MongoDbConnection:
             return dict(db.find_one({"slug": query, "blog_publish_status": True}))
 
         except Exception as e:
-            raise {"status": False, "message": str(e)}
+            raise Exception({"status": False, "message": str(e)})
+
+    def add_blog(self, data: BlogSchema):
+        try:
+
+            db = self.db.get_collection("blogs")
+            db.insert_one(data)
+
+        except Exception as e:
+            raise Exception({"status": False, "message": str(e)})
+
+    def update_blog(self, query: str, data: BlogSchema):
+        try:
+            db = self.db.get_collection("blogs")
+            if db.count_documents({"slug": query}, limit=1) != 0:
+                db.update_one({"slug": query}, {"$set": data})
+            else:
+                raise Exception(
+                    {
+                        "status": False,
+                        "message": "The blog is not present in the database.",
+                    }
+                )
+
+        except Exception as e:
+            raise Exception({"status": False, "message": str(e)})
+
+    def delete_blog(self, query: str):
+        try:
+            db = self.db.get_collection("blogs")
+            if db.count_documents({"slug": query}, limit=1) != 0:
+                db.delete_one({"slug": query})
+            else:
+                raise Exception(
+                    {
+                        "status": False,
+                        "message": "The blog is not present in the database.",
+                    }
+                )
+
+        except Exception as e:
+            raise Exception({"status": False, "message": str(e)})
 
     def __del__(self):
         """Delete this instance."""
