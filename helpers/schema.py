@@ -12,7 +12,7 @@ class BlogSchema(BaseModel):
     category: list[str]
     blog_publish_status: bool
 
-class UpdateSchema(BaseModel):
+class UpdateBlogSchema(BaseModel):
     blog_title: Union[str, None]=None
     blog_body: Union[str, None]=None
     blog_entry_image: Union[str, None]=None

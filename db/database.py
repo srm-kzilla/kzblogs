@@ -6,7 +6,7 @@ from pymongo import MongoClient, database
 from pymongo.database import Database
 
 from helpers.constants import CONST_DB_SETTINGS
-from helpers.schema import BlogSchema, UpdateSchema
+from helpers.schema import BlogSchema, UpdateBlogSchema
 
 logger = logging.getLogger(__name__)
 
@@ -53,7 +53,7 @@ class MongoDbConnection:
         except Exception as e:
             raise Exception({"status": False, "message": str(e)})
 
-    def update_blog(self, query: str, data: UpdateSchema):
+    def update_blog(self, query: str, data: UpdateBlogSchema):
         try:
             db = self.db.get_collection("blogs")
             if db.count_documents({"slug": query}, limit=1) != 0:

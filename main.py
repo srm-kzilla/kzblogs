@@ -11,7 +11,7 @@ from slugify import slugify
 
 from db.database import MongoDbConnection
 from helpers.dependencies.auth_dependency import bearer_auth_dependency
-from helpers.schema import BlogSchema, UpdateSchema
+from helpers.schema import BlogSchema, UpdateBlogSchema
 
 app = FastAPI()
 
@@ -77,7 +77,7 @@ async def add_blogs(request: BlogSchema):
 
 
 @app.put("/admin/blog/update/")
-async def update_blog(query: str, request: UpdateSchema):
+async def update_blog(query: str, request: UpdateBlogSchema):
     """Endpoint for Updating Blogs."""
 
     try:
