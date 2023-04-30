@@ -3,13 +3,12 @@ module.exports = {
   content: [
     './pages/**/*.{js,ts,jsx,tsx,mdx}',
     './components/**/*.{js,ts,jsx,tsx,mdx}',
-    './app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
     extend: {
       fontFamily:{
-        "font-body":['cal-sans'],
-      },
+        'font-body':['cal-sans'],
+      }
     },
   },
   plugins: [],
