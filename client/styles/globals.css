@@ -1,3 +1,67 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Landing Page */
+
+.title{
+    position: absolute;
+    width: 588px;
+    height: 160px;
+    left: 373px;
+    top: 200px;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 150px;
+    line-height: 80%;
+    letter-spacing: -0.045em; 
+    background: linear-gradient(90deg, #23BCFE 5.23%, #56A86E 22.34%, #FF5F5F 37.29%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    z-index: 2;
+}
+
+/* @media screen and (max-width: 580px){
+    .title{
+        width: 400px;
+        height: 190px;
+        left: 30%;
+        top: 200px;
+        font-style: normal;
+        font-weight: 700;
+        font-size: 100px;
+        line-height: 40%;
+        letter-spacing: -0.045em; 
+        background: linear-gradient(90deg, #23BCFE 5.23%, #56A86E 22.34%, #FF5F5F 37.29%);
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        z-index: 2;
+    }
+} */
+
+
+/* scrollbar */
+
+/* Firefox */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: #ff7262 #ffffff;
+  }
+
+  /* Chrome, Edge, and Safari */
+  *::-webkit-scrollbar {
+    width: 9px;
+    height: 9px;
+  }
+
+  *::-webkit-scrollbar-track {
+    background: #ffffff;
+  }
+
+  *::-webkit-scrollbar-thumb {
+    background-color: #ff7b6c5d;
+    border-radius: 10px;
+    border: 1px solid #ffffff;
+  }
