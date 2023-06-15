@@ -9,7 +9,9 @@ module.exports = {
       'kz-orange': '#FF5F5F',
     },
     screens:{
-      'sm': '576px',
+      'sm': {'max':'576px'},
+      'md':{'max':'768px'},
+      'lg':{'max':'1008'},
     },
     extend: {
       boxShadow:{

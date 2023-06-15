@@ -22,16 +22,16 @@
     z-index: 2;
 }
 
-/* @media screen and (max-width: 580px){
+@media screen and (max-width: 580px){
     .title{
-        width: 400px;
-        height: 190px;
-        left: 30%;
-        top: 200px;
+        width: 25rem;
+        height: 7rem;
+        left: 3rem;
+        top: 16.45rem;
         font-style: normal;
         font-weight: 700;
-        font-size: 100px;
-        line-height: 40%;
+        font-size: 5rem;
+        line-height: 60%;
         letter-spacing: -0.045em; 
         background: linear-gradient(90deg, #23BCFE 5.23%, #56A86E 22.34%, #FF5F5F 37.29%);
         background-clip: text;
@@ -39,7 +39,7 @@
         -webkit-text-fill-color: transparent;
         z-index: 2;
     }
-} */
+}
 
 
 /* scrollbar */
