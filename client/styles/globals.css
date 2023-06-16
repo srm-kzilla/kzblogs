@@ -1,3 +1,17 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+    @font-face{
+        font-family: 'Josefin Sans';
+        src: 'next/font/google';
+        font-display: swap;
+        font-style: normal;
+
+        font-family:'Outfit';
+        src: 'next/font/google';
+        font-display: swap;
+        font-style: normal;        
+    }
+}
