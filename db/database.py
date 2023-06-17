@@ -35,7 +35,6 @@ class MongoDbConnection:
     def get_blogs(self, query: str):
         db = self.db.get_collection("blogs")
         try:
-
             if query == "all":
                 return list(db.find({"blog_publish_status": True}))
 
@@ -46,7 +45,6 @@ class MongoDbConnection:
 
     def add_blog(self, data: BlogSchema):
         try:
-
             db = self.db.get_collection("blogs")
             db.insert_one(data)
 
