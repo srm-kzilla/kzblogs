@@ -7,11 +7,14 @@ module.exports = {
   theme: {
     colors:{
       'kz-orange': '#FF5F5F',
+      'kz-grey' : '#F9F9F9',
+      'kz-green': '#56A86E',
+      'kz-blue' : '#23BCFE',
     },
     screens:{
       'sm': {'max':'576px'},
-      'md':{'max':'768px'},
-      'lg':{'max':'1008'},
+      'md':{'max':'776px'},
+      'lg':{'max':'1324'},
     },
     extend: {
       boxShadow:{

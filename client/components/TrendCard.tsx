@@ -1,16 +1,20 @@
-import React from "react";
-
-const TrendCard=()=> {
-    return(
-        <>
-        <div className="flex flex-row w-[350px] h-[70px] p-[7px] m-[10px] bg-[#f9f9f9] shadow-md rounded-s text-ellipsis overflow-clip sm:w-[15rem]">
-        <img className="w-[50px] h-[50px] p-[2px] rounded-sm" src="tempCardImg.jpg" alt="" />
-            <div>
-                <p className="left-[1545px] top-[666px] font-light text-sm p-[3px] text-black">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Consequuntur repudiandae reprehenderit, corrupti praesentium modi iste! Aperiam accusamus, ex illo tenetur ratione doloribus et voluptas ducimus deleniti suscipit, veritatis sunt ullam?</p>
-            </div>
+const TrendCard = ({ trendArr }) => {
+  return (
+    <>
+      <div className="m-6 flex flex-row w-64 h-16 bg-kz-grey shadow-md rounded-s text-ellipsis overflow-clip md:w-44">
+        <img
+          className="w-1/4 h-7/8  p-2 rounded-sm md:h-5/6"
+          src={trendArr.img}
+          alt=""
+        />
+        <div>
+          <p className="font-light text-sm p-2 text-black md:text-xs">
+            {trendArr.content}
+          </p>
         </div>
-        </>
-    );
-}
+      </div>
+    </>
+  );
+};
 
 export default TrendCard;

@@ -4,42 +4,51 @@
 
 /* Landing Page */
 
-.title{
+/* .title{
     position: absolute;
-    width: 588px;
-    height: 160px;
-    left: 373px;
-    top: 200px;
+    width: 40%;
+    height: 20%;
+    left: 26%;
+    top: 25%;
     font-style: normal;
     font-weight: 700;
-    font-size: 150px;
+    font-size: 10vw;
     line-height: 80%;
     letter-spacing: -0.045em; 
     background: linear-gradient(90deg, #23BCFE 5.23%, #56A86E 22.34%, #FF5F5F 37.29%);
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    z-index: 2;
+    z-index: 30;
 }
 
 @media screen and (max-width: 580px){
     .title{
-        width: 25rem;
-        height: 7rem;
         left: 3rem;
         top: 16.45rem;
-        font-style: normal;
-        font-weight: 700;
-        font-size: 5rem;
         line-height: 60%;
         letter-spacing: -0.045em; 
         background: linear-gradient(90deg, #23BCFE 5.23%, #56A86E 22.34%, #FF5F5F 37.29%);
         background-clip: text;
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
-        z-index: 2;
+        z-index: 30;
     }
 }
+
+@media (max-width: 320px){
+  .title{
+      left: 7rem;
+      top: 18rem;
+      line-height: 60%;
+      letter-spacing: -0.045em; 
+      background: linear-gradient(90deg, #23BCFE 5.23%, #56A86E 22.34%, #FF5F5F 37.29%);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      z-index: 30;
+  }
+} */
 
 
 /* scrollbar */
