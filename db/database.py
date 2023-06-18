@@ -32,13 +32,18 @@ class MongoDbConnection:
 
         logger.info("MongoDB Connected!")
 
-    def get_blogs(self, query: str):
+    def get_blogs(self, query: str, show_all: bool = False):
         db = self.db.get_collection("blogs")
         try:
+            check: dict = {"slug": query, "blog_publish_status": True}
+            if show_all:
+                del check["blog_publish_status"]
+                return list(db.find(check))
             if query == "all":
-                return list(db.find({"blog_publish_status": True}))
+                del check["slug"]
+                return list(db.find(check))
 
-            return dict(db.find_one({"slug": query, "blog_publish_status": True}))
+            return dict(db.find_one(check))
 
         except Exception as e:
             raise Exception({"status": False, "message": str(e)})
