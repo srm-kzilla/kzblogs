@@ -1,41 +1,20 @@
 import type { NextPage } from "next";
+import axios from "axios";
+import { useState, useEffect } from "react";
 import Navbar from "@/components/Navbar";
 import BlogCard from "@/components/BlogCard";
 import TrendCard from "@/components/TrendCard";
 
 const LandingPage: NextPage = () => {
-  let blogArr = [
-    {
-      title: "Card Title",
-      img: "tempCardImg.jpg",
-      content:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto atque, dolorem quaerat amet quasi recusandae facilis consequuntur est unde soluta eveniet dolorum minima nam. Suscipit facere sunt soluta accusantium. Saepe.",
-    },
-    {
-      title: "Card Title",
-      img: "tempCardImg.jpg",
-      content:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto atque, dolorem quaerat amet quasi recusandae facilis consequuntur est unde soluta eveniet dolorum minima nam. Suscipit facere sunt soluta accusantium. Saepe.",
-    },
-  ];
+  const [blog, setBlog] = useState([]);
+  useEffect(() => {
+    axios.get("./data/blogSampleData.json").then((res) => setBlog(res.data));
+  }, []);
 
-  let trendArr = [
-    {
-      img: "tempCardImg.jpg",
-      content:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto atque, dolorem quaerat amet quasi recusandae facilis consequuntur est unde soluta eveniet dolorum minima nam. Suscipit facere sunt soluta accusantium. Saepe.",
-    },
-    {
-      img: "tempCardImg.jpg",
-      content:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto atque, dolorem quaerat amet quasi recusandae facilis consequuntur est unde soluta eveniet dolorum minima nam. Suscipit facere sunt soluta accusantium. Saepe.",
-    },
-    {
-      img: "tempCardImg.jpg",
-      content:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto atque, dolorem quaerat amet quasi recusandae facilis consequuntur est unde soluta eveniet dolorum minima nam. Suscipit facere sunt soluta accusantium. Saepe.",
-    },
-  ];
+  const [trend, setTrend] = useState([]);
+  useEffect(() => {
+    axios.get("./data/trendSampleData.json").then((res) => setTrend(res.data));
+  }, []);
 
   return (
     <div>
@@ -49,7 +28,7 @@ const LandingPage: NextPage = () => {
           <Navbar />
         </div>
         <div>
-          <h1 className="absolute md:top-56 md:mt-3 md:left-56 left-96 top-1/5 mt-16 ml-5 z-20 font-bold text-[10vw] h-32 w-2/4 from-kz-blue via-kz-green to-kz-orange bg-gradient-to-r bg-clip-text text-transparent">
+          <h1 className="absolute font-bold text-[10vw] h-64 w-2/4 from-kz-blue via-kz-green to-kz-orange bg-gradient-to-r bg-clip-text text-transparent">
             KZBlogs
           </h1>
           <div>
@@ -57,13 +36,9 @@ const LandingPage: NextPage = () => {
               type="text"
               name="Search"
               placeholder="Search your interests here"
-              className="absolute m-2 h-16 w-1/2 left-1/4 top-[20rem] lg:text-lg bg-[#FAFAFA] rounded-3xl text-left lg:indent-11 z-10 sm:text-xs sm:indent-5"
+              className="absolute m-2 h-16 w-1/2 left-1/4 top-80 lg:text-lg bg-kz-grey rounded-3xl text-left indent-11 z-10 sm:text-xs sm:indent-5"
             />
-            <div
-              className="absolute m-1 mr-8 right-1/4 top-[21rem] z-10 sm:top-88 sm:mr-3 sm:mt-3
-            
-            "
-            >
+            <div className="absolute m-1 mr-8 right-1/4 top-80 mt-6 z-10 sm:top-88 sm:mr-3 sm:mt-3">
               <img src="search.svg" alt="search" className="sm:w-5 " />
             </div>
           </div>
@@ -91,9 +66,9 @@ const LandingPage: NextPage = () => {
               Explore
             </h2>
             <div className="flex flex-row flex-wrap ml-11 m-5">
-              {blogArr.map((blog) => {
+              {blog.map((blog: any) => {
                 return (
-                  <div>
+                  <div id={blog.id}>
                     <BlogCard blogArr={blog} />
                   </div>
                 );
@@ -106,9 +81,9 @@ const LandingPage: NextPage = () => {
             </h2>
             <div className="flex flex-col flex-wrap m-3 relative left-20 sm:left-32">
               <div>
-                {trendArr.map((trend) => {
+                {trend.map((trend: any) => {
                   return (
-                    <div>
+                    <div id={trend.id}>
                       <TrendCard trendArr={trend} />
                     </div>
                   );

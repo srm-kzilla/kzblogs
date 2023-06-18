@@ -1,4 +1,4 @@
-const BlogCard = ({ blogArr }) => {
+const BlogCard = ({ blogArr }: { blogArr: any }) => {
   return (
     <>
       <div className="flex flex-col w-96 h-auto m-5 p-2 bg-kz-grey shadow-lg rounded-3xl md:w-5/6">
@@ -16,7 +16,7 @@ const BlogCard = ({ blogArr }) => {
           </p>
           <a
             href="#"
-            className="p-1 text-kz-orange text-sm hover:text-[#000000] sm:text-xs"
+            className="p-1 text-kz-orange text-sm hover:text-kz-blue sm:text-xs"
           >
             Read More
           </a>

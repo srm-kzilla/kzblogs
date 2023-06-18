@@ -1,0 +1,20 @@
+[
+      {
+        "id":1,
+      "img": "tempCardImg.jpg",
+        "content":
+          "Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto atque, dolorem quaerat amet quasi recusandae facilis consequuntur est unde soluta eveniet dolorum minima nam. Suscipit facere sunt soluta accusantium. Saepe."
+      },
+      {
+        "id":2,
+      "img": "tempCardImg.jpg",
+        "content":
+          "Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto atque, dolorem quaerat amet quasi recusandae facilis consequuntur est unde soluta eveniet dolorum minima nam. Suscipit facere sunt soluta accusantium. Saepe."
+      },
+      {
+        "id":3,
+      "img": "tempCardImg.jpg",
+        "content":
+          "Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto atque, dolorem quaerat amet quasi recusandae facilis consequuntur est unde soluta eveniet dolorum minima nam. Suscipit facere sunt soluta accusantium. Saepe."
+      }
+    ]

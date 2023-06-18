@@ -1,4 +1,4 @@
-const TrendCard = ({ trendArr }) => {
+const TrendCard = ({ trendArr }: { trendArr: any }) => {
   return (
     <>
       <div className="m-6 flex flex-row w-64 h-16 bg-kz-grey shadow-md rounded-s text-ellipsis overflow-clip md:w-44">
