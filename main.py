@@ -1,9 +1,10 @@
 from fastapi import FastAPI, Response, Request
-from routes import crudRoutes
+from routes import regularRoutes, adminRoutes
 
 app = FastAPI()
 
-app.include_router(crudRoutes.router, prefix="/blog")
+app.include_router(regularRoutes.router, prefix="/blog")
+app.include_router(adminRoutes.router, prefix="/admin")
 
 @app.get("/")
 async def root(req: Request) -> Response:
