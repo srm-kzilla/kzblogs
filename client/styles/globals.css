@@ -1,17 +1,7 @@
-@tailwind base;
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@700&family=Outfit:wght@400;700&display=swap');@tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-@layer components {
-    @font-face{
-        font-family: 'Josefin Sans';
-        src: 'next/font/google';
-        font-display: swap;
-        font-style: normal;
-
-        font-family:'Outfit';
-        src: 'next/font/google';
-        font-display: swap;
-        font-style: normal;        
-    }
+.rotate-270 {
+  transform: rotate(270deg);
 }

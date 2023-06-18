@@ -8,10 +8,10 @@ module.exports = {
     extend: {
       fontFamily:{
         'font-body':['cal-sans'],
-        Josefin_Sans: ['Josefin_Sans'],
-        Outfit: ['Outfit'],
+        josefin_sans: ['Josefin Sans', 'sans-serif'],
+        outfit: ['Outfit', 'sans-serif'],
       }
     },
   },
-  plugins: [],
+  plugins: [],  
 }
