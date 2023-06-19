@@ -23,6 +23,16 @@ class UpdateBlogSchema(BaseModel):
     date_published: int
     date_modified: int
     readtime_min: int
+    required_slug: str
     likes_count: int
+    category: list
+    blog_publish_status: bool
+
+
+class AddBlogSchema(BaseModel):
+    blog_title: str
+    blog_body: str
+    blog_entry_img: str
+    author: str
     category: list
     blog_publish_status: bool
