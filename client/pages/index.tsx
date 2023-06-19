@@ -13,7 +13,7 @@ export const getStaticProps = async () => {
 
 const LandingPage: NextPage = ({ blogs }: any) => {
   return (
-    <div>
+    <div className="font-outfit bg-kz-dark-grey">
       <header>
         <meta name="description" content="blog by kzilla" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -24,7 +24,7 @@ const LandingPage: NextPage = ({ blogs }: any) => {
           <Navbar />
         </div>
         <div className="h-20 w-full">
-          <h1 className="relative left-1/4 top-4 mt-11 ml-5 z-20 md:mt-32 sm:top-20 font-bold text-transparent text-[10vw] bg-clip-text bg-gradient-to-r from-kz-blue from-5% via-kz-green via-10% to-kz-orange to-20%">
+          <h1 className="relative left-1/4 top-4 mt-11 ml-5 z-20 md:mt-32 sm:top-20 font-bold font-josefin_sans text-transparent text-[10vw] bg-clip-text bg-gradient-to-r from-kz-blue from-5% via-kz-green via-10% to-kz-orange to-20%">
             KZBlogs
           </h1>
           <div>
@@ -58,7 +58,7 @@ const LandingPage: NextPage = ({ blogs }: any) => {
         </div>
         <div className="relative w-full top-96 flex flex-row justify-around sm:flex-col ">
           <div className="relative">
-            <h2 className="relative left-20 font-semibold text-3xl p-1 text-black">
+            <h2 className="relative left-20 font-semibold text-3xl p-1 text-white">
               Explore
             </h2>
             <div className="flex flex-row flex-wrap ml-11 m-5">
@@ -70,7 +70,7 @@ const LandingPage: NextPage = ({ blogs }: any) => {
             </div>
           </div>
           <div className="relative right-20 ">
-            <h2 className="relative font-semibold text-right text-3xl p-1 text-black sm:text-center sm:left-11">
+            <h2 className="relative font-semibold text-right text-3xl p-1 text-white sm:text-center sm:left-11">
               Trending Topics
             </h2>
             <div className="flex flex-col flex-wrap m-3 relative left-20 sm:left-32">

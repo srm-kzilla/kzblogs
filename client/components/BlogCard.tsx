@@ -12,25 +12,26 @@ export interface BlogProps {
 const BlogCard = ({ blogs }: BlogProps) => {
   return (
     <>
-      <div className="flex flex-col w-96 h-auto m-5 p-2 bg-kz-grey shadow-lg rounded-3xl md:w-5/6">
+      <div className="flex flex-col w-96 h-[30rem] m-5 p-2 bg-slate-950 shadow-card-shadow hover:shadow-box-shadow rounded-3xl md:w-5/6 transform transition duration-500 hover:scale-105">
         <img
-          className="w-auto h-auto p-2 rounded-3xl"
+          className="w-auto h-1/2 p-2 rounded-3xl"
           src="tempCardImg.jpg"
           alt=""
         />
         <div>
-          <h5 className="p-1 text-3xl font-semibold text-kz-blue sm:text-xl">
+          <h5 className="p-1 mt-5 text-xl text-center font-semibold text-white sm:text-xl">
             {blogs.title}
           </h5>
-          <p className="p-2 font-light text-xl text-black sm:text-xs">
+          <p className="px-2 mt-3 font-light text-xs text-white">
             {blogs.body}
           </p>
-          <a
-            href="#"
-            className="p-1 text-kz-orange text-sm hover:text-kz-blue sm:text-xs"
-          >
-            Read More
-          </a>
+          <div className="mt-10 mb-5 text-center">
+            <a href="#">
+              <button className="bg-black border rounded-full text-white text-xs px-2 py-1  ">
+                Read More
+              </button>
+            </a>
+          </div>
         </div>
       </div>
     </>
