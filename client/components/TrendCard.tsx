@@ -1,4 +1,14 @@
-const TrendCard = ({ trendArr }: { trendArr: any }) => {
+export type trendType = {
+  id: number;
+  img: string;
+  content: string;
+};
+
+interface TrendProps {
+  trendArr: trendType;
+}
+
+const TrendCard = ({ trendArr }: TrendProps) => {
   return (
     <>
       <div className="m-6 flex flex-row w-64 h-16 bg-kz-grey shadow-md rounded-s text-ellipsis overflow-clip md:w-44">

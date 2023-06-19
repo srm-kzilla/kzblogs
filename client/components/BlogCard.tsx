@@ -1,4 +1,15 @@
-const BlogCard = ({ blogArr }: { blogArr: any }) => {
+export type blogType = {
+  id: number;
+  title: string;
+  img: string;
+  content: string;
+};
+
+interface BlogProps {
+  blogArr: blogType;
+}
+
+const BlogCard = ({ blogArr }: BlogProps) => {
   return (
     <>
       <div className="flex flex-col w-96 h-auto m-5 p-2 bg-kz-grey shadow-lg rounded-3xl md:w-5/6">

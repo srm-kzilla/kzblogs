@@ -2,19 +2,31 @@ import type { NextPage } from "next";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import Navbar from "@/components/Navbar";
-import BlogCard from "@/components/BlogCard";
-import TrendCard from "@/components/TrendCard";
+import BlogCard, { blogType } from "@/components/BlogCard";
+import TrendCard, { trendType } from "@/components/TrendCard";
 
 const LandingPage: NextPage = () => {
   const [blog, setBlog] = useState([]);
+
   useEffect(() => {
-    axios.get("./data/blogSampleData.json").then((res) => setBlog(res.data));
+    blogs();
   }, []);
 
+  const blogs = async () => {
+    const response = await axios("./data/blogSampleData.json");
+    setBlog(await response.data);
+  };
+
   const [trend, setTrend] = useState([]);
+
   useEffect(() => {
-    axios.get("./data/trendSampleData.json").then((res) => setTrend(res.data));
+    trends();
   }, []);
+
+  const trends = async () => {
+    const response = await axios("./data/trendSampleData.json");
+    setTrend(await response.data);
+  };
 
   return (
     <div>
@@ -66,9 +78,9 @@ const LandingPage: NextPage = () => {
               Explore
             </h2>
             <div className="flex flex-row flex-wrap ml-11 m-5">
-              {blog.map((blog: any) => {
+              {blog.map((blog: blogType) => {
                 return (
-                  <div id={blog.id}>
+                  <div key={blog.id}>
                     <BlogCard blogArr={blog} />
                   </div>
                 );
@@ -81,9 +93,9 @@ const LandingPage: NextPage = () => {
             </h2>
             <div className="flex flex-col flex-wrap m-3 relative left-20 sm:left-32">
               <div>
-                {trend.map((trend: any) => {
+                {trend.map((trend: trendType) => {
                   return (
-                    <div id={trend.id}>
+                    <div key={trend.id}>
                       <TrendCard trendArr={trend} />
                     </div>
                   );
