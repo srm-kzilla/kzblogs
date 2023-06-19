@@ -1,15 +1,15 @@
-export type blogType = {
+export type BlogType = {
   id: number;
   title: string;
   img: string;
   body: string;
 };
 
-export interface blogProps {
-  blogs: blogType;
+export interface BlogProps {
+  blogs: BlogType;
 }
 
-const BlogCard = ({ blogs }: blogProps) => {
+const BlogCard = ({ blogs }: BlogProps) => {
   return (
     <>
       <div className="flex flex-col w-96 h-auto m-5 p-2 bg-kz-grey shadow-lg rounded-3xl md:w-5/6">
