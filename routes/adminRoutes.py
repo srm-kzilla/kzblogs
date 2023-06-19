@@ -28,10 +28,10 @@ async def add_blog(req: Request, data: AddBlogSchema) -> Response:
         )
 
 
-@router.delete("/delete/blog/{slug}")
-async def delete_blog(req: Request, slug: str) -> Response:
+@router.delete("/delete/blog/{id}")
+async def delete_blog(req: Request, id: str) -> Response:
     try:
-        output = db.delete_blog(slug)
+        output = db.delete_blog(id)
         return Response(
             dumps(output),
             status_code=200 if output["status"] else 404,
@@ -81,9 +81,9 @@ async def get_all(req: Request) -> Response:
 @router.post("/update-status/{id}")
 async def update_status(req: Request, id: str) -> Response:
     try:
-        blog = db.get_blogs(query=None, _id=id)
+        blog = db.get_blog_by_id(str(id))
         blog["blog_publish_status"] = not blog["blog_publish_status"]
-        output: dict = db.update_blog(blog["_id"], blog)
+        output: dict = db.update_blog(blog["id"], blog)
         output["publish_status"] = blog["blog_publish_status"]
         return Response(
             dumps(output),

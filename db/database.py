@@ -1,6 +1,7 @@
 import logging
 from typing import Final, Union
 from time import time
+from bson import ObjectId
 from slugify import slugify
 
 from pymongo import MongoClient, database
@@ -33,7 +34,7 @@ class MongoDbConnection:
 
         logger.info("MongoDB Connected!")
 
-    def get_blogs(self, query: Union[str, None], show_all: bool = False, **kwargs):
+    def get_blogs(self, query: Union[str, None] = None, show_all: bool = False, **kwargs):
         db = self.db.get_collection("blogs")
         try:
             filter: dict = {"slug": query, "blog_publish_status": True}
@@ -60,6 +61,23 @@ class MongoDbConnection:
         except Exception as e:
             raise Exception(e)
 
+    def get_blog_by_id(self, query: str) -> dict:
+        try:
+            db = self.db.get_collection("blogs")
+            result = db.find_one({"_id": ObjectId(query)})
+            if not result:
+                return {
+                    "message": "The blog is not present in the database.",
+                    "status": False,
+                }
+            result = dict(result)
+            print(result)
+            result["id"] = str(result.pop("_id"))
+            return result
+
+        except Exception as e:
+            raise Exception(e)
+
     def add_blog(self, data: BlogSchema):
         try:
             data = dict(data)
@@ -68,7 +86,7 @@ class MongoDbConnection:
             data["readtime_min"], data["likes_count"] = 0, 0
             data["slug"] = slugify(data["blog_title"])
             db = self.db.get_collection("blogs")
-            return str(db.insert_one(data))
+            return str(db.insert_one(data).inserted_id)
 
         except Exception as e:
             raise Exception(e)
@@ -76,13 +94,14 @@ class MongoDbConnection:
     def update_blog(self, query: str, data: UpdateBlogSchema) -> dict:
         try:
             db = self.db.get_collection("blogs")
-            if db.count_documents({"_id": query}, limit=1) != 0:
-                existing_data = dict(db.find_one({"_id": query}))
+            if db.count_documents({"_id": ObjectId(query)}, limit=1) != 0:
+                existing_data = dict(db.find_one({"_id": ObjectId(query)}))
                 data = dict(data)
-                data.pop("id")
+                if "id" in data:
+                    data.pop("id")
                 data["slug"] = slugify(data["blog_title"])
                 existing_data.update(data)
-                db.update_one({"slug": query}, {"$set": data})
+                db.update_one({"_id": query}, {"$set": data})
                 return {"status": True, "message": "Blog updated successfully!"}
             else:
                 return {
@@ -96,8 +115,8 @@ class MongoDbConnection:
     def delete_blog(self, query: str) -> dict:
         try:
             db = self.db.get_collection("blogs")
-            if db.count_documents({"_id": query}, limit=1) != 0:
-                db.delete_one({"_id": query})
+            if db.count_documents({"_id": ObjectId(query)}, limit=1) != 0:
+                db.delete_one({"_id": ObjectId(query)})
                 return {"status": True, "message": "Blog deleted successfully!"}
             else:
                 return {

@@ -9,7 +9,7 @@ db = database.MongoDbConnection()
 @router.get("/all")
 async def get_all(req: Request) -> Response:
     try:
-        results: list = db.get_blogs(None)
+        results: list = db.get_blogs()
         return Response(dumps(results), status_code=200, media_type="application/json")
     except Exception as e:
         print(e)
@@ -46,7 +46,7 @@ async def like_article(req: Request, slug: str) -> Response:
     try:
         results: dict = db.get_blogs(slug)
         results["likes_count"] += 1
-        output = db.update_blog(slug, results)
+        output = db.update_blog(results["id"], results)
         return Response(
             dumps(output),
             status_code=200 if output["status"] else 404,
