@@ -1,7 +1,7 @@
 import type { NextPage } from "next";
 import Navbar from "@/components/Navbar";
-import BlogCard from "@/components/BlogCard";
-import TrendCard from "@/components/TrendCard";
+import BlogCard, { BlogType } from "@/components/BlogCard";
+import TrendCard, { TrendType } from "@/components/TrendCard";
 
 export const getStaticProps = async () => {
   const res = await fetch("https://jsonplaceholder.typicode.com/posts");
@@ -62,7 +62,7 @@ const LandingPage: NextPage = ({ blogs }: any) => {
               Explore
             </h2>
             <div className="flex flex-row flex-wrap ml-11 m-5">
-              {blogs.map((blog: any) => (
+              {blogs.map((blog: BlogType) => (
                 <div key={blogs.id}>
                   <BlogCard blogs={blog} />
                 </div>
@@ -75,7 +75,7 @@ const LandingPage: NextPage = ({ blogs }: any) => {
             </h2>
             <div className="flex flex-col flex-wrap m-3 relative left-20 sm:left-32">
               <div>
-                {blogs.map((blog: any) => (
+                {blogs.map((blog: TrendType) => (
                   <div key={blogs.id}>
                     <TrendCard blogs={blog} />
                   </div>
