@@ -11,15 +11,18 @@ db = database.MongoDbConnection()
 @router.post("/add/blog")
 async def add_blog(req: Request, data: AddBlogSchema) -> Response:
     try:
-        db.add_blog(data)
+        output: str = db.add_blog(data)
         return Response(
-            dumps({"status": True, "message": "Blog added successfully!"}),
+            dumps(
+                {"status": True, "message": "Blog added successfully!", "id": output}
+            ),
             status_code=200,
             media_type="application/json",
         )
     except Exception as e:
+        print(e)
         return Response(
-            dumps({"status": False, "message": str(e)}),
+            dumps({"status": False, "message": "Oops! something went wrong"}),
             status_code=500,
             media_type="application/json",
         )
@@ -28,15 +31,16 @@ async def add_blog(req: Request, data: AddBlogSchema) -> Response:
 @router.delete("/delete/blog/{slug}")
 async def delete_blog(req: Request, slug: str) -> Response:
     try:
-        db.delete_blog(slug)
+        output = db.delete_blog(slug)
         return Response(
-            dumps({"status": True, "message": "Blog deleted successfully!"}),
-            status_code=200,
+            dumps(output),
+            status_code=200 if output["status"] else 404,
             media_type="application/json",
         )
     except Exception as e:
+        print(e)
         return Response(
-            dumps({"status": False, "message": str(e)}),
+            dumps({"status": False, "message": "Oops! something went wrong"}),
             status_code=500,
             media_type="application/json",
         )
@@ -45,15 +49,16 @@ async def delete_blog(req: Request, slug: str) -> Response:
 @router.put("/update/blog")
 async def update_blog(req: Request, data: UpdateBlogSchema) -> Response:
     try:
-        db.update_blog(dict(data)["required_slug"], data)
+        output = db.update_blog(str(data.id), data.dict())
         return Response(
-            dumps({"status": True, "message": "Blog updated successfully!"}),
-            status_code=200,
+            dumps(output),
+            status_code=200 if output["status"] else 404,
             media_type="application/json",
         )
     except Exception as e:
+        print(e)
         return Response(
-            dumps({"status": False, "message": str(e)}),
+            dumps({"status": False, "message": "Oops! something went wrong"}),
             status_code=500,
             media_type="application/json",
         )
@@ -62,37 +67,33 @@ async def update_blog(req: Request, data: UpdateBlogSchema) -> Response:
 @router.get("/blog/all")
 async def get_all(req: Request) -> Response:
     try:
-        results: list = db.get_blogs("all", show_all=True)
+        results: list = db.get_blogs(None, show_all=True)
         return Response(dumps(results), status_code=200, media_type="application/json")
     except Exception as e:
+        print(e)
         return Response(
-            dumps({"status": False, "message": str(e)}),
+            dumps({"status": False, "message": "Oops! something went wrong"}),
             status_code=500,
             media_type="application/json",
         )
 
 
-@router.post("/update-status/{slug}")
-async def update_status(req: Request, slug: str) -> Response:
+@router.post("/update-status/{id}")
+async def update_status(req: Request, id: str) -> Response:
     try:
-        blog = db.get_blogs(slug)
+        blog = db.get_blogs(query=None, _id=id)
         blog["blog_publish_status"] = not blog["blog_publish_status"]
-        blog["required_slug"] = blog["slug"]
-        db.update_blog(slug, blog)
+        output: dict = db.update_blog(blog["_id"], blog)
+        output["publish_status"] = blog["blog_publish_status"]
         return Response(
-            dumps(
-                {
-                    "status": True,
-                    "message": f"Blog updated successfully!",
-                    "blog_publish_status": blog["blog_publish_status"],
-                }
-            ),
-            status_code=200,
+            dumps(output),
+            status_code=200 if output["status"] else 404,
             media_type="application/json",
         )
     except Exception as e:
+        print(e)
         return Response(
-            dumps({"status": False, "message": str(e)}),
+            dumps({"status": False, "message": "Oops! something went wrong"}),
             status_code=500,
             media_type="application/json",
         )

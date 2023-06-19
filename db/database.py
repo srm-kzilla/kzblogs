@@ -1,6 +1,5 @@
 import logging
-import os
-from typing import Final
+from typing import Final, Union
 from time import time
 from slugify import slugify
 
@@ -34,27 +33,32 @@ class MongoDbConnection:
 
         logger.info("MongoDB Connected!")
 
-    def get_blogs(self, query: str, show_all: bool = False):
+    def get_blogs(self, query: Union[str, None], show_all: bool = False, **kwargs):
         db = self.db.get_collection("blogs")
         try:
-            check: dict = {"slug": query, "blog_publish_status": True}
+            filter: dict = {"slug": query, "blog_publish_status": True}
+            filter.update(kwargs)
             if show_all:
-                del check["blog_publish_status"]
-            if query == "all":
-                del check["slug"]
-                result: list = list(db.find(check))
-                [i.pop("_id") for i in result]  # Removing All MongoDB IDs
+                del filter["blog_publish_status"]
+            if not query:
+                del filter["slug"]
+                result: list = list(db.find(filter))
+                for i in range(len(result)):
+                    result[i]["id"] = str(result[i].pop("_id"))
                 return result
 
-            result = db.find_one(check)
+            result = db.find_one(filter)
             if not result:
-                raise Exception("No data found!")
+                result = {
+                    "message": "The blog is not present in the database.",
+                    "status": False,
+                }
             result = dict(result)
-            result.pop("_id")
+            result["id"] = str(result.pop("_id"))
             return result
 
         except Exception as e:
-            raise Exception(str(e))
+            raise Exception(e)
 
     def add_blog(self, data: BlogSchema):
         try:
@@ -64,37 +68,45 @@ class MongoDbConnection:
             data["readtime_min"], data["likes_count"] = 0, 0
             data["slug"] = slugify(data["blog_title"])
             db = self.db.get_collection("blogs")
-            db.insert_one(data)
+            return str(db.insert_one(data))
 
         except Exception as e:
-            raise Exception(str(e))
+            raise Exception(e)
 
-    def update_blog(self, query: str, data: UpdateBlogSchema):
+    def update_blog(self, query: str, data: UpdateBlogSchema) -> dict:
         try:
             db = self.db.get_collection("blogs")
-            if db.count_documents({"slug": query}, limit=1) != 0:
-                existing_data = dict(db.find_one({"slug": query}))
+            if db.count_documents({"_id": query}, limit=1) != 0:
+                existing_data = dict(db.find_one({"_id": query}))
                 data = dict(data)
-                data.pop("required_slug")
+                data.pop("id")
                 data["slug"] = slugify(data["blog_title"])
                 existing_data.update(data)
                 db.update_one({"slug": query}, {"$set": data})
+                return {"status": True, "message": "Blog updated successfully!"}
             else:
-                raise Exception("The blog is not present in the database.")
+                return {
+                    "message": "The blog is not present in the database.",
+                    "status": False,
+                }
 
         except Exception as e:
-            raise Exception(str(e))
+            raise Exception(e)
 
-    def delete_blog(self, query: str):
+    def delete_blog(self, query: str) -> dict:
         try:
             db = self.db.get_collection("blogs")
-            if db.count_documents({"slug": query}, limit=1) != 0:
-                db.delete_one({"slug": query})
+            if db.count_documents({"_id": query}, limit=1) != 0:
+                db.delete_one({"_id": query})
+                return {"status": True, "message": "Blog deleted successfully!"}
             else:
-                raise Exception("The blog is not present in the database.")
+                return {
+                    "message": "The blog is not present in the database.",
+                    "status": False,
+                }
 
         except Exception as e:
-            raise Exception(str(e))
+            raise Exception(e)
 
     def __del__(self):
         """Delete this instance."""
