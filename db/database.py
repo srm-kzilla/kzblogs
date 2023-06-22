@@ -34,7 +34,9 @@ class MongoDbConnection:
 
         logger.info("MongoDB Connected!")
 
-    def get_blogs(self, query: Union[str, None] = None, show_all: bool = False, **kwargs):
+    def get_blogs(
+        self, query: Union[str, None] = None, show_all: bool = False, **kwargs
+    ):
         db = self.db.get_collection("blogs")
         try:
             filter: dict = {"slug": query, "blog_publish_status": True}
