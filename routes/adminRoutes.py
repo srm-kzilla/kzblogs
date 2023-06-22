@@ -31,7 +31,7 @@ async def add_blog(req: Request, data: AddBlogSchema) -> Response:
 @router.delete("/delete/blog/{id}")
 async def delete_blog(req: Request, id: str) -> Response:
     try:
-        output = db.delete_blog(id)
+        output: dict = db.delete_blog(id)
         return Response(
             dumps(output),
             status_code=200 if output["status"] else 404,
@@ -49,7 +49,7 @@ async def delete_blog(req: Request, id: str) -> Response:
 @router.put("/update/blog")
 async def update_blog(req: Request, data: UpdateBlogSchema) -> Response:
     try:
-        output = db.update_blog(str(data.id), data.dict())
+        output: dict = db.update_blog(str(data.id), data.dict())
         return Response(
             dumps(output),
             status_code=200 if output["status"] else 404,
@@ -65,9 +65,9 @@ async def update_blog(req: Request, data: UpdateBlogSchema) -> Response:
 
 
 @router.get("/blog/all")
-async def get_all(req: Request) -> Response:
+async def get_all(req: Request, showall: bool = True) -> Response:
     try:
-        results: list = db.get_blogs(None, show_all=True)
+        results: list = db.get_blogs(None, show_all=showall)
         return Response(dumps(results), status_code=200, media_type="application/json")
     except Exception as e:
         print(e)
