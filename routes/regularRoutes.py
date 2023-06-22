@@ -7,10 +7,20 @@ db = database.MongoDbConnection()
 
 
 @router.get("/all")
-async def get_all(req: Request) -> Response:
+async def get_all(req: Request, page: int = 0, count: int = 0) -> Response:
     try:
         results: list = db.get_blogs()
-        return Response(dumps(results), status_code=200, media_type="application/json")
+        count = count if count else len(results)
+        output: dict = {
+            "page": page,
+            "count": count,
+            "total": len(results),
+            "total_pages": len(results) // count,
+            "results": results[page * count : (page + 1) * count]
+            if len(results)
+            else [],
+        }
+        return Response(dumps(output), status_code=200, media_type="application/json")
     except Exception as e:
         print(e)
         return Response(

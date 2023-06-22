@@ -73,7 +73,6 @@ class MongoDbConnection:
                     "status": False,
                 }
             result = dict(result)
-            print(result)
             result["id"] = str(result.pop("_id"))
             return result
 
@@ -103,7 +102,6 @@ class MongoDbConnection:
                     data.pop("id")
                 data["slug"] = slugify(data["blog_title"])
                 existing_data.update(data)
-                print(existing_data)
                 db.update_one({"_id": ObjectId(query)}, {"$set": data})
                 return {"status": True, "message": "Blog updated successfully!"}
             else:
