@@ -11,33 +11,7 @@ SECRET_KEY = "your-secret-key"
 
 bearer = HTTPBearer()
 
-def generate_token(username: str, password: str) -> str:
-    if username not in MongoDbConnection or MongoDbConnection[username]["password"] != password:
-        raise HTTPException(status_code=401, detail="Invalid credentials")
 
-    payload = {"username": username,
-               "password":password,
-               "expires": time.time() + 2592000
-               }
-    token = jwt.encode(payload, SECRET_KEY, algorithm="HS256")
-    return token
-
-def authenticate_token(credentials: HTTPAuthorizationCredentials = Depends(bearer)) -> dict:
-    try:
-        token = credentials.credentials
-        payload = jwt.decode(token, SECRET_KEY, algorithms=["HS256"])
-        return payload
-    except jwt.DecodeError:
-        raise HTTPException(status_code=401, detail="Invalid token")
-
-@router.get("/jwt_authenticate")
-async def protected_route(payload: dict = Depends(authenticate_token)):
-    return {"message": "This route is protected!", "payload": payload}
-
-@router.post("/jwt_token")
-async def login(username: str, password: str):
-    token = generate_token(username,password)
-    return {"token": token}
 
 @router.get("/all")
 async def get_all(req: Request) -> Response:

@@ -15,7 +15,6 @@ logger = logging.getLogger(__name__)
 
 
 CONST_MONGODB_URI: Final = CONST_DB_SETTINGS.get("MONGO_DB_URI")
-
 if CONST_MONGODB_URI is None:
     print("[ERROR] Please specifiy mongodb url")
 
