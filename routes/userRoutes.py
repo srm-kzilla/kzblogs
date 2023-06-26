@@ -29,7 +29,7 @@ async def add_user(req: Request, data: AddUserSchema) -> Response:
 @router.post("/login")
 async def login(data: AddUserSchema) -> Response:
     try:
-        output: dict = db.login(data.email, data.password)
+        output: dict = db.login(data)
         return Response(
             dumps(output),
             status_code=200 if output["status"] else 404,

@@ -69,7 +69,9 @@ class MongoDbConnection:
                 }
             result.pop("password")
             result["id"] = str(result.pop("_id"))
-            return jwt.signJWT(result)
+            output: dict = jwt.signJWT(result)
+            output.update({"message": "User logged in successfully.", "status": True})
+            return output
         except Exception as e:
             raise e
 
