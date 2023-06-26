@@ -1,6 +1,7 @@
 from pydantic import BaseModel
 from typing import Union
 
+
 class BlogSchema(BaseModel):
     blog_title: str
     blog_body: str
@@ -36,9 +37,15 @@ class AddBlogSchema(BaseModel):
     category: list
     blog_publish_status: bool
 
+
 class AddUserSchema(BaseModel):
     name: str
-    email:str
-    password:str
-    
+    email: str
+    password: str
 
+
+class UpdateUserSchema(BaseModel):
+    name: str
+    email: str
+    password: str
+    old_password: str

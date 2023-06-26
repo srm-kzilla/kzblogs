@@ -2,44 +2,10 @@ from fastapi import Response, Request, APIRouter as Router
 from json import dumps
 from db import database
 
-from helpers.schema import AddBlogSchema, UpdateBlogSchema,AddUserSchema
+from helpers.schema import AddBlogSchema, UpdateBlogSchema
 
 router = Router()
 db = database.MongoDbConnection()
-
-@router.post("/add/user")
-async def add_user(req: Request, data: AddUserSchema)-> Response:
-    try:
-        output: str=db.add_user(data)
-        return Response(
-            dumps(
-            {"status": True,"message":"User added successfully!","user":output}
-            ),
-            status_code=200,
-            media_type="application/json",
-        )
-    except Exception as e:
-        print(e)
-        return Response(
-            dumps({"status": False, "message": "Oops! something went wrong"}),
-            status_code=500,
-            media_type="application/json",
-        )
-    
-@router.post("/login")
-async def login(emai:str, password: str, req: Request, data: AddUserSchema)-> Response:
-    try:
-        email=db.login(str(email))
-        password=db.login(str(password))
-        return Response
-    except Exception as e:
-        print(e)
-        return Response(
-            dumps({"status": False, "message": "Oops! something went wrong"}),
-            status_code=500,
-            media_type="application/json",
-        )
- 
 
 
 @router.post("/add/blog")
@@ -131,6 +97,3 @@ async def update_status(req: Request, id: str) -> Response:
             status_code=500,
             media_type="application/json",
         )
-
-
-

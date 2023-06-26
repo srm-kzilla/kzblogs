@@ -1,22 +1,27 @@
-from fastapi import Response, Request, APIRouter as Router, FastAPI, HTTPException, Depends
+from fastapi import (
+    Response,
+    Request,
+    APIRouter as Router,
+    FastAPI,
+    HTTPException,
+    Depends,
+)
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from json import dumps
-from db.database import MongoDbConnection,database
-import jwt
-import time
+from db.database import MongoDbConnection, database
 
 
 router = Router()
 SECRET_KEY = "your-secret-key"
 
 bearer = HTTPBearer()
-
+db = MongoDbConnection()
 
 
 @router.get("/all")
 async def get_all(req: Request) -> Response:
     try:
-        results: list = database.get_blogs()
+        results: list = db.get_blogs()
         return Response(dumps(results), status_code=200, media_type="application/json")
     except Exception as e:
         print(e)
@@ -30,7 +35,7 @@ async def get_all(req: Request) -> Response:
 @router.get("/article/{slug}")
 async def get_article(req: Request, slug: str) -> Response:
     try:
-        results: dict = database.get_blogs(slug)
+        results: dict = db.get_blogs(slug)
         if "message" not in results:
             return Response(
                 dumps(results), status_code=200, media_type="application/json"
@@ -51,9 +56,9 @@ async def get_article(req: Request, slug: str) -> Response:
 @router.post("/like/{slug}")
 async def like_article(req: Request, slug: str) -> Response:
     try:
-        results: dict = database.get_blogs(slug)
+        results: dict = db.get_blogs(slug)
         results["likes_count"] += 1
-        output = database.update_blog(results["id"], results)
+        output = db.update_blog(results["id"], results)
         return Response(
             dumps(output),
             status_code=200 if output["status"] else 404,
@@ -66,4 +71,3 @@ async def like_article(req: Request, slug: str) -> Response:
             status_code=500,
             media_type="application/json",
         )
-

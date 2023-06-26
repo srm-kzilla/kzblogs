@@ -1,13 +1,20 @@
 from fastapi import FastAPI, Response, Request
-from routes import crudRoutes
+from routes import adminRoutes, regularRoutes, userRoutes
+from middleware import middleware
 
 app = FastAPI()
 
-app.include_router(crudRoutes.router, prefix="/blog")
+app.include_router(regularRoutes.router, prefix="/blog")
+app.include_router(adminRoutes.router, prefix="/admin")
+app.include_router(userRoutes.router, prefix="/user")
+
+middleware.init_middleware(app)
+
 
 @app.get("/")
 async def root(req: Request) -> Response:
     return Response("KZBLOGS API V1.0", 200)
+
 
 @app.get("/health")
 async def healthcheck(request: Request) -> Response:

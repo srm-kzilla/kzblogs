@@ -1,16 +1,15 @@
-
 import logging
 from typing import Final, Union
 from time import time
 from bson import ObjectId
 from slugify import slugify
-
+from security import jwtHandler as jwt, bcryptHandler as bcrypt
 
 from pymongo import MongoClient, database
 from pymongo.database import Database
 
 from helpers.constants import CONST_DB_SETTINGS
-from helpers.schema import BlogSchema, UpdateBlogSchema,AddUserSchema
+from helpers.schema import BlogSchema, UpdateBlogSchema, AddUserSchema
 
 logger = logging.getLogger(__name__)
 
@@ -37,45 +36,46 @@ class MongoDbConnection:
 
     def add_user(self, data: AddUserSchema):
         try:
-            data=dict(data)
-            db=self.db.get_collection("users")
-            result=db.find_one({"email": ObjectId(data)})
-            if result:
-                return{
-                    "message": "User already exist.",
+            db = self.db.get_collection("users")
+            if db.find_one({"email": data.email}):
+                return {
+                    "message": "User already exists.",
                     "status": False,
                 }
-            result = dict(result)
-            print(result)
-            result["email"] = str(result.pop("email"))
-            return result
-        
+            information: dict = data.dict()
+            information["password"] = bcrypt.generateHash(information["password"])
+            db.insert_one(information)
+            return {
+                "message": "User added successfully.",
+                "status": True,
+            }
         except Exception as e:
-            raise Exception(e)
+            raise e
 
-    def login(self, query: str, data: AddUserSchema) -> dict:
-         try:
+    def login(self, data: AddUserSchema) -> dict:
+        try:
             db = self.db.get_collection("users")
-            result = db.find_one({"email": ObjectId(query)})
+            result = db.find_one({"email": data.email})
             if not result:
                 return {
-                    "message": "Invalid User.",
+                    "message": "User does not exist.",
                     "status": False,
                 }
-            password=db.find_one({"password":ObjectId(query)})
-            if not password:
-                return{
-                    "message":"Invalid Password.",
-                    "status":False,
-                }
             result = dict(result)
-            print(result)
-            result["email"] = str(result.pop("email"))
-            return result
-         except Exception as e:
-            raise Exception(e)
+            if not bcrypt.compareHashToPassword(data.password, result["password"]):
+                return {
+                    "message": "Incorrect password.",
+                    "status": False,
+                }
+            result.pop("password")
+            result["id"] = str(result.pop("_id"))
+            return jwt.signJWT(result)
+        except Exception as e:
+            raise e
 
-    def get_blogs(self, query: Union[str, None] = None, show_all: bool = False, **kwargs):
+    def get_blogs(
+        self, query: Union[str, None] = None, show_all: bool = False, **kwargs
+    ):
         db = self.db.get_collection("blogs")
         try:
             filter: dict = {"slug": query, "blog_publish_status": True}
@@ -131,8 +131,6 @@ class MongoDbConnection:
 
         except Exception as e:
             raise Exception(e)
-        
-    
 
     def update_blog(self, query: str, data: UpdateBlogSchema) -> dict:
         try:
@@ -183,4 +181,3 @@ class MongoDbConnection:
 
         except Exception as e:
             raise e
-
