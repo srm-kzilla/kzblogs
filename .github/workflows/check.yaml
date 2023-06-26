@@ -11,7 +11,7 @@ jobs:
       - uses: actions/checkout@v2
       - name: print env
         run: echo ${{ secrets.ENVIRONMENT }}
-        with: 
+        env: 
           ENVIRONMENT: "test"
       - name: Installing test dependencies
         run: pip3 install -r requirements.txt requirements_test.txt
