@@ -5,7 +5,7 @@ const Navbar = () => {
     <div className="h- w-screen flex flex-row align-middle px-0.5 py-0 shadow-box-shadow">
       <div className="h-20% w-20%">
         <img
-          src="logo.svg"
+          src="/logo.svg"
           alt="KZBlogs Logo"
           className=" h-20 w-15 mx-1 sm:h-30 "
         />
