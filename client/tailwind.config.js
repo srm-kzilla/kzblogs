@@ -5,11 +5,6 @@ module.exports = {
     './components/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
-    screens:{
-      'sm': {'max':'576px'},
-      'md':{'max':'776px'},
-      'lg':{'max':'1024'},
-    },
     extend: {
       colors:{
         'kz-dark-grey':'#151319',
