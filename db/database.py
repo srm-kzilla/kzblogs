@@ -85,7 +85,7 @@ class MongoDbConnection:
             data["date_published"] = int(time()) if data["blog_publish_status"] else 0
             data["date_modified"] = int(time())
             data["readtime_min"], data["likes_count"] = 0, 0
-            data["slug"] = slugify(data["blog_title"])
+            data["slug"] = slugify(data["blog_title"] + str(int(time())))
             db = self.db.get_collection("blogs")
             return str(db.insert_one(data).inserted_id)
 
@@ -100,7 +100,7 @@ class MongoDbConnection:
                 data = dict(data)
                 if "id" in data:
                     data.pop("id")
-                data["slug"] = slugify(data["blog_title"])
+                data["slug"] = slugify(data["blog_title"] + str(int(time())))
                 existing_data.update(data)
                 db.update_one({"_id": ObjectId(query)}, {"$set": data})
                 return {"status": True, "message": "Blog updated successfully!"}
