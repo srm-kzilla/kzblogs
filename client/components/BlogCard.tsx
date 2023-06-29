@@ -8,7 +8,7 @@ export interface BlogType {
 const BlogCard = ({ body, title }: BlogType) => {
   return (
     <>
-      <div className="flex flex-col w-96 h-[30rem] m-5 p-2 bg-slate-950 shadow-card-shadow hover:shadow-box-shadow rounded-3xl md:w-5/6 transform transition duration-500 hover:scale-105">
+      <div className="flex flex-col w-5/6 h-[30rem] m-5 p-2 bg-slate-950 shadow-card-shadow hover:shadow-box-shadow rounded-3xl md:w-96 transform transition duration-500 hover:scale-105">
         <img
           className="w-auto h-1/2 p-2 rounded-3xl"
           src="/tempCardImg.jpg"
