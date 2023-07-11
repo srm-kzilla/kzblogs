@@ -7,7 +7,7 @@ const Navbar = () => {
         <img
           src="/logo.svg"
           alt="KZBlogs Logo"
-          className=" h-20 w-15 mx-1 sm:h-30 "
+          className=" h-20 w-15 mx-1 sm:h-30"
         />
       </div>
       <div className=" flex-col ml-auto font-medium text-xs  text-white flex sm:flex-row sm:text-lg ">

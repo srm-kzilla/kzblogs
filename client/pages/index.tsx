@@ -16,7 +16,7 @@ const LandingPage: NextPage = ({ blogs }: any) => {
             <Navbar />
           </div>
           <div className="h-20 w-full">
-            <h1 className="select-none relative left-1/4 top-20 mt-32 ml-5  z-0 md:mt-11 sm:top-4 font-bold font-josefin_sans text-transparent text-[10vw] bg-clip-text bg-gradient-to-r from-kz-blue from-5% via-kz-green via-20% to-kz-orange to-40% w-fit">
+            <h1 className="select-none relative left-1/4 top-20 mt-32 ml-5  z-0 md:mt-11 sm:top-4 font-bold font-josefinSans text-transparent text-[10vw] bg-clip-text bg-gradient-to-r from-kz-blue from-5% via-kz-green via-20% to-kz-orange to-40% w-fit">
               KZBlogs
             </h1>
             <div>

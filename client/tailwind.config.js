@@ -19,7 +19,7 @@ module.exports = {
       },
       fontFamily:{
         body:['cal-sans', 'sans-serif'],
-        josefin_sans: ['Josefin Sans', 'sans-serif'],
+        josefinSans: ['Josefin Sans', 'sans-serif'],
         outfit: ['Outfit', 'sans-serif'],
       }
     },

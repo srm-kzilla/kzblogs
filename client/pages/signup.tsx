@@ -10,7 +10,7 @@ const LoginPage: NextPage = () => {
       </Head>
       <div className="flex h-screen w-full flex-col bg-kz-dark-grey">
         <div className="z-20">
-        <Navbar/>
+          <Navbar/>
         </div>
         <div className="flex h-full w-full">
           <div className="hidden h-full w-5/12 lg:block">
@@ -21,7 +21,7 @@ const LoginPage: NextPage = () => {
               </div>
               <div className="h-[50vw]">
                 <div className="relative h-1/2 pr-12">
-                  <div className="mt-20 h-full w-full font-josefin_sans font-bold text-transparent text-[7.5vw] bg-clip-text bg-gradient-to-r from-kz-blue from-5% via-kz-green via-20% to-kz-orange to-40%">
+                  <div className="mt-20 h-full w-full font-josefinSans font-bold text-transparent text-[7.5vw] bg-clip-text bg-gradient-to-r from-kz-blue from-5% via-kz-green via-20% to-kz-orange to-40%">
                     KZBlogs
                   </div>
                   {/* edit this tagline to an actual tagline */}
