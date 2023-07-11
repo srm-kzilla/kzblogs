@@ -6,7 +6,7 @@ export interface TrendType {
 
 const TrendCard = ({ body }: TrendType) => {
   return (
-    <>
+    <div>
       <div className="m-6 flex flex-row w-44 h-16 bg-slate-950  shadow-md rounded-xl text-ellipsis overflow-clip md:w-64">
         <img
           className="w-1/4 h-5/6 p-2 rounded-sm md:h-7/8 border-solid border-white"
@@ -19,7 +19,7 @@ const TrendCard = ({ body }: TrendType) => {
           </p>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
