@@ -1,36 +1,58 @@
 import Link from "next/link";
+import React, { useState } from "react";
+
 const Navbar = () => {
+  const [navbarOpen, setNavbarOpen] = useState(false);
   return (
-    <div className="h- w-full flex flex-row align-middle px-0.5 py-0 shadow-box-shadow">
-      <div className="h-20% w-20%">
-        <img
-          src="/logo.svg"
-          alt="KZBlogs Logo"
-          className=" h-20 w-15 mx-1 sm:h-30 "
-        />
-      </div>
-      <div className=" ml-auto font-medium text-xs  text-white flex flex-col lg:text-lg ">
-        <ul className="flex p-1 mx-0 my-5">
-          <li className="mx-1 my-2 md:mx-5 hover:text-kz-lt-purple transition-all duration-500">
-            <Link href="/">Home</Link>
-          </li>
-          <li className="mx-1 my-2 md:mx-5 hover:text-kz-lt-purple transition-all duration-500">
-            <Link href="/explore">Explore</Link>
-          </li>
-          <li className="mx-1 my-2 md:mx-5 hover:text-kz-lt-purple transition-all duration-500">
-            <Link href="/create">Create</Link>
-          </li>
-          <li className="mx-1 my-2 md:mx-5">
-            <Link
-              href="/signup"
-              className="p-3 rounded-3xl border border-kz-lt-purple border-solid text-kz-lt-purple box-border hover:text-[#ffffff] hover:border-[#ffffff] hover:bg-kz-lt-purple transition-all duration-500 "
+    <>
+      <div className="h-20 w-full flex flex-row px-0.5 py-0 shadow-box-shadow">
+        <div className="container px-4 mx-auto flex flex-wrap items-center">
+          <div className="w-full flex justify-between lg:w-auto">
+            <img
+              src="logo.svg"
+              alt="Logo"
+              className="h-12 w-12 absolute top-5 left-6"
+            />
+            <img
+              src="KZBlogs.svg"
+              alt="KZBlogs"
+              className="absolute top-7 left-20 w-32 md:hidden"
+            />
+            <button
+              className="absolute w-10 h-10 right-1 top-6 cursor-pointer lg:hidden"
+              type="button"
+              onClick={() => setNavbarOpen(!navbarOpen)}
             >
-              Sign up/Login
-            </Link>
-          </li>
-        </ul>
+              <img src="dotsMenu.svg" alt="Menu" />
+            </button>
+          </div>
+          <div
+            className={"lg:flex flex-grow" + (navbarOpen ? " flex" : " hidden")}
+          >
+            <ul className="absolute right-1 top-20 lg:top-5 items-end flex flex-col lg:flex-row lg:ml-auto text-white text-xs lg:text-lg">
+              <li className="mx-1 my-2 md:mx-5 hover:text-kz-lt-purple transition-all duration-500">
+                <Link href="/">Home</Link>
+              </li>
+              <li className="mx-1 my-2 md:mx-5 hover:text-kz-lt-purple transition-all duration-500">
+                <Link href="/explore">Explore</Link>
+              </li>
+              <li className="mx-1 my-2 md:mx-5 hover:text-kz-lt-purple transition-all duration-500">
+                <Link href="/create">Create</Link>
+              </li>
+              <li className="mx-1 my-2 md:mx-5">
+                <Link
+                  href="/signup"
+                  className="p-3 rounded-3xl border border-kz-lt-purple border-solid text-kz-lt-purple box-border hover:text-[#ffffff] hover:border-[#ffffff] hover:bg-kz-lt-purple transition-all duration-500 "
+                >
+                  Sign up/Login
+                </Link>
+              </li>
+            </ul>
+          </div>
+        </div>
       </div>
-    </div>
+    </>
   );
 };
+
 export default Navbar;
