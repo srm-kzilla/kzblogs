@@ -7,14 +7,14 @@ export interface TrendType {
 const TrendCard = ({ body }: TrendType) => {
   return (
     <>
-      <div className="m-6 flex flex-row w-64 h-16 bg-slate-950  shadow-md rounded-xl text-ellipsis overflow-clip md:w-44">
+      <div className="m-6 flex flex-row w-44 h-16 bg-[#232238]  shadow-md rounded-xl text-ellipsis overflow-clip md:w-64">
         <img
-          className="w-1/4 h-7/8 p-2 rounded-sm md:h-5/6 border-solid border-white"
+          className="w-1/4 h-5/6 p-2 rounded-sm md:h-7/8 border-solid border-white"
           src="/tempCardImg.jpg"
           alt=""
         />
         <div>
-          <p className="font-light text-sm px-2 my-1 text-white md:text-xs">
+          <p className="font-light text-xs px-2 my-1 text-white md:text-sm">
             {body}
           </p>
         </div>

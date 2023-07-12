@@ -7,13 +7,13 @@
 /* Firefox */
 * {
   scrollbar-width: thin;
-  scrollbar-color: #ff7262 #ffffff;
+  scrollbar-color: #37379B #ffffff;
 }
 
 /* Chrome, Edge, and Safari */
 *::-webkit-scrollbar {
-  width: 9px;
-  height: 9px;
+  width: 5px;
+  height: 5px;
 }
 
 *::-webkit-scrollbar-track {
@@ -21,7 +21,7 @@
 }
 
 *::-webkit-scrollbar-thumb {
-  background-color: #ff7262;
+  background-color: #37379B;
   border-radius: 10px;
   border: 1px solid #151319;
 }
