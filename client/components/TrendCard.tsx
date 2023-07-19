@@ -11,7 +11,7 @@ const TrendCard = ({ body }: TrendType) => {
         <img
           className="w-1/4 h-5/6 p-2 rounded-sm md:h-7/8 border-solid border-white"
           src="/tempCardImg.jpg"
-          alt=""
+          alt="blog img"
         />
         <div>
           <p className="font-light text-xs px-2 my-1 text-white md:text-sm">

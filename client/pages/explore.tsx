@@ -30,7 +30,7 @@ const ExplorePage: NextPage = ({ blogs }: any) => {
     ref.current += tagsPerPage;
   };
   return (
-    <div className="">
+    <div>
       <Head>
         <title>Explore</title>
         <meta name="description" content="Explore Blogs" />
@@ -39,7 +39,7 @@ const ExplorePage: NextPage = ({ blogs }: any) => {
         <div>
           <Navbar />
         </div>
-        <div className="">
+        <div>
           <div className="h-full w-full">
             <h1 className="select-none relative top-11 left-5 text-3xl h-36  md:text-4xl md:top-12 md:ml-6 lg:text-6xl lg:top-36 xl:top-40 font-bold font-josefinSans text-transparent bg-clip-text bg-gradient-to-r from-kz-purple from-5% via-kz-blue via-25% to-kz-pink to-50% w-fit">
               Explore
@@ -67,8 +67,11 @@ const ExplorePage: NextPage = ({ blogs }: any) => {
             <div className="flex flex-row m-3 md:mt-8">
               <p className=" text-kz-grey text-base lg:text-lg">Recommended:</p>
               <div className="flex flex-row flex-wrap">
-                {recommend.map((rec) => (
-                  <div className="text-base text-center mx-4 text-kz-grey md:text-lg md:w-28 hover:underline">
+                {recommend.map((rec, index) => (
+                  <div
+                    key={index}
+                    className="text-base text-center mx-4 text-kz-grey md:text-lg md:w-28 hover:underline"
+                  >
                     {rec}
                   </div>
                 ))}

@@ -12,7 +12,7 @@ const BlogCard = ({ body, title }: BlogType) => {
         <img
           className="w-auto h-1/2 p-2 rounded-lg"
           src="/tempCardImg.jpg"
-          alt=""
+          alt="Blog Img"
         />
         <div className="px-1">
           <h5 className="text-lg text-left ml-1 tracking-tight font-semibold text-white md:text-xl">
