@@ -1,16 +1,34 @@
 import { BlogCard, BlogType, Navbar } from "@/components";
 import type { NextPage } from "next";
 import Head from "next/head";
-interface ExploreProps {
-  blogs: BlogType;
-  recommend: Array<string>;
-  rec: string;
-  tag: string;
-  tags: Array<string>;
-}
+import tags from "@/data/tags";
+import { useEffect, useState, useRef } from "react";
+import Tags from "@/components/Tags";
+let arrayForHoldingTags: any = [];
+const tagsPerPage = 3;
+// interface ExploreProps {
+//   blogs: BlogType;
+//   recommend: Array<string>;
+//   rec: string;
+//   tag: string;
+//   tags: Array<string>;
+// }
 const ExplorePage: NextPage = ({ blogs }: any) => {
   const recommend = ["google", "technology", "python"];
-  const tags = ["google", "technology", "python"];
+  const [tagsToShow, setTagsToShow] = useState([]);
+  const ref = useRef(tagsPerPage);
+  const loopWithSlice = (start: number, end: number) => {
+    const slicedTags = tags.slice(start, end);
+    arrayForHoldingTags = arrayForHoldingTags.concat(slicedTags);
+    setTagsToShow(arrayForHoldingTags);
+  };
+  useEffect(() => {
+    loopWithSlice(0, tagsPerPage);
+  }, []);
+  const handleShowMoreTags = () => {
+    loopWithSlice(ref.current, ref.current + tagsPerPage);
+    ref.current += tagsPerPage;
+  };
   return (
     <div className="">
       <Head>
@@ -56,12 +74,15 @@ const ExplorePage: NextPage = ({ blogs }: any) => {
                 ))}
               </div>
             </div>
-            <div className="flex flex-row flex-wrap justify-start">
-              {tags.map((tag) => (
-                <div className="text-xs text-center m-1 p-1 mt-6 border border-transparent rounded-2xl w-20 h-7 mx-1 bg-kz-purp-2 text-kz-grey md:m-2 md:text-base md:w-28 md:h-9">
-                  {tag}
-                </div>
-              ))}
+            <div>
+              <Tags tagsToRender={tagsToShow} />
+              <button
+                onClick={handleShowMoreTags}
+                className="text-xs text-center m-1 p-1 mt-6 border border-transparent rounded-2xl w-7 h-7 mx-1 bg-kz-purp-2 text-kz-grey md:m-2 md:text-base md:w-10 md:h-9"
+              >
+                {" "}
+                +{" "}
+              </button>
             </div>
           </div>
         </div>
