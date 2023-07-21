@@ -69,7 +69,8 @@ uvicorn main:app --reload
     "string"
   ],
   "blog_publish_status": true
-}```
+}
+```
 
 
 `Returns:`
@@ -83,3 +84,63 @@ uvicorn main:app --reload
 ```
 - 500: Internal Server Error
 
+### POST `/update-status/{id}`
+
+`Body:`
+```json
+{
+  "blog_publish_status": true
+}
+```
+
+`Returns:`
+- 200: 
+```json
+{
+    "status": true, 
+    "message": "Blog updated successfully!"
+}
+```
+- 500: Internal Server Error
+
+### PUT `/update/blog`
+
+`Body:`
+```json
+{
+  "blog_title": "string",
+  "blog_body": "string",
+  "blog_entry_img": "string",
+  "date_published": 0,
+  "date_modified": 0,
+  "readtime_min": 0,
+  "id": "string",
+  "likes_count": 0,
+  "category": [
+    "string"
+  ],
+  "blog_publish_status": true
+}
+```
+
+### DELETE `/delete/blog/{id}`
+
+`Path Parameters:`
+- id: str → id of the blog
+
+`Returns:`
+- 200: 
+```json
+{
+    "status": true, 
+    "message": "Blog deleted successfully!"
+}
+```
+- 404:
+```json
+{
+    "status": false, 
+    "message": "Blog not found!"
+}
+```
+- 500: Internal Server Error

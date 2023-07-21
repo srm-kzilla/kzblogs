@@ -2,7 +2,7 @@ from fastapi import Response, Request, APIRouter as Router
 from json import dumps
 from db import database
 
-from helpers.schema import AddBlogSchema, UpdateBlogSchema
+from helpers.schema import AddBlogSchema, UpdateBlogSchema, UpdateStatusSchema
 
 router = Router()
 db = database.MongoDbConnection()
@@ -91,10 +91,12 @@ async def get_all(
 
 
 @router.post("/update-status/{id}")
-async def update_status(req: Request, id: str) -> Response:
+async def update_status(
+    req: Request, id: str, blog_publish_status: UpdateStatusSchema
+) -> Response:
     try:
         blog = db.get_blog_by_id(str(id))
-        blog["blog_publish_status"] = not blog["blog_publish_status"]
+        blog["blog_publish_status"] = blog_publish_status
         output: dict = db.update_blog(blog["id"], blog)
         output["publish_status"] = blog["blog_publish_status"]
         return Response(
