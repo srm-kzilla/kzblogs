@@ -2,6 +2,7 @@ import { Navbar, BlogCard } from "@/components";
 import type { BlogType } from "@/components";
 import type { NextPage } from "next";
 import Head from "next/head";
+import Image from "next/image";
 
 const LandingPage: NextPage = ({ blogs }: any) => {
   return (
@@ -22,24 +23,28 @@ const LandingPage: NextPage = ({ blogs }: any) => {
                 type="text"
                 name="Search"
                 placeholder="Search your interests here"
-                className="absolute text-xs text-left h-12 w-[90vw] rounded-xl p-2 ml-4 top-48 indent-2 md:ml-5 md:mt-3 lg:top-80 lg:mt-6 xl:mt-14 z-10 text-kz-grey bg-kz-purp-2"
+                className="absolute text-xs text-left h-12 w-[90vw] rounded-xl p-2 ml-4 top-56 indent-2 md:ml-5 md:mt-3 lg:top-80 lg:mt-6 xl:mt-14 z-10 text-kz-grey bg-kz-purp-2"
               />
-              <div className="absolute z-10 left-3/4 top-48 mt-3 md:mt-5 md:ml-10 lg:mt-40 lg:ml-16 xl:mt-48">
-                <img src="/search.svg" alt="search" className="w-5 md:w-8 " />
+              <div className="absolute z-10 left-3/4 top-56 mt-3 ml-5 md:mt-5 lg:mt-32 xl:mt-40 ">
+                <Image
+                  src="/search.svg"
+                  alt="search"
+                  className="w-5 md:w-8  "
+                />
               </div>
             </div>
-            <img
+            <Image
               src="/shapes.svg"
               alt="moon and shapes"
-              className="absolute z-0 w-7 h-7 top-52 mt-7 left-12 md:w-10 md:h-10 md:mt-9 lg:mt-44 xl:mt-52"
+              className="absolute z-0 w-7 h-7 top-60 mt-7 left-12 md:w-10 md:h-10 md:mt-9 lg:mt-36 xl:mt-44 "
             />
           </div>
           <div className="relative flex flex-col">
-            <h2 className="relative text-2xl text-white font-semibold top-48 ml-9 md:text-3xl md:mt-11 md:ml-12 lg:top-72 lg:ml-12">
+            <h2 className="relative text-center text-2xl text-white font-semibold top-48 md:text-left md:text-3xl md:mt-11 md:ml-12 lg:top-72 lg:ml-12">
               Trending Topics
             </h2>
             <div className="w-3/4">
-              <div className="relative flex flex-col flex-wrap top-48 ml-3 md:flex-row md:top-56 md:ml-9 md:justify-start md:mr-7 lg:top-72">
+              <div className="relative flex flex-col left-14 flex-wrap top-48 md:flex-row md:top-56 lg:top-72">
                 {blogs.map((blog: BlogType) => (
                   <div key={blogs.id}>
                     <BlogCard {...blog} />

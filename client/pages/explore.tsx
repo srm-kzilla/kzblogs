@@ -4,6 +4,7 @@ import Head from "next/head";
 import tags from "@/data/tags";
 import { useEffect, useState, useRef } from "react";
 import Tags from "@/components/Tags";
+import Image from "next/image";
 let arrayForHoldingTags: any = [];
 const tagsPerPage = 3;
 // interface ExploreProps {
@@ -54,10 +55,10 @@ const ExplorePage: NextPage = ({ blogs }: any) => {
                 />
               </div>
               <div className="absolute z-10 left-3/4 top-48 mt-3 md:mt-5 md:ml-10 lg:mt-40 lg:ml-10 xl:mt-48">
-                <img src="/search.svg" alt="search" className="w-5 md:w-8 " />
+                <Image src="/search.svg" alt="search" className="w-5 md:w-8 " />
               </div>
             </div>
-            <img
+            <Image
               src="/shapes.svg"
               alt="moon and shapes"
               className="absolute z-0 w-7 h-7 top-52 mt-7 left-12 md:w-10 md:h-10 md:mt-9 lg:mt-44 xl:mt-52"

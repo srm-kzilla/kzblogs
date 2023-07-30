@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 export interface BlogType {
   id: number;
   title: string;
@@ -9,7 +11,7 @@ const BlogCard = ({ body, title }: BlogType) => {
   return (
     <>
       <div className="flex flex-col m-5 p-2 rounded-lg w-5/6 h-[30rem] mb-8 md:w-96 lg:w-80 bg-gradient-to-b from-kz-dull-purple from-50% to-black to-90% shadow-card-shadow hover:shadow-box-shadow transform transition duration-500 hover:scale-105">
-        <img
+        <Image
           className="w-auto h-1/2 p-2 rounded-lg"
           src="/tempCardImg.jpg"
           alt="Blog Img"
