@@ -7,21 +7,21 @@ const Navbar = () => {
         <img
           src="/logo.svg"
           alt="KZBlogs Logo"
-          className=" h-20 w-15 mx-1 sm:h-30 "
+          className=" h-20 w-15 mx-1 sm:h-30"
         />
       </div>
-      <div className=" ml-auto font-medium text-lg  text-white flex sm:flex-col sm:text-xs ">
+      <div className=" flex-col ml-auto font-medium text-xs  text-white flex sm:flex-row sm:text-lg ">
         <ul className="flex p-1 mx-0 my-5">
-          <li className="mx-5 my-2 sm:mx-1 hover:text-kz-orange  transition-all duration-500">
+          <li className="mx-1 my-2 sm:mx-5 hover:text-kz-orange  transition-all duration-500">
             <Link href="/">Home</Link>
           </li>
-          <li className="mx-5 my-2 sm:mx-1 hover:text-kz-orange  transition-all duration-500">
+          <li className="mx-1 my-2 sm:mx-5 hover:text-kz-orange  transition-all duration-500">
             <Link href="/explore">Explore</Link>
           </li>
-          <li className="mx-5 my-2 sm:mx-1 hover:text-kz-orange  transition-all duration-500">
+          <li className="mx-1 my-2 sm:mx-5 hover:text-kz-orange  transition-all duration-500">
             <Link href="/create">Create</Link>
           </li>
-          <li className="mx-5 my-2 sm:mx-1">
+          <li className="mx-1 my-2 sm:mx-5">
             <Link
               href="/signup"
               className="p-3 rounded-3xl border border-kz-orange border-solid text-kz-orange box-border hover:text-[#ffffff] hover:border-[#ffffff] hover:bg-[#FF5F5F] transition-all duration-500 "
