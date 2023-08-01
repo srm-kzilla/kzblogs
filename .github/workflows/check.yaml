@@ -1,0 +1,19 @@
+name: Check backend
+on: 
+  push:
+    branches:
+      - "**"
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: print env
+        run: echo ${{ secrets.ENVIRONMENT }}
+        env: 
+          ENVIRONMENT: "test"
+      - name: Installing test dependencies
+        run: pip3 install -r requirements.txt; pip3 install -r requirements_test.txt
+      - name: Formatting test
+        run: black *.py ./**/*.py --check

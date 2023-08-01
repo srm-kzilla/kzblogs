@@ -34,7 +34,9 @@ class MongoDbConnection:
 
         logger.info("MongoDB Connected!")
 
-    def get_blogs(self, query: Union[str, None] = None, show_all: bool = False, **kwargs):
+    def get_blogs(
+        self, query: Union[str, None] = None, show_all: bool = False, **kwargs
+    ):
         db = self.db.get_collection("blogs")
         try:
             filter: dict = {"slug": query, "blog_publish_status": True}
@@ -50,7 +52,7 @@ class MongoDbConnection:
 
             result = db.find_one(filter)
             if not result:
-                result = {
+                return {
                     "message": "The blog is not present in the database.",
                     "status": False,
                 }
@@ -71,7 +73,6 @@ class MongoDbConnection:
                     "status": False,
                 }
             result = dict(result)
-            print(result)
             result["id"] = str(result.pop("_id"))
             return result
 
@@ -84,7 +85,7 @@ class MongoDbConnection:
             data["date_published"] = int(time()) if data["blog_publish_status"] else 0
             data["date_modified"] = int(time())
             data["readtime_min"], data["likes_count"] = 0, 0
-            data["slug"] = slugify(data["blog_title"])
+            data["slug"] = slugify(data["blog_title"] + str(int(time())))
             db = self.db.get_collection("blogs")
             return str(db.insert_one(data).inserted_id)
 
@@ -99,9 +100,9 @@ class MongoDbConnection:
                 data = dict(data)
                 if "id" in data:
                     data.pop("id")
-                data["slug"] = slugify(data["blog_title"])
+                data["slug"] = slugify(data["blog_title"] + str(int(time())))
                 existing_data.update(data)
-                db.update_one({"_id": query}, {"$set": data})
+                db.update_one({"_id": ObjectId(query)}, {"$set": data})
                 return {"status": True, "message": "Blog updated successfully!"}
             else:
                 return {

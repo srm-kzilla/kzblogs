@@ -36,3 +36,7 @@ class AddBlogSchema(BaseModel):
     author: str
     category: list
     blog_publish_status: bool
+
+
+class UpdateStatusSchema(BaseModel):
+    blog_publish_status: bool
