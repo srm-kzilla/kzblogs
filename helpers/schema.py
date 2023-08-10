@@ -49,3 +49,6 @@ class UpdateUserSchema(BaseModel):
     email: str
     password: str
     old_password: str
+    
+class UpdateStatusSchema(BaseModel):
+    blog_publish_status: bool

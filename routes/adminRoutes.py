@@ -2,7 +2,7 @@ from fastapi import Response, Request, APIRouter as Router
 from json import dumps
 from db import database
 
-from helpers.schema import AddBlogSchema, UpdateBlogSchema
+from helpers.schema import AddBlogSchema, UpdateBlogSchema, UpdateStatusSchema
 
 router = Router()
 db = database.MongoDbConnection()
@@ -31,7 +31,7 @@ async def add_blog(req: Request, data: AddBlogSchema) -> Response:
 @router.delete("/delete/blog/{id}")
 async def delete_blog(req: Request, id: str) -> Response:
     try:
-        output = db.delete_blog(id)
+        output: dict = db.delete_blog(id)
         return Response(
             dumps(output),
             status_code=200 if output["status"] else 404,
@@ -49,7 +49,7 @@ async def delete_blog(req: Request, id: str) -> Response:
 @router.put("/update/blog")
 async def update_blog(req: Request, data: UpdateBlogSchema) -> Response:
     try:
-        output = db.update_blog(str(data.id), data.dict())
+        output: dict = db.update_blog(str(data.id), data.dict())
         return Response(
             dumps(output),
             status_code=200 if output["status"] else 404,
@@ -65,10 +65,22 @@ async def update_blog(req: Request, data: UpdateBlogSchema) -> Response:
 
 
 @router.get("/blog/all")
-async def get_all(req: Request) -> Response:
+async def get_all(
+    req: Request, showall: bool = True, page: int = 0, count: int = 0
+) -> Response:
     try:
-        results: list = db.get_blogs(None, show_all=True)
-        return Response(dumps(results), status_code=200, media_type="application/json")
+        results: list = db.get_blogs(None, show_all=showall)
+        count = count if count else len(results)
+        output: dict = {
+            "page": page,
+            "count": count,
+            "total": len(results),
+            "total_pages": len(results) // count,
+            "results": results[page * count : (page + 1) * count]
+            if len(results)
+            else [],
+        }
+        return Response(dumps(output), status_code=200, media_type="application/json")
     except Exception as e:
         print(e)
         return Response(
@@ -79,10 +91,12 @@ async def get_all(req: Request) -> Response:
 
 
 @router.post("/update-status/{id}")
-async def update_status(req: Request, id: str) -> Response:
+async def update_status(
+    req: Request, id: str, blog_publish_status: UpdateStatusSchema
+) -> Response:
     try:
         blog = db.get_blog_by_id(str(id))
-        blog["blog_publish_status"] = not blog["blog_publish_status"]
+        blog["blog_publish_status"] = blog_publish_status
         output: dict = db.update_blog(blog["id"], blog)
         output["publish_status"] = blog["blog_publish_status"]
         return Response(
