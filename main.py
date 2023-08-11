@@ -8,7 +8,7 @@ app.include_router(regularRoutes.router, prefix="/blog")
 app.include_router(adminRoutes.router, prefix="/admin")
 app.include_router(userRoutes.router, prefix="/user")
 
-middleware.init_middleware(app)
+middleware.verifyAuth(app)
 
 
 @app.get("/")

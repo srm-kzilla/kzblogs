@@ -38,10 +38,12 @@ class AddBlogSchema(BaseModel):
     blog_publish_status: bool
 
 
+
 class AddUserSchema(BaseModel):
     name: str
     email: str
     password: str
+    is_admin: bool
 
 
 class UpdateUserSchema(BaseModel):
@@ -49,6 +51,7 @@ class UpdateUserSchema(BaseModel):
     email: str
     password: str
     old_password: str
+    is_admin: bool
     
 class UpdateStatusSchema(BaseModel):
     blog_publish_status: bool
