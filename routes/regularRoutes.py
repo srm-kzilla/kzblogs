@@ -11,6 +11,7 @@ router = Router()
 bearer = HTTPBearer()
 db = MongoDbConnection()
 
+
 @router.get("/all")
 async def get_all(req: Request, page: int = 0, count: int = 0) -> Response:
     try:

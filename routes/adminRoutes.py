@@ -1,7 +1,6 @@
 from fastapi import Response, Request, APIRouter as Router
 from json import dumps
 from db import database
-from middleware.middleware import verifyAuth
 from fastapi import Depends
 
 from helpers.schema import AddBlogSchema, UpdateBlogSchema, UpdateStatusSchema
