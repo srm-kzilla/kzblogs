@@ -3,9 +3,8 @@ from security import jwtHandler
 from json import dumps
 from helpers.constants import ALLOWED_URLS
 
-check = lambda request: any([
-    request.url.path.startswith(url) for url in ALLOWED_URLS
-])
+check = lambda request: any([request.url.path.startswith(url) for url in ALLOWED_URLS])
+
 
 def verifyAuth(app: FastAPI):
     @app.middleware("http")

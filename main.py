@@ -2,10 +2,7 @@ from fastapi import FastAPI, Response, Request
 from routes import adminRoutes, regularRoutes, userRoutes
 from middleware import middleware
 
-app = FastAPI(
-    docs_url="/docs",
-    openapi_url="/openapi.json"
-)
+app = FastAPI(docs_url="/docs", openapi_url="/openapi.json")
 middleware.verifyAuth(app)
 
 app.include_router(regularRoutes.router, prefix="/blog")
