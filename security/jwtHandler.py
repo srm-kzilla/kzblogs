@@ -7,10 +7,10 @@ from helpers.constants import (
 )
 
 
-def signJWT(user_id: dict) -> Dict[str, str]:
+def signJWT(user: dict) -> Dict[str, str]:
     payload = {
-        "user_id": user_id["id"],
-        "is_admin": False,
+        "user_id": user["id"],
+        "is_admin": user["is_admin"],
         "expires": time.time() + 2592000,
     }
     token = jwt.encode(payload, JWT_SECRET, algorithm=JWT_ALGORITHM)

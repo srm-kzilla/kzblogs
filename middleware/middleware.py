@@ -21,7 +21,7 @@ def verifyAuth(app: FastAPI):
                 return Response(dumps({"status": False, "message": "Invalid token"}))
             else:
                 if request.url.path.startswith("/admin"):
-                    if verify["role"] != "admin":
+                    if not verify["is_admin"]:
                         return Response(
                             dumps(
                                 {
