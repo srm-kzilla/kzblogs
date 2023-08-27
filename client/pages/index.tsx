@@ -43,7 +43,7 @@ const LandingPage: NextPage<BlogProps> = ({ blogs }) => {
               className="absolute w-auto h-auto z-0 top-60 mt-5 left-12 md:mt-8 lg:mt-36 xl:mt-44"
             />
           </div>
-          <div className="relative flex flex-col w-screen top-96">
+          <div className="relative flex flex-col w-screen top-60 md:top-72">
             <h2 className="relative text-left ml-10 text-2xl text-white font-semibold md:text-left md:text-3xl md:ml-20 lg:ml-12">
               Trending Topics
             </h2>
