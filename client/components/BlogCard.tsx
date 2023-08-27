@@ -14,6 +14,8 @@ const BlogCard = ({ body, title }: BlogType) => {
         <Image
           className="w-auto h-1/2 p-2 rounded-lg"
           src="/tempCardImg.jpg"
+          width={240}
+          height={240}
           alt="Blog Img"
         />
         <div className="px-1">

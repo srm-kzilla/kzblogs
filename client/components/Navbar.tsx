@@ -12,11 +12,15 @@ const Navbar = () => {
             <Image
               src="logo.svg"
               alt="Logo"
+              width={32}
+              height={32}
               className="h-12 w-12 absolute top-5 left-6"
             />
             <Image
               src="KZBlogs.svg"
               alt="KZBlogs"
+              width={32}
+              height={32}
               className="absolute top-7 left-20 w-32 md:hidden"
             />
             <button
@@ -24,7 +28,7 @@ const Navbar = () => {
               type="button"
               onClick={() => setNavbarOpen(!navbarOpen)}
             >
-              <Image src="dotsMenu.svg" alt="Menu" />
+              <Image src="dotsMenu.svg" alt="Menu" width={32} height={32} />
             </button>
           </div>
           <div

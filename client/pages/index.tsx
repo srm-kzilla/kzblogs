@@ -40,11 +40,11 @@ const LandingPage: NextPage<BlogProps> = ({ blogs }) => {
               </div>
             </div>
             <Image
-              width={8}
-              height={8}
+              width={48}
+              height={32}
               src="/shapes.svg"
               alt="moon and shapes"
-              className="absolute z-0 w-7 h-7 top-60 mt-7 left-12 md:w-10 md:h-10 md:mt-9 lg:mt-36 xl:mt-44"
+              className="absolute z-0 top-60 mt-7 left-12 md:w-10 md:h-10 md:mt-9 lg:mt-36 xl:mt-44"
             />
           </div>
           <div className="relative flex flex-col">
