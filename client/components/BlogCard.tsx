@@ -1,9 +1,9 @@
 import Image from "next/image";
 
 export interface BlogType {
+  userId: number;
   id: number;
   title: string;
-  img: string;
   body: string;
 }
 
