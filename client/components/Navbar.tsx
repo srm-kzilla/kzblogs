@@ -6,7 +6,7 @@ const Navbar = () => {
   const [navbarOpen, setNavbarOpen] = useState(false);
   return (
     <>
-      <div className="h-20 w-full flex flex-row px-0.5 py-0 shadow-box-shadow">
+      <div className="h-20 w-screen flex flex-row px-1 py-0 shadow-box-shadow">
         <div className="container px-4 mx-auto flex flex-wrap items-center">
           <div className="w-full flex justify-between lg:w-auto">
             <Image
@@ -39,24 +39,31 @@ const Navbar = () => {
                 key={1}
                 className="mx-1 my-2 md:mx-5 hover:text-kz-lt-purple transition-all duration-500"
               >
-                <Link href="/">Home</Link>
+                <Link href="/" prefetch>
+                  Home
+                </Link>
               </li>
               <li
                 key={2}
                 className="mx-1 my-2 md:mx-5 hover:text-kz-lt-purple transition-all duration-500"
               >
-                <Link href="/explore">Explore</Link>
+                <Link href="/explore" prefetch>
+                  Explore
+                </Link>
               </li>
               <li
                 key={3}
                 className="mx-1 my-2 md:mx-5 hover:text-kz-lt-purple transition-all duration-500"
               >
-                <Link href="/create">Create</Link>
+                <Link href="/create" prefetch>
+                  Create
+                </Link>
               </li>
               <li key={4} className="mx-1 my-2 md:mx-5">
                 <Link
                   href="/signup"
-                  className="p-3 rounded-3xl border border-kz-lt-purple border-solid text-kz-lt-purple box-border hover:text-[#ffffff] hover:border-[#ffffff] hover:bg-kz-lt-purple transition-all duration-500 "
+                  prefetch
+                  className="md:p-3 rounded-3xl lg:border border-kz-lt-purple border-solid text-kz-lt-purple box-border hover:text-[#ffffff] hover:border-[#ffffff] hover:bg-kz-lt-purple transition-all duration-500 "
                 >
                   Sign up/Login
                 </Link>
