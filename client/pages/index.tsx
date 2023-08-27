@@ -6,7 +6,7 @@ import Image from "next/image";
 
 const LandingPage: NextPage<BlogProps> = ({ blogs }) => {
   return (
-    <div>
+    <div className="w-screen h-full">
       <Head>
         <title>KZBlogs</title>
         <meta name="description" content="Blogs from SRMKZILLA!" />
@@ -14,7 +14,7 @@ const LandingPage: NextPage<BlogProps> = ({ blogs }) => {
       <div className="bg-kz-dark-grey">
         <div>
           <Navbar />
-          <div className="h-full w-screen">
+          <div>
             <h1 className="select-none relative invisible z-20 h-36 md:visible md:text-8xl md:top-16 md:mt-2 md:ml-11 lg:text-9xl lg:top-36 lg:mt-3 xl:top-44 font-bold font-josefinSans text-transparent bg-clip-text bg-gradient-to-r from-kz-purple from-5% via-kz-blue via-25% to-kz-pink to-50% w-fit">
               KZBlogs
             </h1>
