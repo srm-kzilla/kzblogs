@@ -48,7 +48,7 @@ async def login(data: UserSchema) -> Response:
 @router.get("/details/{id}")
 async def details(req: Request, id: str):
     try:
-        req.headers.get("authorization")
+        print(jwtHandler.decodeJWT(req.headers.get("authorization")))
         output: dict = db.get_user(id)
         return Response(
             dumps(output),
