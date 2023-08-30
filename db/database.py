@@ -9,7 +9,7 @@ from pymongo import MongoClient, database
 from pymongo.database import Database
 
 from helpers.constants import CONST_DB_SETTINGS
-from helpers.schema import BlogSchema, UpdateBlogSchema, AddUserSchema
+from helpers.schema import BlogSchema, UpdateBlogSchema, AddUserSchema, UpdateUserSchema
 
 logger = logging.getLogger(__name__)
 
@@ -35,139 +35,151 @@ class MongoDbConnection:
         logger.info("MongoDB Connected!")
 
     def add_user(self, data: AddUserSchema):
-        try:
-            db = self.db.get_collection("users")
-            if db.find_one({"email": data.email}):
+        db = self.db.get_collection("users")
+        if db.find_one({"email": data.email}):
+            return {
+                "message": "User already exists.",
+                "status": False,
+            }
+        information: dict = data.dict()
+        information["password"] = bcrypt.generateHash(information["password"])
+        information["is_admin"] = False
+        db.insert_one(information)
+        return {
+            "message": "User added successfully.",
+            "status": True,
+        }
+
+    def update_user(self, id: str, data: UpdateUserSchema):
+        db = self.db.get_collection("users")
+        if existing_data := db.find_one({"_id": ObjectId(id)}):
+            if not data.old_password or not bcrypt.compareHashToPassword(
+                data.old_password, dict(existing_data)["password"]
+            ):
                 return {
-                    "message": "User already exists.",
+                    "message": "Incorrect password. The old password is wrong",
                     "status": False,
                 }
-            information: dict = data.dict()
-            information["password"] = bcrypt.generateHash(information["password"])
-            db.insert_one(information)
+            data = dict(data)
+            if "id" in data:
+                data.pop("id")
+            if "password" in data:
+                data["password"] = bcrypt.generateHash(data["password"])
+            existing_data.update(data)
+            existing_data["admin"] = False
+            db.update_one({"_id": ObjectId(id)}, {"$set": data})
+            return {"status": True, "message": "User updated successfully!"}
+        else:
             return {
-                "message": "User added successfully.",
-                "status": True,
+                "message": "The user is not present in the database.",
+                "status": False,
             }
-        except Exception as e:
-            raise e
+
+    def get_user(self, id: str):
+        db = self.db.get_collection("users")
+        result = db.find_one({"_id": ObjectId(id)})
+        if not result:
+            return {
+                "message": "The user is not present in the database.",
+                "status": False,
+            }
+        result = dict(result)
+        result["id"] = str(result.pop("_id"))
+        return result
 
     def login(self, data: AddUserSchema) -> dict:
-        try:
-            db = self.db.get_collection("users")
-            result = db.find_one({"email": data.email})
-            if not result:
-                return {
-                    "message": "User does not exist.",
-                    "status": False,
-                }
-            result = dict(result)
-            if not bcrypt.compareHashToPassword(data.password, result["password"]):
-                return {
-                    "message": "Incorrect password.",
-                    "status": False,
-                }
-            result.pop("password")
-            result["id"] = str(result.pop("_id"))
-            output: dict = jwt.signJWT(result)
-            output.update({"message": "User logged in successfully.", "status": True})
-            return output
-        except Exception as e:
-            raise e
+        db = self.db.get_collection("users")
+        result = db.find_one({"email": data.email})
+        if not result:
+            return {
+                "message": "User does not exist.",
+                "status": False,
+            }
+        result = dict(result)
+        if not bcrypt.compareHashToPassword(data.password, result["password"]):
+            return {
+                "message": "Incorrect password.",
+                "status": False,
+            }
+        result.pop("password")
+        result["id"] = str(result.pop("_id"))
+        output: dict = jwt.signJWT(result)
+        output.update({"message": "User logged in successfully.", "status": True})
+        return output
 
     def get_blogs(
         self, query: Union[str, None] = None, show_all: bool = False, **kwargs
     ):
         db = self.db.get_collection("blogs")
-        try:
-            filter: dict = {"slug": query, "blog_publish_status": True}
-            filter.update(kwargs)
-            if show_all:
-                del filter["blog_publish_status"]
-            if not query:
-                del filter["slug"]
-                result: list = list(db.find(filter))
-                for i in range(len(result)):
-                    result[i]["id"] = str(result[i].pop("_id"))
-                return result
-
-            result = db.find_one(filter)
-            if not result:
-                return {
-                    "message": "The blog is not present in the database.",
-                    "status": False,
-                }
-            result = dict(result)
-            result["id"] = str(result.pop("_id"))
+        filter: dict = {"slug": query, "blog_publish_status": True}
+        filter.update(kwargs)
+        if show_all:
+            del filter["blog_publish_status"]
+        if not query:
+            del filter["slug"]
+            result: list = list(db.find(filter))
+            for i in range(len(result)):
+                result[i]["id"] = str(result[i].pop("_id"))
             return result
 
-        except Exception as e:
-            raise Exception(e)
+        result = db.find_one(filter)
+        if not result:
+            return {
+                "message": "The blog is not present in the database.",
+                "status": False,
+            }
+        result = dict(result)
+        result["id"] = str(result.pop("_id"))
+        return result
 
     def get_blog_by_id(self, query: str) -> dict:
-        try:
-            db = self.db.get_collection("blogs")
-            result = db.find_one({"_id": ObjectId(query)})
-            if not result:
-                return {
-                    "message": "The blog is not present in the database.",
-                    "status": False,
-                }
-            result = dict(result)
-            result["id"] = str(result.pop("_id"))
-            return result
-
-        except Exception as e:
-            raise Exception(e)
+        db = self.db.get_collection("blogs")
+        result = db.find_one({"_id": ObjectId(query)})
+        if not result:
+            return {
+                "message": "The blog is not present in the database.",
+                "status": False,
+            }
+        result = dict(result)
+        result["id"] = str(result.pop("_id"))
+        return result
 
     def add_blog(self, data: BlogSchema):
-        try:
-            data = dict(data)
-            data["date_published"] = int(time()) if data["blog_publish_status"] else 0
-            data["date_modified"] = int(time())
-            data["readtime_min"], data["likes_count"] = 0, 0
-            data["slug"] = slugify(data["blog_title"])
-            db = self.db.get_collection("blogs")
-            return str(db.insert_one(data).inserted_id)
-
-        except Exception as e:
-            raise Exception(e)
+        data = dict(data)
+        data["date_published"] = int(time()) if data["blog_publish_status"] else 0
+        data["date_modified"] = int(time())
+        data["readtime_min"], data["likes"] = 0, []
+        data["slug"] = slugify(data["blog_title"])
+        db = self.db.get_collection("blogs")
+        return str(db.insert_one(data).inserted_id)
 
     def update_blog(self, query: str, data: UpdateBlogSchema) -> dict:
-        try:
-            db = self.db.get_collection("blogs")
-            if db.count_documents({"_id": ObjectId(query)}, limit=1) != 0:
-                existing_data = dict(db.find_one({"_id": ObjectId(query)}))
-                data = dict(data)
-                if "id" in data:
-                    data.pop("id")
-                data["slug"] = slugify(data["blog_title"])
-                existing_data.update(data)
-                db.update_one({"_id": ObjectId(query)}, {"$set": data})
-                return {"status": True, "message": "Blog updated successfully!"}
-            else:
-                return {
-                    "message": "The blog is not present in the database.",
-                    "status": False,
-                }
-
-        except Exception as e:
-            raise Exception(e)
+        db = self.db.get_collection("blogs")
+        if db.count_documents({"_id": ObjectId(query)}, limit=1) != 0:
+            existing_data = dict(db.find_one({"_id": ObjectId(query)}))
+            data = dict(data)
+            if "id" in data:
+                data.pop("id")
+            data["slug"] = slugify(data["blog_title"])
+            existing_data.update(data)
+            db.update_one({"_id": ObjectId(query)}, {"$set": data})
+            return {"status": True, "message": "Blog updated successfully!"}
+        else:
+            return {
+                "message": "The blog is not present in the database.",
+                "status": False,
+            }
 
     def delete_blog(self, query: str) -> dict:
-        try:
-            db = self.db.get_collection("blogs")
-            if db.count_documents({"_id": ObjectId(query)}, limit=1) != 0:
-                db.delete_one({"_id": ObjectId(query)})
-                return {"status": True, "message": "Blog deleted successfully!"}
-            else:
-                return {
-                    "message": "The blog is not present in the database.",
-                    "status": False,
-                }
-
-        except Exception as e:
-            raise Exception(e)
+        db = self.db.get_collection("blogs")
+        if db.count_documents({"_id": ObjectId(query)}, limit=1) != 0:
+            db.delete_one({"_id": ObjectId(query)})
+            return {"status": True, "message": "Blog deleted successfully!"}
+        else:
+            return {
+                "message": "The blog is not present in the database.",
+                "status": False,
+            }
 
     def __del__(self):
         """Delete this instance."""

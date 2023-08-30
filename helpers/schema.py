@@ -1,4 +1,5 @@
 from pydantic import BaseModel
+from typing import List
 
 
 class BlogSchema(BaseModel):
@@ -9,7 +10,7 @@ class BlogSchema(BaseModel):
     date_published: int
     date_modified: int
     readtime_min: int
-    likes_count: int
+    likes: List[str]
     slug: str
     category: list
     blog_publish_status: bool
@@ -23,7 +24,7 @@ class UpdateBlogSchema(BaseModel):
     date_modified: int
     readtime_min: int
     id: str
-    likes_count: int
+    likes: List[str]
     category: list
     blog_publish_status: bool
 
@@ -41,15 +42,19 @@ class AddUserSchema(BaseModel):
     name: str
     email: str
     password: str
-    is_admin: bool
 
 
 class UpdateUserSchema(BaseModel):
+    id: str
     name: str
     email: str
     password: str
     old_password: str
-    is_admin: bool
+
+
+class UserSchema(BaseModel):
+    email: str
+    password: str
 
 
 class UpdateStatusSchema(BaseModel):

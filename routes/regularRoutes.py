@@ -4,6 +4,7 @@ from fastapi import (
     APIRouter as Router,
 )
 from fastapi.security import HTTPBearer
+from security import jwtHandler
 from json import dumps
 from db.database import MongoDbConnection
 
@@ -17,6 +18,12 @@ async def get_all(req: Request, page: int = 0, count: int = 0) -> Response:
     try:
         results: list = db.get_blogs()
         count = count if count else len(results)
+        if not count:
+            return Response(
+                dumps({"status": False, "message": "No blogs found"}),
+                status_code=404,
+                media_type="application/json",
+            )
         output: dict = {
             "page": page,
             "count": count,
@@ -60,16 +67,23 @@ async def get_article(req: Request, slug: str) -> Response:
 async def like_article(req: Request, slug: str) -> Response:
     try:
         results: dict = db.get_blogs(slug)
-        results["likes_count"] += 1
-        output = db.update_blog(results["id"], results)
-        output.update({"likes_count": results["likes_count"]})
+        if "message" in results:
+            return Response(
+                dumps(results), status_code=400, media_type="application/json"
+            )
+        user_token: str = req.headers.get("authorization", {})
+        user_id: str = jwtHandler.decodeJWT(user_token).get("user_id")
+        results["likes"].append(user_id) if user_id not in results[
+            "likes"
+        ] else results["likes"].remove(user_id)
+        output: dict = db.update_blog(results["id"], results)
         return Response(
             dumps(output),
             status_code=200 if output["status"] else 404,
             media_type="application/json",
         )
     except Exception as e:
-        print(e)
+        raise e
         return Response(
             dumps({"status": False, "message": "Oops! something went wrong"}),
             status_code=500,

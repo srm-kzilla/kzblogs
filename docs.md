@@ -115,7 +115,7 @@ uvicorn main:app --reload
   "date_modified": 0,
   "readtime_min": 0,
   "id": "string",
-  "likes_count": 0,
+  "likes": [],
   "category": [
     "string"
   ],
