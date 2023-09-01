@@ -35,7 +35,7 @@ const ExplorePage: NextPage<BlogProps> = ({ blogs }) => {
           <Navbar />
         </div>
         <div>
-          <h1 className="select-none relative invisible z-20 h-36 md:visible md:text-8xl md:top-16 md:mt-2 md:ml-11 lg:text-9xl lg:top-36 lg:mt-3 xl:top-44 font-bold font-josefinSans text-transparent bg-clip-text bg-gradient-to-r from-kz-purple from-5% via-kz-blue via-25% to-kz-pink to-50% w-fit">
+          <h1 className="select-none relative invisible z-20 h-36 md:visible md:text-8xl md:top-20 md:ml-11 lg:text-9xl lg:top-36 lg:mt-6 xl:top-44 font-bold font-josefinSans text-transparent bg-clip-text bg-gradient-to-r from-kz-purple from-5% via-kz-blue via-25% to-kz-pink to-50% w-fit">
             Explore
           </h1>
           <div>
@@ -60,7 +60,7 @@ const ExplorePage: NextPage<BlogProps> = ({ blogs }) => {
             height={32}
             src="/shapes.svg"
             alt="moon and shapes"
-            className="absolute w-auto h-auto z-0 top-60 mt-5 left-12 md:mt-8 lg:mt-36 xl:mt-44"
+            className="absolute top-64 mt-2 w-10 h-10 z-0 left-12 md:mt-5 md:h-12 md:w-12 lg:top-80 lg:mt-16 xl:w-16 xl:h-16 xl:mt-24"
           />
         </div>
         <div className="relative top-24 m-5 lg:top-48 xl:top-56 xl:ml-4">

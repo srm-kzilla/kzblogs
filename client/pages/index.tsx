@@ -15,7 +15,7 @@ const LandingPage: NextPage<BlogProps> = ({ blogs }) => {
         <div>
           <Navbar />
           <div>
-            <h1 className="select-none relative invisible z-20 h-36 md:visible md:text-8xl md:top-16 md:mt-2 md:ml-11 lg:text-9xl lg:top-36 lg:mt-3 xl:top-44 font-bold font-josefinSans text-transparent bg-clip-text bg-gradient-to-r from-kz-purple from-5% via-kz-blue via-25% to-kz-pink to-50% w-fit">
+            <h1 className="select-none relative invisible z-20 h-36 md:visible md:text-8xl md:top-20 md:ml-11 lg:text-9xl lg:top-36 lg:mt-6 xl:top-44 font-bold font-josefinSans text-transparent bg-clip-text bg-gradient-to-r from-kz-purple from-5% via-kz-blue via-25% to-kz-pink to-50% w-fit">
               KZBlogs
             </h1>
             <div>
@@ -23,7 +23,7 @@ const LandingPage: NextPage<BlogProps> = ({ blogs }) => {
                 type="text"
                 name="Search"
                 placeholder="Search your interests here"
-                className="absolute text-xs text-left h-12 w-[90vw] rounded-xl p-2 ml-4 top-56 indent-2 md:ml-5 md:mt-3 lg:top-80 lg:mt-6 xl:mt-14 z-10 text-kz-grey bg-kz-purp-2"
+                className="absolute text-xs text-left h-12 w-[90vw] rounded-xl p-2 ml-4 top-56 indent-2 md:ml-6 md:mt-3 lg:top-80 lg:mt-6 xl:mt-14 z-10 text-kz-grey bg-kz-purp-2"
               />
               <div className="absolute z-10 left-3/4 top-56 mt-3 md:mt-5 md:ml-10 lg:mt-32 xl:mt-40">
                 <Image
@@ -40,10 +40,10 @@ const LandingPage: NextPage<BlogProps> = ({ blogs }) => {
               height={32}
               src="/shapes.svg"
               alt="moon and shapes"
-              className="absolute w-auto h-auto z-0 top-60 mt-5 left-12 md:mt-8 lg:mt-36 xl:mt-44"
+              className="absolute top-64 mt-2 w-10 h-10 z-0 left-12 md:mt-5 md:h-12 md:w-12 lg:top-80 lg:mt-16 xl:w-16 xl:h-16 xl:mt-24"
             />
           </div>
-          <div className="relative flex flex-col w-screen top-60 md:top-72">
+          <div className="relative flex flex-col w-screen top-44 md:top-60 lg:top-72">
             <h2 className="relative text-left ml-10 text-2xl text-white font-semibold md:text-left md:text-3xl md:ml-20 lg:ml-12">
               Trending Topics
             </h2>
