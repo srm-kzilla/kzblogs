@@ -1,32 +1,37 @@
+import Image from "next/image";
+import Link from "next/link";
+
 export interface BlogType {
+  userId: number;
   id: number;
   title: string;
-  img: string;
   body: string;
+}
+
+export interface BlogProps {
+  blogs: BlogType[];
 }
 
 const BlogCard = ({ body, title }: BlogType) => {
   return (
     <>
-      <div className="flex flex-col w-5/6 h-[30rem] m-5 p-2 bg-slate-950 shadow-card-shadow hover:shadow-box-shadow rounded-3xl md:w-96 transform transition duration-500 hover:scale-105">
-        <img
-          className="w-auto h-1/2 p-2 rounded-3xl"
+      <div className="flex flex-col p-1 m-5 rounded-lg w-64 h-[27rem] mb-8 md:w-80 lg:w-80 bg-gradient-to-b from-kz-dull-purple from-50% to-black to-90% shadow-card-shadow hover:shadow-box-shadow transform transition duration-500 hover:scale-105">
+        <Image
+          className="w-auto h-auto p-2 rounded-lg"
           src="/tempCardImg.jpg"
-          alt=""
+          width={240}
+          height={120}
+          alt="Blog Img"
         />
-        <div>
-          <h5 className="p-1 mt-5 text-xl text-center font-semibold text-white sm:text-xl">
+        <div className="px-1">
+          <h5 className="text-lg text-left ml-1 tracking-tight font-semibold text-white md:text-xl">
             {title}
           </h5>
-          <p className="px-2 mt-3 font-light text-xs text-white">
-            {body}
-          </p>
-          <div className="mt-10 mb-5 text-center">
-            <a href="#">
-              <button className="bg-black border rounded-full text-white text-xs px-2 py-1  ">
-                Read More
-              </button>
-            </a>
+          <p className="font-light text-xs p-1 text-white">{body}</p>
+          <div className="absolute bottom-5 right-5">
+            <Link href={"/"}>
+              <button className="text-white text-xs">Read More...</button>
+            </Link>
           </div>
         </div>
       </div>
