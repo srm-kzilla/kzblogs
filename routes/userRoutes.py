@@ -48,8 +48,22 @@ async def login(data: UserSchema) -> Response:
 @router.get("/details/{id}")
 async def details(req: Request, id: str):
     try:
-        print(jwtHandler.decodeJWT(req.headers.get("authorization")))
+        if not req.headers.get("authorization"):
+            return Response(
+                dumps({"status": False, "message": "Missing Authorization header"}),
+                status_code=403,
+            )
+        jwtData: dict = jwtHandler.decodeJWT(
+            req.headers.get("authorization", "").encode("utf-8")
+        )
+        if jwtData["id"] != id:
+            return Response(
+                dumps({"status": False, "message": "Unauthorized"}),
+                status_code=403,
+            )
+
         output: dict = db.get_user(id)
+        output.pop("password", None)
         return Response(
             dumps(output),
             status_code=200 if output.get("status", True) else 404,
