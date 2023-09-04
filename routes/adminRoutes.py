@@ -1,18 +1,15 @@
 from fastapi import Response, Request, APIRouter as Router
 from json import dumps
-from db import database
-from fastapi import Depends
 
 from helpers.schema import AddBlogSchema, UpdateBlogSchema, UpdateStatusSchema
 
 router = Router()
-db = database.MongoDbConnection()
 
 
 @router.post("/add/blog")
 async def add_blog(req: Request, data: AddBlogSchema) -> Response:
     try:
-        output: str = db.add_blog(data)
+        output: str = req.db.add_blog(data)
         return Response(
             dumps(
                 {"status": True, "message": "Blog added successfully!", "id": output}
@@ -32,7 +29,7 @@ async def add_blog(req: Request, data: AddBlogSchema) -> Response:
 @router.delete("/delete/blog/{id}")
 async def delete_blog(req: Request, id: str) -> Response:
     try:
-        output: dict = db.delete_blog(id)
+        output: dict = req.db.delete_blog(id)
         return Response(
             dumps(output),
             status_code=200 if output["status"] else 404,
@@ -50,7 +47,7 @@ async def delete_blog(req: Request, id: str) -> Response:
 @router.put("/update/blog")
 async def update_blog(req: Request, data: UpdateBlogSchema) -> Response:
     try:
-        output: dict = db.update_blog(str(data.id), data.dict())
+        output: dict = req.db.update_blog(str(data.id), data.dict())
         return Response(
             dumps(output),
             status_code=200 if output["status"] else 404,
@@ -70,7 +67,7 @@ async def get_all(
     req: Request, showall: bool = True, page: int = 0, count: int = 0
 ) -> Response:
     try:
-        results: list = db.get_blogs(None, show_all=showall)
+        results: list = req.db.get_blogs(None, show_all=showall)
         count = count if count else len(results)
         output: dict = {
             "page": page,
@@ -96,9 +93,9 @@ async def update_status(
     req: Request, id: str, blog_publish_status: UpdateStatusSchema
 ) -> Response:
     try:
-        blog = db.get_blog_by_id(str(id))
+        blog = req.db.get_blog_by_id(str(id))
         blog["blog_publish_status"] = blog_publish_status
-        output: dict = db.update_blog(blog["id"], blog)
+        output: dict = req.db.update_blog(blog["id"], blog)
         output["publish_status"] = blog["blog_publish_status"]
         return Response(
             dumps(output),
