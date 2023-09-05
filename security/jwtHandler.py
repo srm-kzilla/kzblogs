@@ -9,7 +9,7 @@ from helpers.constants import (
 
 def signJWT(user: dict) -> Dict[str, str]:
     payload = {
-        "user_id": user["id"],
+        "user_id": str(user.get("id", user["_id"])),
         "is_admin": user["is_admin"],
         "expires": time.time() + 2592000,
     }

@@ -22,7 +22,7 @@ class BlogDB:
             del filter["blog_publish_status"]
         if not query:
             del filter["slug"]
-            result: list = self.blogs.find(filter)
+            result: list = list(self.blogs.find(filter))
             for i in range(len(result)):
                 result[i]["id"] = str(result[i].pop("_id"))
             return result

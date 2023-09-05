@@ -1,8 +1,5 @@
 import logging
-from typing import Callable, Final
-
-from fastapi import Request, Response
-from fastapi.routing import APIRoute
+from typing import Final
 
 from pymongo import MongoClient, database
 
@@ -30,24 +27,3 @@ class MongoDbConnection:
 
     def disconnect(self):
         self.client.close()
-
-
-class CustomRequest(Request):
-    def __init__(self, db: MongoDbConnection, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.db = db
-
-
-class CustomRouter(APIRoute):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.db = MongoDbConnection()
-
-    def get_route_handler(self) -> Callable:
-        original_route_handler = super().get_route_handler()
-
-        async def custom_route_handler(request: Request) -> Response:
-            request = CustomRequest(self.db, request.scope, request.receive)
-            return await original_route_handler(request)
-
-        return custom_route_handler

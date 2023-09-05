@@ -1,18 +1,18 @@
 from fastapi import APIRouter as Router, Response, Request
-from db import database
+from db.database import MongoDbConnection
 from json import dumps
-from security import bcryptHandler, jwtHandler
+from security import jwtHandler
 
 from helpers.schema import AddUserSchema, UpdateUserSchema, UserSchema
 
 router = Router()
-db = database.MongoDbConnection()
+db = MongoDbConnection()
 
 
 @router.post("/add")
 async def add_user(req: Request, data: AddUserSchema) -> Response:
     try:
-        output: dict = db.add_user(data)
+        output: dict = db.users.add_user(data)
         return Response(
             dumps(output),
             status_code=200 if output["status"] else 404,
@@ -30,7 +30,7 @@ async def add_user(req: Request, data: AddUserSchema) -> Response:
 @router.post("/login")
 async def login(data: UserSchema) -> Response:
     try:
-        output: dict = db.login(data)
+        output: dict = db.users.login(data)
         return Response(
             dumps(output),
             status_code=200 if output["status"] else 404,
@@ -56,13 +56,13 @@ async def details(req: Request, id: str):
         jwtData: dict = jwtHandler.decodeJWT(
             req.headers.get("authorization", "").encode("utf-8")
         )
-        if jwtData["id"] != id:
+        if jwtData["user_id"] != id:
             return Response(
                 dumps({"status": False, "message": "Unauthorized"}),
                 status_code=403,
             )
 
-        output: dict = db.get_user(id)
+        output: dict = db.users.get_user(id)
         output.pop("password", None)
         return Response(
             dumps(output),
