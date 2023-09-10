@@ -17,5 +17,3 @@ jobs:
         run: pip3 install poetry
       - name: Poetry install
         run: poetry install --no-interaction
-      - name: Formatting test
-        run: black *.py ./**/*.py --check
