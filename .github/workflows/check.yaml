@@ -16,7 +16,7 @@ jobs:
       - name: Installing poetry
         run: pip3 install poetry
       - name: Env do not create 
-        run: poetry config virtualenvs.create false
+        run: poetry shell -n
       - name: Poetry install
         run: poetry install --no-interaction --no-ansi --no-root
       - name: Formatting test
