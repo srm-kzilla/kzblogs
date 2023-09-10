@@ -15,9 +15,7 @@ jobs:
           ENVIRONMENT: "test"
       - name: Installing poetry
         run: pip3 install poetry
-      - name: Env do not create 
-        run: poetry shell -n
       - name: Poetry install
-        run: poetry install --no-interaction --no-ansi --no-root
+        run: poetry install --no-interaction
       - name: Formatting test
         run: black *.py ./**/*.py --check
