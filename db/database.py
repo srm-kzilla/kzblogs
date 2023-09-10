@@ -27,7 +27,7 @@ class MongoDbConnection:
 
         self.uri = CONST_MONGODB_URI
         self.db: Database
-        self.client: MongoClient
+        self.client: MongoClient(host=self.uri, connect=True)
 
         self.client = MongoClient(self.uri)
         self.db = database.Database(self.client, "kzblogs")
