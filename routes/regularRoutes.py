@@ -89,3 +89,39 @@ async def like_article(req: Request, slug: str) -> Response:
             status_code=500,
             media_type="application/json",
         )
+
+
+@router.get("/trending")
+async def trending_articles(req: Request) -> Response:
+    try:
+        results: list = db.blogs.get_blogs()
+        output: dict = {
+            "results": sorted(results, key=lambda x: len(x["likes"]), reverse=True)[:5]
+        }
+        return Response(dumps(output), status_code=200, media_type="application/json")
+    except Exception as e:
+        print(e)
+        return Response(
+            dumps({"status": False, "message": "Oops! something went wrong"}),
+            status_code=500,
+            media_type="application/json",
+        )
+
+
+@router.get("/new")
+async def newBlogs(req: Request):
+    try:
+        results: list = db.blogs.get_blogs()
+        output: dict = {
+            "results": sorted(results, key=lambda x: x["date_published"], reverse=True)[
+                :5
+            ]
+        }
+        return Response(dumps(output), status_code=200, media_type="application/json")
+    except Exception as e:
+        print(e)
+        return Response(
+            dumps({"status": False, "message": "Oops! something went wrong"}),
+            status_code=500,
+            media_type="application/json",
+        )
