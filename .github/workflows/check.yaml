@@ -13,7 +13,7 @@ jobs:
         run: echo ${{ secrets.ENVIRONMENT }}
         env: 
           ENVIRONMENT: "test"
-      - name: Installing test dependencies
-        run: pip3 install -r requirements.txt; pip3 install -r requirements_test.txt
-      - name: Formatting test
-        run: black *.py ./**/*.py --check
+      - name: Installing poetry
+        run: pip3 install poetry
+      - name: Poetry install
+        run: poetry install --no-interaction
