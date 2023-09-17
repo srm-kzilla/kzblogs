@@ -6,13 +6,14 @@ from slugify import slugify
 
 from pymongo import MongoClient, database
 from pymongo.database import Database
-
+import pymongo
+import certifi
 from helpers.constants import CONST_DB_SETTINGS
 from helpers.schema import BlogSchema, UpdateBlogSchema
 
 logger = logging.getLogger(__name__)
 
-
+ca=certifi.where()
 CONST_MONGODB_URI: Final = CONST_DB_SETTINGS.get("MONGO_DB_URI")
 
 if CONST_MONGODB_URI is None:
@@ -26,11 +27,11 @@ class MongoDbConnection:
         """Create the MongoDB connection."""
 
         self.uri = CONST_MONGODB_URI
-        self.db: Database
-        self.client: MongoClient(host=self.uri, connect=True)
+        self.db = Database
+        self.client= MongoClient(host=self.uri, connect=True)
 
-        self.client = MongoClient(self.uri)
-        self.db = database.Database(self.client, "kzblogs")
+        self.client = pymongo.MongoClient(self.uri, tlsCAFile=certifi.where())
+        self.db = database.Database(self.client, "Kzblogs")
 
         logger.info("MongoDB Connected!")
 
