@@ -1,7 +1,13 @@
 import Image from "next/image";
+import BlogCard from "./components/BlogCard";
 
 export default function Home() {
   return (
-    <div className="text-5xl text-kz-highlightl font-extrabold">KZBlogs</div>
+    <div>
+      <h1 className="">KZBlogs</h1>
+      <div>
+        <BlogCard />
+      </div>
+    </div>
   );
 }
