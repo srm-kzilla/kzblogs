@@ -7,7 +7,7 @@ import {
 
 const BlogCard = () => {
   return (
-    <div className="p-3 bg-kz-lightcard text-kz-secondary rounded-lg w-fit h-fit m-2">
+    <div className="p-3 bg-kz-lightcard text-kz-secondary rounded-lg w-full h-fit">
       <div className="flex flex-col md:flex-row justify-between gap-3">
         <div className="flex flex-row align-middle gap-3">
           <UserCircleIcon
