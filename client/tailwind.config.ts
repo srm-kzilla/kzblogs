@@ -8,6 +8,9 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      fontFamily:{
+        main:"Cal Sans",
+      },
       colors:{
         kz:{
           primary:"#141414",
