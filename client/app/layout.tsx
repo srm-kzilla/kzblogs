@@ -14,7 +14,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="font-main bg-kz-primary">{children}</body>
+      <body className="font-body bg-kz-primary">{children}</body>
     </html>
   );
 }

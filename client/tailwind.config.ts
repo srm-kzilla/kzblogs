@@ -9,7 +9,7 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily:{
-        main:"Cal Sans",
+        body:["Cal Sans","sans"],
       },
       colors:{
         kz:{
