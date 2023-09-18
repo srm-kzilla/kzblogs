@@ -8,6 +8,16 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      colors:{
+        kz:{
+          primary:"#141414",
+          darkcard:"#1D1C1C",
+          lightcard:"#282727",
+          highlightl:"#30D5C8",
+          secondary:"#D9D9D9",
+          highlightd:"#0A427D",
+        }
+      }
     },
   },
   plugins: [],
