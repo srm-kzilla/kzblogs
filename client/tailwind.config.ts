@@ -11,6 +11,9 @@ const config: Config = {
       fontFamily:{
         body:["Cal Sans","sans-serif"],
       },
+      boxShadow:{
+        box:"0px 4px 88px -9px #000",
+      },
       colors:{
         kz:{
           primary:"#141414",

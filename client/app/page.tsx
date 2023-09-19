@@ -1,7 +1,12 @@
 import Image from "next/image";
+import Navbar from "./components/Navbar";
 
 export default function Home() {
   return (
-    <div className="text-5xl text-kz-highlightl font-extrabold">KZBlogs</div>
+    <div className="">
+      <div>
+        <Navbar />
+      </div>
+    </div>
   );
 }
