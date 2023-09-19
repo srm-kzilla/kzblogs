@@ -4,8 +4,14 @@ import {
   MessageSquare,
   UserCircleIcon,
 } from "lucide-react";
+import { Blog } from "../types";
 
-const BlogCard = () => {
+interface BlogCardProps {
+  blog: Blog;
+}
+
+const BlogCard = ({ blog }: BlogCardProps) => {
+  const { id, title, author, content, likes, last_edited, comments } = blog;
   return (
     <div className="p-3 bg-kz-lightcard text-kz-secondary rounded-lg w-full h-fit">
       <div className="flex flex-col md:flex-row justify-between gap-3">
@@ -16,28 +22,24 @@ const BlogCard = () => {
             height={32}
           />
           <div className="flex flex-col">
-            <p className="text-base font-sans">Taylor Swift</p>
-            <p className="text-xs font-extralight font-sans">Sep 13, 2023</p>
+            <p className="text-base font-sans">{author}</p>
+            <p className="text-xs font-extralight font-sans">{last_edited}</p>
           </div>
         </div>
         <div className="md:w-[60%]">
-          <h1 className="text-lg md:text-right md:text-3xl md:ml-9">
-            Why the Eras tour is not coming to India?
-          </h1>
+          <h1 className="text-lg md:text-right md:text-3xl md:ml-9">{title}</h1>
         </div>
       </div>
-      <p className="font-sans text-xs font-light mt-3 md:text-lg">
-        We are never getting back together.
-      </p>
+      <p className="font-sans text-xs font-light mt-3 md:text-lg">{content}</p>
       <div className="font-sans relative flex flex-row justify-between mt-2 text-xs font-extralight items-baseline">
         <div className="flex flex-row gap-2 items-center">
           <button className="flex flex-row gap-1 items-center">
             <HeartIcon width={14} />
-            <p>1331</p>
+            <p>{likes}</p>
           </button>
           <button className="flex flex-row gap-1 items-center">
             <MessageSquare width={14} />
-            <p>13</p>
+            <p>{comments?.length}</p>
           </button>
         </div>
         <button className="flex flex-row gap-1">
