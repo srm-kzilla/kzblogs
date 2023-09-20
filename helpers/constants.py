@@ -3,12 +3,14 @@ import os
 
 load_dotenv()
 
+
 class DB_SETTINGS:
     MONGODB_URI = os.getenv("MONGODB_URI")
     DB_NAME = os.getenv("DB_NAME")
     BLOGS = "blogs"
     USERS = "users"
     COMMENTS = "comments"
+
 
 class JWT_SETTINGS:
     SECRET = os.getenv("JWT_SECRET")
