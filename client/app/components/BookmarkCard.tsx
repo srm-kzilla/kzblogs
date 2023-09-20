@@ -44,7 +44,7 @@ const BookmarkCard = ({ blogs }: BookmarkCardProps) => {
             )}
           </div>
           <div className="text-kz-primary font-sans text-xs flex justify-center items-center">
-            <button className="bg-kz-secondary px-3 py-1 rounded-3xl">
+            <button className="bg-kz-secondary mt-1 px-3 py-1 rounded-3xl">
               See All
             </button>
           </div>
