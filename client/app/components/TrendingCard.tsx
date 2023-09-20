@@ -12,7 +12,7 @@ const TrendingCard = ({ blogs }: TrendingCardProps) => {
   return (
     <div className="bg-kz-darkcard p-4 w-full h-fit text-kz-secondary rounded-xl">
         <div>
-          <h1 className="text-2xl">Trendings</h1>
+          <h1 className="text-2xl">Trending</h1>
           <div className="flex flex-col mt-3">
             {blogs.map(({ publish_status, id, name, author }) =>
               publish_status === "trending" ? (
