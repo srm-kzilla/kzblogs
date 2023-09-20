@@ -13,7 +13,7 @@ interface BlogCardProps {
 const BlogCard = ({ blog }: BlogCardProps) => {
   const { id, title, author, content, likes, last_edited, comments } = blog;
   return (
-    <div className="p-3 bg-kz-lightcard text-kz-secondary rounded-lg w-full h-fit">
+    <div className="p-3 bg-kz-lightcard text-kz-secondary rounded-2xl w-full h-fit">
       <div className="flex flex-col md:flex-row justify-between gap-3">
         <div className="flex flex-row align-middle gap-3">
           <UserCircleIcon
@@ -27,7 +27,7 @@ const BlogCard = ({ blog }: BlogCardProps) => {
           </div>
         </div>
         <div className="md:w-[60%]">
-          <h1 className="text-lg md:text-right md:text-3xl md:ml-9">{title}</h1>
+          <h1 className="text-lg md:text-right md:text-2xl md:ml-9">{title}</h1>
         </div>
       </div>
       <p className="font-sans text-xs font-light mt-3 md:text-lg">{content}</p>
