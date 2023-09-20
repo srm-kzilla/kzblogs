@@ -10,6 +10,7 @@ const config: Config = {
     extend: {
       fontFamily:{
         body:["Cal Sans","sans-serif"],
+        breeSerif:["Bree Serif","serif"],
       },
       colors:{
         kz:{
