@@ -5,10 +5,10 @@ import { Blog } from "./types";
 
 export default function Home() {
   return (
-    <div className="text-5xl text-kz-highlightl font-extrabold">
+    <div className="">
       KZBlogs
       {blogData.map((blogs: Blog) => (
-        <div>
+        <div className="w-1/4 m-3">
           <AuthorCard blog={blogs} />
         </div>
       ))}
