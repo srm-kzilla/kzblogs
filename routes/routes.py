@@ -8,8 +8,11 @@ database = Database()
 
 
 @router.get("/{id}")
-async def get_blog(request: Request, id: Union[str, None] = None, page: int = 0, count: int = 0):
-    if id == "all": id = None
+async def get_blog(
+    request: Request, id: Union[str, None] = None, page: int = 0, count: int = 0
+):
+    if id == "all":
+        id = None
     result: Union[dict, list] = database.blogs.get_blog(id)
     print(result)
     if isinstance(result, dict):
