@@ -7,15 +7,15 @@ interface TrendingCardProps {
 }
 
 const TrendingCard = ({ blogs }: TrendingCardProps) => {
-  const trendingBlogs = blogs.filter((blog) => blog.publish_status === "trending");
+  const trendingBlogs = blogs.filter((blog) => blog.publishStatus === "trending");
 
   return (
     <div className="bg-kz-darkcard p-4 w-full h-fit text-kz-secondary rounded-xl">
         <div>
           <h1 className="text-2xl">Trending</h1>
           <div className="flex flex-col mt-3">
-            {blogs.map(({ publish_status, id, name, author }) =>
-              publish_status === "trending" ? (
+            {blogs.map(({ publishStatus, id, name, author }) =>
+              publishStatus === "trending" ? (
                 <div key={id} className="flex justify-between items-end my-3">
                   <div>
                     <h1>{name}</h1>
