@@ -2,6 +2,8 @@
 name = "kzblogs"
 version = "1.0.0"
 description = "Blogs for SRMKZILLA"
+authors = ["Your Name <you@example.com>"]
+license = "n"
 readme = "README.md"
 
 [tool.poetry.dependencies]
