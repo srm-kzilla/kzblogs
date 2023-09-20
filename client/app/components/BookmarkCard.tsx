@@ -38,7 +38,8 @@ const BookmarkCard = ({ blogs }: BookmarkCardProps) => {
                   <div className="mx-2">
                     <h1>{name}</h1>
                     <p className="text-xs font-extralight font-sans">
-                      {author}
+                      subtitle
+                      {/* subtitle data source not set yet */}
                     </p>
                   </div>
                 </div>
