@@ -54,14 +54,14 @@ const Navbar = () => {
       >
         <Link
           href="/write"
-          className="flex flex-row gap-3 items-center lg:px-3 lg:py-1 rounded-lg lg:bg-[#3AA39B] text-kz-secondary hover:text-[#3AA39B] lg:hover:bg-kz-secondary"
+          className="flex flex-row gap-3 items-center lg:px-3 lg:py-1 rounded-lg lg:bg-kz-button text-kz-secondary hover:text-kz-button lg:hover:bg-kz-secondary"
         >
           <PenSquare className="hidden lg:visible" />
           Write
         </Link>
         <Link
           href="/signin"
-          className="lg:px-3 lg:py-1 rounded-lg lg:bg-[#3AA39B] text-kz-secondary hover:text-[#3AA39B] lg:hover:bg-kz-secondary"
+          className="lg:px-3 lg:py-1 rounded-lg lg:bg-kz-button text-kz-secondary hover:text-kz-button lg:hover:bg-kz-secondary"
         >
           Sign In
         </Link>

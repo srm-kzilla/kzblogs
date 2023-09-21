@@ -22,6 +22,7 @@ const config: Config = {
           highlightl:"#30D5C8",
           secondary:"#D9D9D9",
           highlightd:"#0A427D",
+          button:"#3AA39B",
         }
       }
     },
