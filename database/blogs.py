@@ -28,7 +28,11 @@ class Blogs:
 
     def create_blog(self, blog: dict):
         output = self.blogs.insert_one(blog)
-        return {"status": True, "message": "Blog created successfully", "id": str(output.inserted_id)}
+        return {
+            "status": True,
+            "message": "Blog created successfully",
+            "id": str(output.inserted_id),
+        }
 
     def delete_blog(self, id: str):
         if not (output := self.blog_exists(id))["status"]:
