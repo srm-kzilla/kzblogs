@@ -1,7 +1,10 @@
-import Image from "next/image";
+import DraftCard from "@/components/DraftCard";
+import blogData from "@/mock-data/data";
 
 export default function Home() {
   return (
-    <div className="text-5xl text-kz-highlightl font-extrabold">KZBlogs</div>
+    <div className="w-[15vw] m-6">
+      <DraftCard blogs={blogData} />
+    </div>
   );
 }
