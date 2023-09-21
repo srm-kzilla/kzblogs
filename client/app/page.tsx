@@ -1,5 +1,4 @@
-import Image from "next/image";
-import TrendingCard from "./components/TrendingCard";
+import TrendingCard from "@/app/components/TrendingCard";
 import blogData from "@/mock-data/data";
 
 export default function Home() {

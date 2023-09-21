@@ -1,6 +1,5 @@
 import React from "react";
-import { PenLine, PlusCircleIcon } from "lucide-react";
-import { Blog } from "../types";
+import { Blog } from "@/app/types";
 
 interface TrendingCardProps {
   blogs: Blog[];
