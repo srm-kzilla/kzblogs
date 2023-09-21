@@ -1,5 +1,6 @@
 import Image from "next/image";
 import AuthorCard from "@/components/AuthorCard";
+import DraftCard from "@/components/DraftCard";
 import blogData from "@/mock-data/data";
 import { Blog } from "@/types";
 
@@ -12,6 +13,8 @@ export default function Home() {
           <AuthorCard {...blogs} />
         </div>
       ))}
+    <div className="w-[15vw] m-6">
+      <DraftCard blogs={blogData} />
     </div>
   );
 }
