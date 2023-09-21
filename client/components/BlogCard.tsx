@@ -1,17 +1,20 @@
+import { Blog } from "@/types";
 import {
   Bookmark,
   HeartIcon,
   MessageSquare,
   UserCircleIcon,
 } from "lucide-react";
-import { Blog } from "../types";
 
-interface BlogCardProps {
-  blog: Blog;
-}
-
-const BlogCard = ({ blog }: BlogCardProps) => {
-  const { id, title, author, content, likes, last_edited, comments } = blog;
+const BlogCard = ({
+  id,
+  title,
+  author,
+  content,
+  likes,
+  last_edited,
+  comments,
+}: Blog) => {
   return (
     <div className="p-3 bg-kz-lightcard text-kz-secondary rounded-2xl w-full h-fit">
       <div className="flex flex-col md:flex-row justify-between gap-3">
@@ -39,7 +42,7 @@ const BlogCard = ({ blog }: BlogCardProps) => {
           </button>
           <button className="flex flex-row gap-1 items-center">
             <MessageSquare width={14} />
-            <p>{comments?.length}</p>
+            <p>{comments ? comments.length : 0}</p>
           </button>
         </div>
         <button className="flex flex-row gap-1">

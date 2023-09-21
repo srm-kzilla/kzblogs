@@ -1,4 +1,4 @@
-import { Blog } from "@/app/types";
+import { Blog } from "@/types";
 
 const blogData :Blog[] = [
     {
@@ -27,16 +27,16 @@ const blogData :Blog[] = [
       author: "Taylor Swift",
       likes: 150,
       content: "We are never getting back together.",
-      comments: [
-        {
-          author_id: "1234",
-          content: "Great start!",
-        },
-        {
-          author_id: "5678",
-          content: "Looking forward to more.",
-        },
-      ],
+      // comments: [
+      //   {
+      //     author_id: "1234",
+      //     content: "Great start!",
+      //   },
+      //   {
+      //     author_id: "5678",
+      //     content: "Looking forward to more.",
+      //   },
+      // ],
     },
     {
       id: 4,

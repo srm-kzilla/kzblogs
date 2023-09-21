@@ -1,16 +1,15 @@
-import Image from "next/image";
-import BlogCard from "./components/BlogCard";
+import BlogCard from "@/components/BlogCard";
 import blogData from "@/mock-data/data";
-import { Blog } from "./types";
+import { Blog } from "@/types";
 
 export default function Home() {
   return (
     <div>
-      <h1 className="">KZBlogs</h1>
+      <h1>KZBlogs</h1>
       <div>
         {blogData.map((blogs: Blog) => (
           <div key={blogs.id} className="w-[40vw] m-3">
-            {blogs.publish_status === "published" && <BlogCard blog={blogs} />}
+            {blogs.publish_status === "published" && <BlogCard {...blogs} />}
           </div>
         ))}
       </div>
