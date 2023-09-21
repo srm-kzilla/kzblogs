@@ -27,16 +27,16 @@ const blogData :Blog[] = [
       author: "Taylor Swift",
       likes: 150,
       content: "We are never getting back together.",
-      comments: [
-        {
-          authorId: "1234",
-          content: "Great start!",
-        },
-        {
-          authorId: "5678",
-          content: "Looking forward to more.",
-        },
-      ],
+      // comments: [
+      //   {
+      //     authorId: "1234",
+      //     content: "Great start!",
+      //   },
+      //   {
+      //     authorId: "5678",
+      //     content: "Looking forward to more.",
+      //   },
+      // ],
     },
     {
       id: 4,
