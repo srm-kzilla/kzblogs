@@ -12,7 +12,7 @@ const BlogCard = ({
   author,
   content,
   likes,
-  last_edited,
+  lastEdited,
   comments,
 }: Blog) => {
   return (
@@ -26,7 +26,7 @@ const BlogCard = ({
           />
           <div className="flex flex-col">
             <p className="text-base font-sans">{author}</p>
-            <p className="text-xs font-extralight font-sans">{last_edited}</p>
+            <p className="text-xs font-extralight font-sans">{lastEdited}</p>
           </div>
         </div>
         <div className="md:w-[60%]">

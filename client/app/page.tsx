@@ -9,7 +9,7 @@ export default function Home() {
       <div>
         {blogData.map((blogs: Blog) => (
           <div key={blogs.id} className="w-[40vw] m-3">
-            {blogs.publish_status === "published" && <BlogCard {...blogs} />}
+            {blogs.publishStatus === "published" && <BlogCard {...blogs} />}
           </div>
         ))}
       </div>
