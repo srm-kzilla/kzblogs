@@ -3,13 +3,16 @@ import blogData from "@/mock-data/data";
 import { Blog } from "@/types";
 
 export default function Home() {
+  const publishedBlogs = blogData.filter(
+    (blog) => blog.publishStatus === "published"
+  );
   return (
     <div>
       <h1>KZBlogs</h1>
       <div>
-        {blogData.map((blogs: Blog) => (
+        {publishedBlogs.map((blogs: Blog) => (
           <div key={blogs.id} className="w-[40vw] m-3">
-            {blogs.publishStatus === "published" && <BlogCard {...blogs} />}
+            <BlogCard {...blogs} />
           </div>
         ))}
       </div>
