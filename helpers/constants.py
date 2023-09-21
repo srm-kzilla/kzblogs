@@ -1,8 +1,17 @@
+from dotenv import load_dotenv
 import os
 
-from dotenv import load_dotenv
+load_dotenv()
 
-load_dotenv(".env")
 
-CONST_DB_SETTINGS = {"MONGO_DB_URI": os.environ.get("MONGO_DB_URI")}
-CONST_ENVIRONMENT = os.environ.get("ENVIRONMENT")
+class DB_SETTINGS:
+    MONGODB_URI = os.getenv("MONGODB_URI")
+    DB_NAME = os.getenv("DB_NAME") or "kzblogs"
+    BLOGS = "blogs"
+    USERS = "users"
+    COMMENTS = "comments"
+
+
+class JWT_SETTINGS:
+    SECRET = os.getenv("JWT_SECRET")
+    ALGORITHM = os.getenv("JWT_ALGORITHM")
