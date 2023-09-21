@@ -14,13 +14,6 @@ class Blogs:
         self.comments = self.db[DB_SETTINGS.COMMENTS]
         self.users = self.db[DB_SETTINGS.USERS]
 
-    def blog_exists(self, blog_id: str):
-        return (
-            {"status": False, "message": "Blog does not exist"}
-            if self.blogs.count_documents({"_id": ObjectId(blog_id)}) == 0
-            else {"status": True}
-        )
-
     def get_blog(self, blog_id: Union[str, None] = None) -> Union[dict, list]:
         if blog_id and self.blog_exists(blog_id)["status"]:
             return dict(self.blogs.find_one({"_id": ObjectId(blog_id)}))
@@ -35,8 +28,8 @@ class Blogs:
         }
 
     def delete_blog(self, id: str):
-        if not (output := self.blog_exists(id))["status"]:
-            return output
+        if self.blogs.count_documents({"_id": ObjectId(id)}) == 0:
+            return {"status": False, "message": "Blog does not exist"}
         self.blogs.delete_one({"_id": ObjectId(id)})
         return {"status": True, "message": "Blog deleted successfully"}
 
@@ -53,9 +46,12 @@ class Blogs:
         return {"status": True, "message": "Like added successfully"}
 
     def add_comment(self, id: str, user_id: str, comment: str):
-        if not (output := self.blog_exists(id))["status"]:
-            return output
+        if self.blogs.count_documents({"_id": ObjectId(id)}) == 0:
+            return {"status": False, "message": "Blog does not exist"}
         self.comments.insert_one(
             {"blog_id": id, "user_id": user_id, "content": comment}
         )
         return {"status": True, "message": "Comment added successfully"}
+    
+    def get_comments(self, blog_id):
+        return list(self.comments.find({"blog_id": blog_id}))
