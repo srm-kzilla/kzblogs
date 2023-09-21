@@ -1,11 +1,11 @@
-import { Blog } from "@/app/types";
+import { Blog } from "@/types";
 
 const blogData :Blog[] = [
     {
       id: 1,
       name: "Sample Blog 1",
-      publish_status: "draft",
-      last_edited:"Sep 11, 2023",
+      publishStatus: "draft",
+      lastEdited:"Sep 11, 2023",
       author: "John Doe",
       likes: 100,
       content: "This is the content of Sample Blog 1.",
@@ -13,8 +13,8 @@ const blogData :Blog[] = [
     {
       id: 2,
       name: "Sample Blog 2",
-      publish_status: "draft",
-      last_edited:"Sep 11, 2023",
+      publishStatus: "draft",
+      lastEdited:"Sep 11, 2023",
       author: "Jane Smith",
       likes: 50,
       content: "This is the content of Sample Blog 2.",
@@ -22,8 +22,8 @@ const blogData :Blog[] = [
     {
       id: 3,
       name: "Sample Blog 3",
-      publish_status: "Published",
-      last_edited:"Sep 11, 2023",
+      publishStatus: "Published",
+      lastEdited:"Sep 11, 2023",
       author: "Alice Johnson",
       likes: 200,
       content: "This is the content of Sample Blog 3.",
