@@ -1,12 +1,7 @@
 import { UserCircleIcon, UserPlus } from "lucide-react";
-import { Blog } from "../types";
+import { Blog } from "@/types";
 
-interface BlogCardProps {
-  blog: Blog;
-}
-
-const AuthorCard = ({ blog }: BlogCardProps) => {
-  const { author, last_edited } = blog;
+const AuthorCard = ({ author, lastEdited }: Blog) => {
   return (
     <div className="p-3 bg-kz-lightcard text-kz-secondary rounded-lg w-full h-fit">
       <div className="flex flex-row items-center justify-between gap-3">
@@ -19,7 +14,7 @@ const AuthorCard = ({ blog }: BlogCardProps) => {
           />
           <div className="flex flex-col">
             <p className="text-base font-bold font-sans">{author}</p>
-            <p className="text-xs font-extralight font-sans">{last_edited}</p>
+            <p className="text-xs font-extralight font-sans">{lastEdited}</p>
           </div>
         </div>
         <div>
