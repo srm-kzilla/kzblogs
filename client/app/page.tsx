@@ -1,4 +1,5 @@
 import BlogCard from "@/components/BlogCard";
+import Navbar from "@/components/Navbar";
 import Image from "next/image";
 import AuthorCard from "@/components/AuthorCard";
 import DraftCard from "@/components/DraftCard";
@@ -12,6 +13,7 @@ export default function Home() {
   );
   return (
     <div>
+      <Navbar />
       <h1>KZBlogs</h1>
       <div>
         {publishedBlogs.map((blogs: Blog) => (
