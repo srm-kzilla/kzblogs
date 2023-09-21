@@ -12,7 +12,7 @@ class Users:
         self.users = self.db[DB_SETTINGS.USERS]
         self.blogs = self.db[DB_SETTINGS.BLOGS]
 
-    def get_user(self, user_id: str):        
+    def get_user(self, user_id: str):
         if self.users.count_documents({"_id": ObjectId(user_id)}) == 0:
             return {"status": False, "message": "User does not exist"}
         return dict(self.users.find_one({"_id": user_id}))

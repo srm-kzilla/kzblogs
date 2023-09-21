@@ -52,6 +52,6 @@ class Blogs:
             {"blog_id": id, "user_id": user_id, "content": comment}
         )
         return {"status": True, "message": "Comment added successfully"}
-    
+
     def get_comments(self, blog_id):
         return list(self.comments.find({"blog_id": blog_id}))
