@@ -25,8 +25,9 @@ export default function Home() {
           <AuthorCard {...blogs} />
         </div>
       ))}
-    <div className="w-[15vw] m-6">
-      <DraftCard blogs={blogData} />
+      <div className="w-[15vw] m-6">
+        <DraftCard blogs={blogData} />
+      </div>
     </div>
   );
 }
