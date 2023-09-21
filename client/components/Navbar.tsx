@@ -9,7 +9,7 @@ const Navbar = () => {
   return (
     <div className="shadow-box p-2 font-body flex lg:flex-row flex-col lg:items-center">
       <div className="flex flex-row items-center gap-5">
-        <Image src={"logo.svg"} alt={"logo"} width={32} height={32} />
+        <Image src="logo.svg" alt="logo" width={32} height={32} />
         <h1 className="text-4xl mt-2 font-extrabold bg-gradient-to-r from-kz-highlightd via-kz-highlightl to-kz-secondary bg-clip-text text-transparent">
           KZBlogs
         </h1>
@@ -17,7 +17,7 @@ const Navbar = () => {
       <button
         className="absolute w-10 h-10 right-1 top-6 cursor-pointer lg:hidden"
         type="button"
-        onClick={() => setNavbarOpen(!navbarOpen)}
+        onClick={() => setNavbarOpen((prevState) => !prevState)}
       >
         <Image src="menu.svg" alt="Menu" width={32} height={32} />
       </button>
