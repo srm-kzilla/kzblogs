@@ -14,9 +14,9 @@ class Blogs:
         self.comments = self.db[DB_SETTINGS.COMMENTS]
         self.users = self.db[DB_SETTINGS.USERS]
 
-    def get_blog(self, blog_id: Union[str, None] = None) -> Union[dict, list]:
+    def get_blog(self, blog_id: Union[str, None] = None, show_all = False) -> Union[dict, list]:
         if not blog_id:
-            return list(self.blogs.find())
+            return list(self.blogs.find({"publish_status": True} if not show_all else {}))
         blog = self.blogs.find_one({"_id": ObjectId(blog_id)})
         return (
             dict(blog) if blog else {"status": False, "message": "Blog does not exist"}
