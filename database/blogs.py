@@ -4,6 +4,7 @@ from bson import ObjectId
 from typing import Union
 
 from helpers.constants import DB_SETTINGS
+from helpers.schemas import Comment
 
 
 class Blogs:
@@ -45,12 +46,10 @@ class Blogs:
         self.blogs.update_one({"_id": ObjectId(id)}, {"$push": {"likes": user_id}})
         return {"status": True, "message": "Like added successfully"}
 
-    def add_comment(self, id: str, user_id: str, comment: str):
-        if self.blogs.count_documents({"_id": ObjectId(id)}) == 0:
+    def add_comment(self, comment: Comment):
+        if self.blogs.count_documents({"_id": ObjectId(comment.blog_id)}) == 0:
             return {"status": False, "message": "Blog does not exist"}
-        self.comments.insert_one(
-            {"blog_id": id, "user_id": user_id, "content": comment}
-        )
+        self.comments.insert_one(dict(comment))
         return {"status": True, "message": "Comment added successfully"}
 
     def get_comments(self, blog_id):
