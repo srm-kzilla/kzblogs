@@ -1,4 +1,3 @@
-import React from "react";
 import { PenLine, PlusCircleIcon } from "lucide-react";
 
 interface DraftCardProps {
