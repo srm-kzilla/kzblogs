@@ -1,5 +1,3 @@
-import { Challenge } from "@/types";
-
 interface ChallengesCardProps {
   challenges: Challenge[];
 }

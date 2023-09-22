@@ -1,5 +1,3 @@
-import { Challenge } from "@/types";
-
 const challengeData: Challenge[] = [
   {
     id: 1,

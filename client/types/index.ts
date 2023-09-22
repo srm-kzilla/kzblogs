@@ -23,7 +23,7 @@ type User = {
   googleId: string;
   isAdmin: boolean;
 }
-export interface Challenge {
+type Challenge = {
   id: number;
   name: string;
   ongoingStatus: boolean;
