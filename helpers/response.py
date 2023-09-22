@@ -4,6 +4,7 @@ from json import dumps
 
 class Response(Response):
     """Custom Response class to return JSON data"""
+
     def __init__(
         self,
         content: dict,

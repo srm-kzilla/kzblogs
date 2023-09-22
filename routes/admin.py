@@ -32,3 +32,9 @@ async def add_blog(request: Request, blog: Blog):
 async def update_blog(request: Request, blog: Blog, id: str):
     result: dict = db.blogs.update_blog(id, dict(blog))
     return Response(result, status_code=404 if not result["status"] else 200)
+
+
+@router.delette("/{id}")
+async def delete_blog(request: Request, id: str):
+    result: dict = db.blogs.delete_blog(id)
+    return Response(result, status_code=404 if not result["status"] else 200)
