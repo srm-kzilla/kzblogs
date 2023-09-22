@@ -1,5 +1,5 @@
 import React from "react";
-import { Challenge } from "@/app/types";
+import { Challenge } from "@/types";
 
 interface ChallengesCardProps {
   challenges: Challenge[];
@@ -23,10 +23,9 @@ const ChallengesCard = ({ challenges }: ChallengesCardProps) => {
         </div>
       ) : (
         <div className="bg-kz-darkcard font-breeSerif p-4 w-full h-fit text-kz-secondary rounded-xl">
-          <h1 className="text-2xl text-transparent bg-clip-text bg-gradient-to-tr from-[#0A427D] via-[#3AA39B] via-40% to-[#D9D9D9] to-90%">Ongoing Challenges</h1>
+            <h1 className="text-2xl text-transparent bg-clip-text bg-gradient-to-tr from-kz-highlightd via-kz-highlightl via-40% to-kz-secondary to-90%">Challenges</h1>
           <div className="flex flex-col mt-1">
-            {challenges.map(({ ongoingStatus, id, name, description, endingDate }) =>
-              ongoingStatus === true ? (
+            {challengesBlogs.map(({id, name, description, endingDate }) =>(
                 <div key={id} className="flex items-center justify-left my-3">
                   <div className="mx-2">
                     <h1>{name}</h1>
@@ -38,11 +37,10 @@ const ChallengesCard = ({ challenges }: ChallengesCardProps) => {
                     </p>
                   </div>
                 </div>
-              ) : null
-            )}
+              ))}
           </div>
-          <div className="text-kz-primary font-sans text-sm flex justify-center items-center">
-            <button className="bg-kz-secondary px-4 py-1 rounded-3xl">
+          <div className="text-kz-primary font-sans text-xs flex justify-center items-center">
+            <button className="bg-kz-secondary px-3 py-1 rounded-3xl">
               See All
             </button>
           </div>

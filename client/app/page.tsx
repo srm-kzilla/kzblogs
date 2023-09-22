@@ -1,5 +1,5 @@
-import ChallengesCard from "@/app/components/ChallengesCard";
-import challengeData from "@/mock-data/data";
+import ChallengesCard from "@/components/ChallengesCard";
+import challengeData from "@/mock-data/ChallengeData";
 
 export default function Home() {
   return (
