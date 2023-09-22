@@ -4,7 +4,7 @@ const challengeData: Challenge[] = [
     name: "Sample Challenge 1",
     ongoingStatus: true,
     endingDate: "Sep 31, 2024",
-    description: "This is the discription of Sample Challenge 1.",
+    description: "This is the discription of Sample Challenge 1.sdddddddddddddddddddddddddddddddddddddddddsssssssssssssssssssssssssssssssssssssssssssssssssdddddddddddddddd",
   },
   {
     id: 2,

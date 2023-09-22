@@ -23,13 +23,13 @@ const ChallengesCard = ({ challenges }: ChallengesCardProps) => {
             <h1 className="text-2xl text-transparent bg-clip-text bg-gradient-to-tr from-kz-highlightd via-kz-highlightl via-40% to-kz-secondary to-90%">Challenges</h1>
           <div className="flex flex-col mt-1">
             {challengesBlogs.map(({id, name, description, endingDate }) =>(
-                <div key={id} className="flex items-center justify-left my-3">
-                  <div className="mx-2">
+                <div key={id} className="flex w-full items-center justify-left my-3">
+                  <div className="mx-2 w-full">
                     <h1>{name}</h1>
                     <p className="text-[12px] font-extralight font-sans">
                       {endingDate}
                     </p>
-                    <p className="text-sm font-sans text-ellipsis">
+                    <p className="text-sm w-full font-sans truncate">
                       {description ? description : "No description"}
                     </p>
                   </div>
