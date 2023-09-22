@@ -1,11 +1,9 @@
 import BlogCard from "@/components/BlogCard";
 import Navbar from "@/components/Navbar";
-import Image from "next/image";
 import AuthorCard from "@/components/AuthorCard";
 import DraftCard from "@/components/DraftCard";
 
 import blogData from "@/mock-data/data";
-import { Blog } from "@/types";
 
 export default function Home() {
   const publishedBlogs = blogData.filter(
