@@ -11,6 +11,9 @@ const config: Config = {
       fontFamily:{
         body:["Cal Sans","sans-serif"],
       },
+      boxShadow:{
+        box:"0px 4px 88px -9px #000",
+      },
       colors:{
         kz:{
           primary:"#141414",
@@ -19,6 +22,7 @@ const config: Config = {
           highlightl:"#30D5C8",
           secondary:"#D9D9D9",
           highlightd:"#0A427D",
+          button:"#3AA39B",
         }
       }
     },
