@@ -13,10 +13,10 @@ const TrendingCard = ({ blogs }: TrendingCardProps) => {
       <div>
         <h1 className="text-2xl">Trending</h1>
         <div className="flex flex-col mt-3">
-          {trendingBlogs.map(({ publishStatus, id, name, author }) => (
+          {trendingBlogs.map(({ publishStatus, id, title, author }) => (
             <div key={id} className="flex justify-between items-end my-3">
               <div>
-                <h1>{name}</h1>
+                <h1>{title}</h1>
                 <p className="text-xs font-extralight font-sans">
                   {author}
                 </p>

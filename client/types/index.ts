@@ -1,11 +1,11 @@
 export interface Comments {
-  author_id: string;
+  authorId: string;
   content: string;
 }
 
 export interface Blog {
   id: number;
-  name: string;
+  title: string;
   publishStatus: string;
   lastEdited: string;
   author: string;
