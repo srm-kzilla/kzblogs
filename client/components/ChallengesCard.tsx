@@ -1,4 +1,3 @@
-import React from "react";
 import { Challenge } from "@/types";
 
 interface ChallengesCardProps {
