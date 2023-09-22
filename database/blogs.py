@@ -19,16 +19,15 @@ class Blogs:
         self, blog_id: Union[str, None] = None, show_all=False
     ) -> Union[dict, list]:
         if not blog_id:
-            for blog in self.blogs.find({"publish_status": True} if not show_all else {}):
+            for blog in self.blogs.find(
+                {"publish_status": True} if not show_all else {}
+            ):
                 blog["_id"] = str(blog["_id"])
         blog = self.blogs.find_one({"_id": ObjectId(blog_id)})
         if blog:
             blog["_id"] = str(blog["_id"])
             return blog
-        return {
-            "status": False,
-            "message": "Blog does not exist"
-        }
+        return {"status": False, "message": "Blog does not exist"}
 
     def create_blog(self, blog: dict):
         output = self.blogs.insert_one(blog)
