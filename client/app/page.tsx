@@ -1,4 +1,4 @@
-import TrendingCard from "@/app/components/TrendingCard";
+import TrendingCard from "@/components/TrendingCard";
 import blogData from "@/mock-data/data";
 
 export default function Home() {
