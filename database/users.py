@@ -18,23 +18,41 @@ class Users:
         return dict(self.users.find_one({"_id": user_id}))
 
     def create_user(self, user: dict):
-        self.users.insert_one(user)
-        return {"status": True, "message": "User created successfully"}
+        output = self.users.insert_one(user)
+        return {
+            "status": True,
+            "message": "User added successfully",
+            "user_id": output.inserted_id,
+        }
 
-    def delete_user(self, id: str):
-        if self.users.count_documents({"_id": ObjectId(id)}):
+    def delete_user(self, user_id: str):
+        output = self.users.delete_one({"_id": ObjectId(user_id)})
+        if output.deleted_count == 0:
             return {"status": False, "message": "User does not exist"}
-        self.users.delete_one({"_id": id})
         return {"status": True, "message": "User deleted successfully"}
 
-    def add_bookmark(self, blog_id: str, user_id: str):
-        if self.blogs.count_documents({"_id": ObjectId(blog_id)}) == 0:
-            return {"status": False, "message": "Blog does not exist"}
-        self.users.update_one({"_id": user_id}, {"$push": {"bookmarks": blog_id}})
+    def add_bookmarks(self, user_id: str, blog_id: str):
+        output = self.users.update_one(
+            {"_id": ObjectId(user_id)}, {"$push": {"bookmarks": blog_id}}
+        )
+        if output.modified_count == 0:
+            return {"status": False, "message": "User does not exist"}
         return {"status": True, "message": "Bookmark added successfully"}
 
-    def remove_bookmark(self, blog_id: str, user_id: str):
-        if self.blogs.count_documents({"_id": ObjectId(blog_id)}) == 0:
-            return {"status": False, "message": "Blog does not exist"}
-        self.users.update_one({"_id": user_id}, {"$pull": {"bookmarks": blog_id}})
+    def remove_bookmark(self, user_id: str, blog_id: str):
+        output = self.users.update_one(
+            {"_id": ObjectId(user_id)}, {"$pull": {"bookmarks": blog_id}}
+        )
+        if output.modified_count == 0:
+            return {"status": False, "message": "User does not exist"}
         return {"status": True, "message": "Bookmark removed successfully"}
+
+    def get_bookmarks(self, user_id: str):
+        user = self.users.find_one({"_id": ObjectId(user_id)})
+        if not user:
+            return {"status": False, "message": "User does not exist"}
+        bookmarks = user.get("bookmarks", [])
+        bookmarks = list(
+            self.blogs.find({"_id": {"$in": bookmarks}}) if bookmarks else []
+        )
+        return bookmarks
