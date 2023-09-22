@@ -1,14 +1,13 @@
 from fastapi import Response, Request, APIRouter as Router
 from json import dumps
 from database import MongoDBConnection as database
-from routes import admin
 from helpers.schemas import Comment, Like, Bookmark
 
 router = Router()
 db = database()
 
 
-@router.post("/likes/{id}}")
+@router.post("/likes/{id}")
 async def add_like(request: Request, id: str, like: Like):
     return Response(
         dumps(db.blogs.add_like(id=id, user_id=like.user_id)),

@@ -7,7 +7,6 @@ import certifi
 
 
 client = MongoClient(DB_SETTINGS.MONGODB_URI, tlsCAFile=certifi.where())
-ca = certifi.where()
 
 
 class MongoDBConnection:
