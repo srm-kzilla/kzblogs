@@ -3,8 +3,11 @@ from pymongo.database import Database
 from database.blogs import Blogs
 from database.users import Users
 from helpers.constants import DB_SETTINGS
+import certifi
 
-client = MongoClient(DB_SETTINGS.MONGODB_URI)
+
+client = MongoClient(DB_SETTINGS.MONGODB_URI, tlsCAFile=certifi.where())
+ca = certifi.where()
 
 
 class MongoDBConnection:
