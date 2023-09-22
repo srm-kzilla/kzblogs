@@ -1,12 +1,12 @@
-export interface Comments {
-  authorId: string;
+type Comments =  {
+  userId: string;
   content: string;
 }
 
-export interface Blog {
+type Blog = {
   id: number;
   title: string;
-  publishStatus: string;
+  publishStatus: "draft" | "published";
   lastEdited: string;
   author: string;
   likes: number;
@@ -14,7 +14,7 @@ export interface Blog {
   content: string;
 }
 
-export interface User {
+type User = {
   id: number;
   name: string;
   username: string;
