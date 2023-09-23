@@ -1,4 +1,3 @@
-import React from "react";
 import { Blog } from "@/types";
 
 interface TrendingCardProps {
@@ -6,14 +5,14 @@ interface TrendingCardProps {
 }
 
 const TrendingCard = ({ blogs }: TrendingCardProps) => {
-  const trendingBlogs = blogs.filter((blog) => blog.publishStatus === "trending");
+  const trendingBlogs = blogs.filter((blog) => blog.trending === true);
 
   return (
     <div className="bg-kz-darkcard p-4 w-full h-fit text-kz-secondary rounded-xl">
       <div>
-        <h1 className="text-2xl">Trending</h1>
+        <h1 className="text-2xl text-transparent bg-clip-text bg-gradient-to-tr from-kz-highlightd via-kz-highlightl via-40% to-kz-secondary to-90%">Trending</h1>
         <div className="flex flex-col mt-3">
-          {trendingBlogs.map(({ publishStatus, id, title, author }) => (
+          {trendingBlogs.map(({id, title, author }) => (
             <div key={id} className="flex justify-between items-end my-3">
               <div>
                 <h1>{title}</h1>

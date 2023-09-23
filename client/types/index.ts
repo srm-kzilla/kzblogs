@@ -12,6 +12,7 @@ export interface Blog {
   likes: number;
   comments?: Comments[];
   content: string;
+  trending: boolean;
 }
 
 export interface User {
