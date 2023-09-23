@@ -5,7 +5,7 @@ interface TrendingCardProps {
 }
 
 const TrendingCard = ({ blogs }: TrendingCardProps) => {
-  const trendingBlogs = blogs.filter((blog) => blog.trending === true);
+  const trendingBlogs = blogs.filter((blog) => blog.trending);
 
   return (
     <div className="bg-kz-darkcard p-4 w-full h-fit text-kz-secondary rounded-xl">
