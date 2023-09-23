@@ -1,5 +1,4 @@
 import { UserCircleIcon, UserPlus } from "lucide-react";
-import { Blog } from "@/types";
 
 const AuthorCard = ({ author, lastEdited }: Blog) => {
   return (
