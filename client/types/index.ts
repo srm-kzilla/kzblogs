@@ -1,12 +1,12 @@
-export interface Comments {
-  authorId: string;
+type Comments =  {
+  userId: string;
   content: string;
 }
 
-export interface Blog {
+type Blog = {
   id: number;
   title: string;
-  publishStatus: string;
+  publishStatus: "draft" | "published";
   lastEdited: string;
   author: string;
   likes: number;
@@ -15,7 +15,7 @@ export interface Blog {
   trending: boolean;
 }
 
-export interface User {
+type User = {
   id: number;
   name: string;
   username: string;
@@ -23,4 +23,11 @@ export interface User {
   bookmarks: Blog[];
   googleId: string;
   isAdmin: boolean;
+}
+type Challenge = {
+  id: number;
+  name: string;
+  ongoingStatus: boolean;
+  endingDate: string;
+  description: string;
 }

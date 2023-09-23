@@ -1,5 +1,3 @@
-import { Blog } from "@/types";
-
 const blogData :Blog[] = [
     {
       id: 1,
@@ -52,11 +50,11 @@ const blogData :Blog[] = [
       trending: false,
       comments: [
         {
-          authorId: "1234",
+          userId: "1234",
           content: "Great start!",
         },
         {
-          authorId: "5678",
+          userId: "5678",
           content: "Looking forward to more.",
         },
       ],
