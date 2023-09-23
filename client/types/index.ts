@@ -23,3 +23,10 @@ type User = {
   googleId: string;
   isAdmin: boolean;
 }
+type Challenge = {
+  id: number;
+  name: string;
+  ongoingStatus: boolean;
+  endingDate: string;
+  description: string;
+}
