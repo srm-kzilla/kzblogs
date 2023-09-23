@@ -4,7 +4,6 @@ import AuthorCard from "@/components/AuthorCard";
 import DraftCard from "@/components/DraftCard";
 import ChallengesCard from "@/components/ChallengesCard";
 import blogData from "@/mock-data/data";
-import { Blog } from "@/types";
 import TrendingCard from "@/components/TrendingCard";
 import challengeData from "@/mock-data/ChallengeData";
 

@@ -1,5 +1,3 @@
-import { Blog } from "@/types";
-
 interface TrendingCardProps {
   blogs: Blog[];
 }
