@@ -12,6 +12,7 @@ type Blog = {
   likes: number;
   comments?: Comments[];
   content: string;
+  trending: boolean;
 }
 
 type User = {
