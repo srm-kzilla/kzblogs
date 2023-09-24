@@ -12,6 +12,7 @@ type Blog = {
   likes: number;
   comments?: Comments[];
   content: string;
+  trending: boolean;
 }
 
 type User = {
@@ -22,4 +23,11 @@ type User = {
   bookmarks: Blog[];
   googleId: string;
   isAdmin: boolean;
+}
+type Challenge = {
+  id: number;
+  name: string;
+  ongoingStatus: boolean;
+  endingDate: string;
+  description: string;
 }
