@@ -15,7 +15,7 @@ const BlogCard = ({
   comments,
 }: Blog) => {
   return (
-    <div className="p-3 bg-kz-lightcard text-kz-secondary rounded-2xl w-full h-fit">
+    <div className="p-3 bg-kz-card-light text-kz-secondary rounded-2xl w-full h-fit">
       <div className="flex flex-col md:flex-row justify-between gap-3">
         <div className="flex flex-row align-middle gap-3">
           <UserCircleIcon

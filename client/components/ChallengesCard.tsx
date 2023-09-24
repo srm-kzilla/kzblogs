@@ -9,7 +9,7 @@ const ChallengesCard = ({ challenges }: ChallengesCardProps) => {
   return (
     <div>
       {challengesNumber === 0 ? (
-        <div className="bg-kz-darkcard font-breeSerif p-4 w-full h-fit text-kz-secondary rounded-xl">
+        <div className="bg-kz-card-dark font-breeSerif p-4 w-full h-fit text-kz-secondary rounded-xl">
           <div className="flex-col">
             <h1 className="text-lg md:text-2xl ">Challenges</h1>
             <p className="mt-3 font-sans text-xs">
@@ -19,7 +19,7 @@ const ChallengesCard = ({ challenges }: ChallengesCardProps) => {
           </div>
         </div>
       ) : (
-        <div className="bg-kz-darkcard font-breeSerif p-4 w-full h-fit text-kz-secondary rounded-xl">
+        <div className="bg-kz-card-dark font-breeSerif p-4 w-full h-fit text-kz-secondary rounded-xl">
             <h1 className="text-2xl text-transparent bg-clip-text bg-gradient-to-tr from-kz-highlight-dark via-kz-highlight-light via-40% to-kz-secondary to-90%">Challenges</h1>
           <div className="flex flex-col mt-1">
             {challengesBlogs.map(({id, name, description, endingDate }) =>(

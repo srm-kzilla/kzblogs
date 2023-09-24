@@ -6,7 +6,7 @@ const TrendingCard = ({ blogs }: TrendingCardProps) => {
   const trendingBlogs = blogs.filter((blog) => blog.trending);
 
   return (
-    <div className="bg-kz-darkcard p-4 w-full h-fit text-kz-secondary rounded-xl">
+    <div className="bg-kz-card-dark p-4 w-full h-fit text-kz-secondary rounded-xl">
       <div>
         <h1 className="text-2xl text-transparent bg-clip-text bg-gradient-to-tr from-kz-highlight-dark via-kz-highlight-light via-40% to-kz-secondary to-90%">Trending</h1>
         <div className="flex flex-col mt-3">
