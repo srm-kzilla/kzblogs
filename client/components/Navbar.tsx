@@ -60,7 +60,7 @@ const Navbar = () => {
           Write
         </Link>
         <Link
-          href="/signin"
+          href="/api/auth/signin"
           className="lg:px-3 lg:py-1 rounded-lg lg:bg-kz-button text-kz-secondary hover:text-kz-button lg:hover:bg-kz-secondary"
         >
           Sign In
