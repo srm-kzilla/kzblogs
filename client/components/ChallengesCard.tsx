@@ -20,7 +20,7 @@ const ChallengesCard = ({ challenges }: ChallengesCardProps) => {
         </div>
       ) : (
         <div className="bg-kz-darkcard font-breeSerif p-4 w-full h-fit text-kz-secondary rounded-xl">
-            <h1 className="text-2xl text-transparent bg-clip-text bg-gradient-to-tr from-kz-highlightd via-kz-highlightl via-40% to-kz-secondary to-90%">Challenges</h1>
+            <h1 className="text-2xl text-transparent bg-clip-text bg-gradient-to-tr from-kz-highlight-dark via-kz-highlight-light via-40% to-kz-secondary to-90%">Challenges</h1>
           <div className="flex flex-col mt-1">
             {challengesBlogs.map(({id, name, description, endingDate }) =>(
                 <div key={id} className="flex w-full items-center justify-left my-3">

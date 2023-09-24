@@ -8,7 +8,7 @@ const TrendingCard = ({ blogs }: TrendingCardProps) => {
   return (
     <div className="bg-kz-darkcard p-4 w-full h-fit text-kz-secondary rounded-xl">
       <div>
-        <h1 className="text-2xl text-transparent bg-clip-text bg-gradient-to-tr from-kz-highlightd via-kz-highlightl via-40% to-kz-secondary to-90%">Trending</h1>
+        <h1 className="text-2xl text-transparent bg-clip-text bg-gradient-to-tr from-kz-highlight-dark via-kz-highlight-light via-40% to-kz-secondary to-90%">Trending</h1>
         <div className="flex flex-col mt-3">
           {trendingBlogs.map(({id, title, author }) => (
             <div key={id} className="flex justify-between items-end my-3">

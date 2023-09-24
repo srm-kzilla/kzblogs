@@ -7,7 +7,7 @@ const AuthorCard = ({ author, lastEdited }: Blog) => {
         <div className="flex flex-row gap-3">
           <p className="text-xl lg:text-2xl font-medium mt-1">#1</p>
           <UserCircleIcon
-            className="text-kz-highlightl mt-1"
+            className="text-kz-highlight-light mt-1"
             width={32}
             height={32}
           />
@@ -18,7 +18,7 @@ const AuthorCard = ({ author, lastEdited }: Blog) => {
         </div>
         <div>
           <UserPlus
-            className="text-kz-highlightl w-5 h-5 lg:w-6 lg:h-6"
+            className="text-kz-highlight-light w-5 h-5 lg:w-6 lg:h-6"
             width={32}
             height={32}
           />

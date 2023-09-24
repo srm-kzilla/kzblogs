@@ -19,9 +19,9 @@ const config: Config = {
           primary:"#141414",
           darkcard:"#1D1C1C",
           lightcard:"#282727",
-          highlightl:"#30D5C8",
+          'highlight-light':"#30D5C8",
           secondary:"#D9D9D9",
-          highlightd:"#0A427D",
+          'highlight-dark':"#0A427D",
           button:"#3AA39B",
         }
       }
