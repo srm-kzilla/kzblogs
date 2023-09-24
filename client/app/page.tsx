@@ -4,6 +4,7 @@ import AuthorCard from "@/components/AuthorCard";
 import DraftCard from "@/components/DraftCard";
 import ChallengesCard from "@/components/ChallengesCard";
 import blogData from "@/mock-data/data";
+import TrendingCard from "@/components/TrendingCard";
 import challengeData from "@/mock-data/ChallengeData";
 
 export default function Home() {
@@ -28,6 +29,9 @@ export default function Home() {
       ))}
       <div className="w-[15vw] m-6">
         <DraftCard blogs={blogData} />
+      </div>
+      <div className="w-[15vw] m-6">
+        <TrendingCard blogs={blogData} />
       </div>
       <div className="w-[15vw] m-6">
         <ChallengesCard challenges={challengeData}/>
