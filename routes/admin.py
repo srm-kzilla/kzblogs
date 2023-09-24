@@ -25,7 +25,7 @@ async def get_admin(request: Request, id: str = "all"):
 @router.post("/")
 async def add_blog(request: Request, blog: Blog):
     result = db.blogs.create_blog(dict(blog))
-    return result
+    return Response(result)
 
 
 @router.put("/{id}")
