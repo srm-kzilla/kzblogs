@@ -13,10 +13,10 @@ class Users:
         self.blogs = self.db[DB_SETTINGS.BLOGS]
 
     def get_user(self, user_id: str):
-        if self.users.count_documents({"_id": ObjectId(user_id)}) == 0:
-            return {"status": False, "message": "User does not exist"}
-        return dict(self.users.find_one({"_id": user_id}))
-
+        if user := self.users.find_one({"_id": ObjectId(user_id)}):
+            return dict(user)
+        return {"status": False, "message": "User does not exist"}
+      
     def create_user(self, user: dict):
         output = self.users.insert_one(user)
         return {

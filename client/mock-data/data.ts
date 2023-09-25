@@ -7,6 +7,7 @@ const blogData :Blog[] = [
       author: "Taylor Swift",
       likes: 50,
       content: "We are never getting back together.",
+      trending: true,
     },
     {
       id: 2,
@@ -16,6 +17,7 @@ const blogData :Blog[] = [
       author: "Taylor Swift",
       likes: 100,
       content: "We are never getting back together.",
+      trending: false,
     },
     {
       id: 3,
@@ -25,6 +27,7 @@ const blogData :Blog[] = [
       author: "Taylor Swift",
       likes: 150,
       content: "We are never getting back together.",
+      trending: true,
       // comments: [
       //   {
       //     authorId: "1234",
@@ -44,6 +47,7 @@ const blogData :Blog[] = [
       author: "Taylor Swift",
       likes: 200,
       content: "We are never getting back together.",
+      trending: false,
       comments: [
         {
           userId: "1234",

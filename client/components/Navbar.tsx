@@ -10,7 +10,7 @@ const Navbar = () => {
     <div className="shadow-box p-2 font-body flex lg:flex-row flex-col lg:items-center">
       <div className="flex flex-row items-center gap-5">
         <Image src="logo.svg" alt="logo" width={32} height={32} />
-        <h1 className="text-4xl mt-2 font-extrabold bg-gradient-to-r from-kz-highlightd via-kz-highlightl to-kz-secondary bg-clip-text text-transparent">
+        <h1 className="text-4xl mt-2 font-extrabold bg-gradient-to-r from-kz-highlight-dark via-kz-highlight-light to-kz-secondary bg-clip-text text-transparent">
           KZBlogs
         </h1>
       </div>
@@ -29,19 +29,19 @@ const Navbar = () => {
       >
         <Link
           href="/"
-          className="active:text-kz-highlightl hover:text-kz-highlightl"
+          className="active:text-kz-highlight-light hover:text-kz-highlight-light"
         >
           Home
         </Link>
         <Link
           href="/explore"
-          className="active:text-kz-highlightl hover:text-kz-highlightl"
+          className="active:text-kz-highlight-light hover:text-kz-highlight-light"
         >
           Explore
         </Link>
         <Link
           href="/bookmarks"
-          className="active:text-kz-highlightl hover:text-kz-highlightl"
+          className="active:text-kz-highlight-light hover:text-kz-highlight-light"
         >
           Bookmarks
         </Link>

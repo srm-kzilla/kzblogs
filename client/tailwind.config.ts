@@ -1,32 +1,36 @@
-import type { Config } from 'tailwindcss'
+import type { Config } from "tailwindcss";
 
 const config: Config = {
   content: [
-    './pages/**/*.{js,ts,jsx,tsx,mdx}',
-    './components/**/*.{js,ts,jsx,tsx,mdx}',
-    './app/**/*.{js,ts,jsx,tsx,mdx}',
+    "./pages/**/*.{js,ts,jsx,tsx,mdx}",
+    "./components/**/*.{js,ts,jsx,tsx,mdx}",
+    "./app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
     extend: {
-      fontFamily:{
-        body:["Cal Sans","sans-serif"],
+      fontFamily: {
+        body: ["Cal Sans", "sans-serif"],
       },
-      boxShadow:{
-        box:"0px 4px 88px -9px #000",
+      boxShadow: {
+        box: "0px 4px 88px -9px #000",
       },
-      colors:{
-        kz:{
-          primary:"#141414",
-          darkcard:"#1D1C1C",
-          lightcard:"#282727",
-          highlightl:"#30D5C8",
-          secondary:"#D9D9D9",
-          highlightd:"#0A427D",
-          button:"#3AA39B",
-        }
-      }
+      colors: {
+        kz: {
+          primary: "#141414",
+          card: {
+            light: "#1D1C1C",
+            dark: "#282727",
+          },
+          secondary: "#D9D9D9",
+          button: "#3AA39B",
+          highlight: {
+            light: "#30D5C8",
+            dark: "#0A427D",
+          },
+        },
+      },
     },
   },
   plugins: [],
-}
-export default config
+};
+export default config;
