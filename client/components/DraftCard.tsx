@@ -9,7 +9,7 @@ const DraftCard = ({ blogs }: DraftCardProps) => {
   const draftNumber = draftBlogs.length;
 
   return (
-    <div className="bg-kz-darkcard px-4 py-3 w-full h-fit text-kz-secondary rounded-xl">
+    <div className="bg-kz-card-dark px-4 py-3 w-full h-fit text-kz-secondary rounded-xl">
       {draftNumber === 0 ? (
         <div>
           <div className="flex flex-row justify-between gap-5">
