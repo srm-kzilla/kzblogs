@@ -6,7 +6,7 @@ import ChallengesCard from "@/components/ChallengesCard";
 import blogData from "@/mock-data/data";
 import TrendingCard from "@/components/TrendingCard";
 import challengeData from "@/mock-data/ChallengeData";
-import Footer from "@/components/footer";
+import Footer from "@/components/Footer";
 
 export default function Home() {
   const publishedBlogs = blogData.filter(
