@@ -1,6 +1,5 @@
-import type { Account, NextAuthOptions, Profile } from "next-auth";
+import type { NextAuthOptions} from "next-auth";
 import GoogleProvider from 'next-auth/providers/google';
-import { GoogleProfile } from "next-auth/providers/google";
 
 export const options: NextAuthOptions={
     providers:[
@@ -18,6 +17,7 @@ export const options: NextAuthOptions={
     ],
     pages:{
         signIn:"/auth/signin"
-    }
-}
+    },   
+ }
+
 
