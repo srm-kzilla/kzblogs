@@ -20,7 +20,9 @@ class Blogs:
     ) -> Union[dict, list]:
         if not blog_id:
             blogs = []
-            for blog in self.blogs.find({"publish_status": True} if not show_all else {}):
+            for blog in self.blogs.find(
+                {"publish_status": True} if not show_all else {}
+            ):
                 blog["_id"] = str(blog["_id"])
                 blogs.append(blog)
             return blogs

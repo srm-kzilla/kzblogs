@@ -31,6 +31,7 @@ class Comment(BaseModel):
     author_id: str
     blog_id: str
 
+
 class AddBlog(BaseModel):
     name: str
     content: str
