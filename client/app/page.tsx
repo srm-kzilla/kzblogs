@@ -1,3 +1,5 @@
+"use client";
+
 import BlogCard from "@/components/BlogCard";
 import Navbar from "@/components/Navbar";
 import AuthorCard from "@/components/AuthorCard";
@@ -35,14 +37,14 @@ export default function Home() {
         <TrendingCard blogs={blogData} />
       </div>
       <div className="w-[15vw] m-6">
-        <ChallengesCard challenges={challengeData}/>
+        <ChallengesCard challenges={challengeData} />
       </div>
       <div className="w-[15vw] m-6">
         <ChallengesCard challenges={challengeData} />
       </div>
       <div className="w-full">
-        <Footer/>
-       </div>
+        <Footer />
+      </div>
     </div>
   );
 }

@@ -1,6 +1,6 @@
-import type { NextAuthOptions } from "next-auth";
+import type { Account, NextAuthOptions, Profile } from "next-auth";
 import GoogleProvider from 'next-auth/providers/google';
-import CredentialsProvider from "next-auth/providers/credentials";
+import { GoogleProfile } from "next-auth/providers/google";
 
 export const options: NextAuthOptions={
     providers:[
@@ -15,21 +15,9 @@ export const options: NextAuthOptions={
                 }
               }
         }),
-        // CredentialsProvider({
-        //     name:"Credentials",
-        //     credentials:{}
-        //     },
-        //     authorize(Credentials) {
-        //         const {username, password } =Credentials as {
-        //             username: string;
-        //             password: string;
-        //         };
-
-        //     },
-        // })
     ],
     pages:{
-        signIn:"/signin"
+        signIn:"/auth/signin"
     }
 }
 
