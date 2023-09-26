@@ -1,3 +1,5 @@
+import { dbClientPromise } from "@/app/utils/mongo";
+import { MongoDBAdapter } from "@auth/mongodb-adapter";
 import type { NextAuthOptions} from "next-auth";
 import GoogleProvider from 'next-auth/providers/google';
 
@@ -17,7 +19,8 @@ export const options: NextAuthOptions={
     ],
     pages:{
         signIn:"/auth/signin"
-    },   
+    }, 
+    adapter: MongoDBAdapter(dbClientPromise, { databaseName: process.env.DB_NAME }),
  }
 
 
