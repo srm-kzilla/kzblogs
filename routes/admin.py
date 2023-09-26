@@ -1,7 +1,7 @@
 from fastapi import Request, APIRouter as Router
 from database import MongoDBConnection as Database
 
-from helpers.schema import Blog
+from helpers.schemas import Blog
 from helpers.response import Response
 
 router = Router()
