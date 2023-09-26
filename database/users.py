@@ -16,7 +16,7 @@ class Users:
         if user := self.users.find_one({"_id": ObjectId(user_id)}):
             return dict(user)
         return {"status": False, "message": "User does not exist"}
-      
+
     def create_user(self, user: dict):
         output = self.users.insert_one(user)
         return {
