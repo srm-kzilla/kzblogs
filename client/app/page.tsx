@@ -23,11 +23,6 @@ export default function Home() {
           </div>
         ))}
       </div>
-      {blogData.map((blogs: Blog) => (
-        <div key={blogs.id} className="w-1/4 m-3">
-          <AuthorCard {...blogs} />
-        </div>
-      ))}
       <div className="w-[15vw] m-6">
         <DraftCard blogs={blogData} />
       </div>
@@ -35,14 +30,8 @@ export default function Home() {
         <TrendingCard blogs={blogData} />
       </div>
       <div className="w-[15vw] m-6">
-        <ChallengesCard challenges={challengeData}/>
-      </div>
-      <div className="w-[15vw] m-6">
         <ChallengesCard challenges={challengeData} />
       </div>
-      <div className="w-full">
-        <Footer/>
-       </div>
     </div>
   );
 }
