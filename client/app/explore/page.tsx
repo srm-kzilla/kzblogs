@@ -5,7 +5,7 @@ import challengeData from "@/mock-data/ChallengeData";
 import Image from "next/image";
 const Explore = () => {
   return (
-    <div className="">
+    <div>
       <Navbar />
       <div className="flex flex-col items-center mt-12">
         <div className="text-kz-secondary text-2xl md:text-4xl lg:text-6xl font-serif text-center w-[60vw]">
