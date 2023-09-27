@@ -6,8 +6,8 @@ from database.users import User
 client = AsyncIOMotorClient(DB_SETTINGS.MONGODB_URI)
 
 
-class Database:
+class MongoDBConnection:
     def __init__(self):
         self.db = client[DB_SETTINGS.DB_NAME]
-        self.blogs = Blog(client, self.db)
-        self.users = User(client, self.db)
+        self.blogs = Blog(client)
+        self.users = User(client)

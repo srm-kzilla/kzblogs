@@ -5,7 +5,7 @@ from motor.motor_asyncio import AsyncIOMotorClient
 
 
 class Blog:
-    def __init__(self, client: AsyncIOMotorClient, db):
+    def __init__(self, client: AsyncIOMotorClient):
         self.client = client
         self.db = client[DB_SETTINGS.DB_NAME]
         self.blogs = self.db[DB_SETTINGS.BLOGS]
