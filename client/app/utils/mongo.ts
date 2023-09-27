@@ -1,4 +1,3 @@
-
 import { MongoClient } from "mongodb";
 
 const initializeClient = async (): Promise<MongoClient> => {
