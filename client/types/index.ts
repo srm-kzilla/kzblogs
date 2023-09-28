@@ -1,7 +1,7 @@
-type Comments =  {
+type Comments = {
   userId: string;
   content: string;
-}
+};
 
 type Blog = {
   id: number;
@@ -14,7 +14,7 @@ type Blog = {
   content: string;
   trending: boolean;
   bookmarked: boolean;
-}
+};
 
 type User = {
   id: number;
@@ -24,11 +24,11 @@ type User = {
   bookmarks: Blog[];
   googleId: string;
   isAdmin: boolean;
-}
+};
 type Challenge = {
   id: number;
   name: string;
   ongoingStatus: boolean;
   endingDate: string;
   description: string;
-}
+};

@@ -15,7 +15,9 @@ export default function Home() {
       <div className="flex w-full md:px-10 lg:px-32 mt-12 lg:mt-24 justify-between">
         <div className="w-full md:w-9/12 flex justify-center md:justify-start">
           <div>
-            <div className="font-serif text-3xl text-kz-secondary m-3">What’s <span className="text-kz-highlight-light">New</span> </div>
+            <div className="font-serif text-3xl text-kz-secondary m-3">
+              What’s <span className="text-kz-highlight-light">New</span>{" "}
+            </div>
             {publishedBlogs.map((blogs: Blog) => (
               <div key={blogs.id} className="w-[80vw] mb-10 md:w-[50vw] m-3">
                 <BlogCard {...blogs} />

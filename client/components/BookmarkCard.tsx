@@ -17,14 +17,18 @@ const BookmarkCard = ({ blogs }: BookmarkCardProps) => {
             <h1 className="text-lg md:text-2xl ">Bookmarks</h1>
             <p className="my-3 font-sans text-base">
               Nothing here yet :(
-              <br />Go get your first exciting read
+              <br />
+              Go get your first exciting read
             </p>
           </div>
         </div>
       ) : (
         <div className="bg-kz-card-dark p-4 w-full h-fit text-kz-secondary rounded-xl">
-          <h1 className="text-xl text-transparent bg-clip-text bg-gradient-to-tr from-kz-highlight-dark via-kz-highlight-light via-40% to-kz-secondary to-90%"> Bookmarked ( {bookmarkNumber} )</h1>
-            <div className="flex max-h-40 no-scrollbar overflow-y-scroll flex-col mt-3">
+          <h1 className="text-xl text-transparent bg-clip-text bg-gradient-to-tr from-kz-highlight-dark via-kz-highlight-light via-40% to-kz-secondary to-90%">
+            {" "}
+            Bookmarked ( {bookmarkNumber} )
+          </h1>
+          <div className="flex max-h-40 no-scrollbar overflow-y-scroll flex-col mt-3">
             {blogs.map(({ bookmarked, id, title, author }) => (
               <div key={id} className="flex items-center justify-left my-3">
                 <button className="mx-2">
