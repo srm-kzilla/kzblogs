@@ -1,7 +1,7 @@
 from fastapi import Request, APIRouter as Router
 from database import MongoDBConnection as Database
 
-from helpers.schemas import Blog
+from helpers.schemas import Blog, AddBlog
 from helpers.response import Response
 
 router = Router()
@@ -23,8 +23,10 @@ async def get_admin(request: Request, id: str = "all"):
 
 
 @router.post("/")
-async def add_blog(request: Request, blog: Blog):
-    result = db.blogs.create_blog(dict(blog))
+async def add_blog(request: Request, blog: AddBlog):
+    blog = dict(blog)
+    blog["likes"] = []
+    result = db.blogs.create_blog(blog)
     return Response(result)
 
 

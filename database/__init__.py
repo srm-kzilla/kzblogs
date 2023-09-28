@@ -5,6 +5,8 @@ from database.users import Users
 from helpers.constants import DB_SETTINGS
 
 client = MongoClient(DB_SETTINGS.MONGODB_URI)
+
+
 class MongoDBConnection:
     def __init__(self):
         self.db = Database(client=client, name=DB_SETTINGS.DB_NAME)

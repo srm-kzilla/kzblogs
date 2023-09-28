@@ -19,10 +19,13 @@ class Blogs:
         self, blog_id: Union[str, None] = None, show_all=False
     ) -> Union[dict, list]:
         if not blog_id:
+            blogs = []
             for blog in self.blogs.find(
                 {"publish_status": True} if not show_all else {}
             ):
                 blog["_id"] = str(blog["_id"])
+                blogs.append(blog)
+            return blogs
         blog = self.blogs.find_one({"_id": ObjectId(blog_id)})
         if blog:
             blog["_id"] = str(blog["_id"])
@@ -73,3 +76,7 @@ class Blogs:
 
     def get_comments(self, blog_id):
         return list(self.comments.find({"blog_id": blog_id}))
+
+    def get_trending(self, count: int = 5):
+        output = self.get_blog()
+        return list(sorted(output, key=lambda x: len(x["likes"]), reverse=True))[:count]
