@@ -14,11 +14,12 @@ class Blog:
 
     async def get_blog(self, blog_id: Union[str, None] = None, show_all: bool = True):
         if not blog_id:
-            async for blog in self.blogs.find(
+            blogs = await self.blogs.find(
                 {"publish_status": True} if not show_all else {}
-            ).to_list():
-                blog["_id"] = str(blog["_id"])
-                return blog
+            ).to_list()
+            for i in range(len(blogs)):
+                blogs[i]["_id"] = str(blogs[i]["_id"])
+            return blogs
         blog = self.blogs.find_one({"_id": ObjectId(blog_id)})
         if blog:
             blog["_id"] = str(blog["_id"])
@@ -67,5 +68,9 @@ class Blog:
         await self.comments.insert_one(dict(comment))
         return {"status": True, "message": "Comment added successfully"}
 
-    async def get_comments(self, blog_id: str):
-        return list(self.comments.find({"blog_id": ObjectId(blog_id)}))
+    async def get_comments(self, blog_id):
+        return list(await self.comments.find({"blog_id": blog_id}))
+
+    async def get_trending(self, count: int = 5):
+        output = await self.get_blog()
+        return list(sorted(output, key=lambda x: len(x["likes"]), reverse=True))[:count]

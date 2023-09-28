@@ -1,5 +1,4 @@
 from fastapi import Response, Request, APIRouter as Router
-from json import dumps
 from database import MongoDBConnection as Database
 from helpers.schemas import Comment, Like, Bookmark
 from helpers.response import Response
@@ -24,6 +23,11 @@ async def add_bookmark(request: Request, id: str, bookmark: Bookmark):
 
 
 @router.get("/bookmarks/{id}")
-async def get_bookmarks(id: str, request: Request, page: int = 0, count: int = 0):
+async def get_bookmarks(id: str, request: Request):
     bookmarks = await db.users.get_bookmarks(id)
     return Response(bookmarks)
+
+
+@router.get("/trending")
+async def get_trending(request: Request, count: int = 5):
+    return Response(await db.blogs.get_trending())
