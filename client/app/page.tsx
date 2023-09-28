@@ -3,6 +3,7 @@ import Navbar from "@/components/Navbar";
 import DraftCard from "@/components/DraftCard";
 import blogData from "@/mock-data/data";
 import TrendingCard from "@/components/TrendingCard";
+import BookmarkCard from "@/components/BookmarkCard";
 
 export default function Home() {
   const publishedBlogs = blogData.filter(
@@ -24,6 +25,9 @@ export default function Home() {
         </div>
         <div className="hidden md:flex w-3/12 justify-end mt-10">
           <div>
+            <div className="md:w-[25vw] lg:w-[17vw] m-6">
+              <BookmarkCard blogs={blogData} />
+            </div>
             <div className="md:w-[25vw] lg:w-[17vw] m-6">
               <DraftCard blogs={blogData} />
             </div>
