@@ -2,10 +2,10 @@ from fastapi import FastAPI, Response, Request
 from routes import admin, routes
 
 app = FastAPI()
-app.include_router(admin.router, prefix="/admin")
-app.include_router(routes.router, prefix="/api")
+app.include_router(admin.router, prefix="/admin", tags=["admin"])
+app.include_router(routes.router, prefix="/api", tags=["api"])
 
 
 @app.get("/")
-async def root():
+async def root(request: Request):
     return Response("KZBLOGS API")
