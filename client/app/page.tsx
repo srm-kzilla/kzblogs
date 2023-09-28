@@ -12,7 +12,7 @@ export default function Home() {
   return (
     <div>
       <Navbar />
-      <div className="flex w-full md:px-10 lg:px-20 mt-12 md:mt-24 justify-between">
+      <div className="flex w-full md:px-10 lg:px-32 mt-12 lg:mt-24 justify-between">
         <div className="w-full md:w-9/12 flex justify-center md:justify-start">
           <div>
             <div className="font-serif text-3xl text-kz-secondary m-3">What’s <span className="text-kz-highlight-light">New</span> </div>
@@ -25,13 +25,13 @@ export default function Home() {
         </div>
         <div className="hidden md:flex w-3/12 justify-end mt-10">
           <div>
-            <div className="md:w-[25vw] lg:w-[17vw] m-6">
+            <div className="md:w-[25vw] lg:w-[18vw] m-6">
               <BookmarkCard blogs={blogData} />
             </div>
-            <div className="md:w-[25vw] lg:w-[17vw] m-6">
+            <div className="md:w-[25vw] lg:w-[18vw] m-6">
               <DraftCard blogs={blogData} />
             </div>
-            <div className="md:w-[25vw] lg:w-[17vw] m-6">
+            <div className="md:w-[25vw] lg:w-[18vw] m-6">
               <TrendingCard blogs={blogData} />
             </div>
           </div>
