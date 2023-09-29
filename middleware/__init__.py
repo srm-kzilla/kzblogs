@@ -9,7 +9,6 @@ def verifyAuth(app: FastAPI):
 
     @app.middleware("http")
     async def verify_auth(request: Request, call_next: Callable):
-        request.session_user = None
         if (
             is_admin_path := request.url.path.startswith("/admin")
         ) or request.url.path.startswith("/api"):
@@ -30,7 +29,6 @@ def verifyAuth(app: FastAPI):
                     {"status": False, "message": "Only admin can access this path"},
                     status_code=403,
                 )
-            request.session_user = user
         response: Response = await call_next(request)
         if response.status_code == 500:
             return Response(
