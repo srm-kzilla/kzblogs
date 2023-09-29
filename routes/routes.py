@@ -10,7 +10,7 @@ db = Database()
 @router.post("/likes/{blog_id}")
 async def add_like(request: Request, blog_id: str, like: Like):
     if (
-        str(db.users.verify_session(request.headers["sessionID"])["_id"])
+        str((await db.users.verify_session(request.headers["sessionID"]))["_id"])
         != like.user_id
     ):
         return Response(
@@ -22,7 +22,7 @@ async def add_like(request: Request, blog_id: str, like: Like):
 @router.post("/comments")
 async def add_comment(request: Request, comment_data: Comment):
     if (
-        str(db.users.verify_session(request.headers["sessionID"])["_id"])
+        str((await db.users.verify_session(request.headers["sessionID"]))["_id"])
         != comment_data.author_id
     ):
         return Response(
@@ -34,7 +34,7 @@ async def add_comment(request: Request, comment_data: Comment):
 @router.post("/bookmarks/{blog_id}")
 async def add_bookmark(request: Request, blog_id: str, bookmark: Bookmark):
     if (
-        str(db.users.verify_session(request.headers["sessionID"])["_id"])
+        str((await db.users.verify_session(request.headers["sessionID"]))["_id"])
         != bookmark.user_id
     ):
         return Response(
@@ -48,7 +48,7 @@ async def add_bookmark(request: Request, blog_id: str, bookmark: Bookmark):
 @router.get("/bookmarks/")
 async def get_bookmarks(request: Request):
     bookmarks = await db.users.get_bookmarks(
-        db.users.verify_session(request.headers["sessionID"])["_id"]
+        (await db.users.verify_session(request.headers["sessionID"]))["_id"]
     )
     return Response(bookmarks)
 
