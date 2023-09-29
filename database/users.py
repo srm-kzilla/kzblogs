@@ -21,7 +21,7 @@ class User:
             return {"status": False, "message": "User does not exist"}
         return {"status": True, "message": "User deleted successfully"}
 
-    async def add_bookmarks(self, user_id: str, blog_id: str):
+    async def add_bookmark(self, user_id: str, blog_id: str):
         output = await self.users.update_one(
             {"_id": ObjectId(user_id)}, {"$push": {"bookmarks": blog_id}}
         )

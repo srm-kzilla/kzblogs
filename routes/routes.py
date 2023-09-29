@@ -41,7 +41,7 @@ async def add_bookmark(request: Request, blog_id: str, bookmark: Bookmark):
             {"status": False, "message": "User ID mismatch"}, status_code=403
         )
     return Response(
-        await db.users.add_bookmark(blog_id=blog_id, user_id=bookmark.user_id)
+        await db.users.add_bookmark(user_id=bookmark.user_id, blog_id=blog_id)
     )
 
 
