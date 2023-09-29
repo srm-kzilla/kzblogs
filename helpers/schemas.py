@@ -8,16 +8,6 @@ class Blog(BaseModel):
     likes: list
     content: str
 
-
-class User(BaseModel):
-    name: str
-    username: str
-    avatar: str
-    bookmarks: list
-    google_id: str
-    is_admin: bool
-
-
 class Like(BaseModel):
     user_id: str
 

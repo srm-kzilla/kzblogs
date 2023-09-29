@@ -10,8 +10,5 @@ class DB_SETTINGS:
     BLOGS = "blogs"
     USERS = "users"
     COMMENTS = "comments"
-
-
-class JWT_SETTINGS:
-    SECRET = os.getenv("JWT_SECRET")
-    ALGORITHM = os.getenv("JWT_ALGORITHM")
+    SESSIONS = "sessions"
+    
