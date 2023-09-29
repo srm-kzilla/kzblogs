@@ -2,6 +2,7 @@ import "./globals.css";
 import type { Metadata } from "next";
 import "cal-sans";
 import Footer from "@/components/Footer";
+import AuthProvider from "@/components/AuthProvider";
 
 export const metadata: Metadata = {
   title: "KZBlogs",
@@ -15,8 +16,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="font-body bg-kz-primary">
-        {children}
+      <body className="font-body bg-kz-primary">        
+        <main>
+          <AuthProvider>{children}</AuthProvider>
+        </main>
         <Footer />
       </body>
     </html>
