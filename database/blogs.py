@@ -16,11 +16,13 @@ class Blog:
         if not blog_id:
             blogs = await self.blogs.find(
                 {"publish_status": True} if not show_all else {}
-            ).to_list()
+            )
             for i in range(len(blogs)):
                 blogs[i]["_id"] = str(blogs[i]["_id"])
             return blogs
-        blog = self.blogs.find_one({"_id": ObjectId(blog_id)})
+        filter = {"_id": ObjectId(blog_id)}
+        filter.update({"publish_status": True} if not show_all else {})
+        blog = self.blogs.find_one(filter)
         if blog:
             blog["_id"] = str(blog["_id"])
             return blog

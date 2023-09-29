@@ -18,7 +18,9 @@ def verifyAuth(app: FastAPI):
                     {"status": False, "message": "Session ID not found"},
                     status_code=403,
                 )
-            user = db.users.verify_session(session_id=request.headers["sessionID"])
+            user = await db.users.verify_session(
+                session_id=request.headers["sessionID"]
+            )
             if not user:
                 return Response(
                     {"status": False, "message": "Invalid session ID"}, status_code=403
