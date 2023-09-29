@@ -48,8 +48,7 @@ const BlogCard = ({
           </button>
         </div>
         <button className="flex flex-row gap-1">
-          {bookmarked ? <BookmarkCheck width={14} /> : 
-          <Bookmark width={14} />}
+          {bookmarked ? <BookmarkCheck width={14} /> : <Bookmark width={14} />}
         </button>
       </div>
     </div>
