@@ -4,5 +4,5 @@ const Footer = () => {
       <span>Made with 🧡 by SRMKZILLA</span>
     </div>
   );
-}
+};
 export default Footer;
