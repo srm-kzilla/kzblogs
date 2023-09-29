@@ -2,13 +2,10 @@
 
 import BlogCard from "@/components/BlogCard";
 import Navbar from "@/components/Navbar";
-import AuthorCard from "@/components/AuthorCard";
 import DraftCard from "@/components/DraftCard";
-import ChallengesCard from "@/components/ChallengesCard";
 import blogData from "@/mock-data/data";
 import TrendingCard from "@/components/TrendingCard";
-import challengeData from "@/mock-data/ChallengeData";
-import Footer from "@/components/Footer";
+import BookmarkCard from "@/components/BookmarkCard";
 
 export default function Home() {
   const publishedBlogs = blogData.filter(
@@ -17,33 +14,32 @@ export default function Home() {
   return (
     <div>
       <Navbar />
-      <h1>KZBlogs</h1>
-      <div>
-        {publishedBlogs.map((blogs: Blog) => (
-          <div key={blogs.id} className="w-[40vw] m-3">
-            <BlogCard {...blogs} />
+      <div className="flex w-full md:px-10 lg:px-32 mt-12 lg:mt-24 justify-between">
+        <div className="w-full md:w-9/12 flex justify-center md:justify-start">
+          <div>
+            <div className="font-serif text-3xl text-kz-secondary m-3">
+              What’s <span className="text-kz-highlight-light">New</span>{" "}
+            </div>
+            {publishedBlogs.map((blogs: Blog) => (
+              <div key={blogs.id} className="w-[80vw] mb-10 md:w-[50vw] m-3">
+                <BlogCard {...blogs} />
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
-      {blogData.map((blogs: Blog) => (
-        <div key={blogs.id} className="w-1/4 m-3">
-          <AuthorCard {...blogs} />
         </div>
-      ))}
-      <div className="w-[15vw] m-6">
-        <DraftCard blogs={blogData} />
-      </div>
-      <div className="w-[15vw] m-6">
-        <TrendingCard blogs={blogData} />
-      </div>
-      <div className="w-[15vw] m-6">
-        <ChallengesCard challenges={challengeData} />
-      </div>
-      <div className="w-[15vw] m-6">
-        <ChallengesCard challenges={challengeData} />
-      </div>
-      <div className="w-full">
-        <Footer />
+        <div className="hidden md:flex w-3/12 justify-end mt-10">
+          <div>
+            <div className="md:w-[25vw] lg:w-[18vw] m-6">
+              <BookmarkCard blogs={blogData} />
+            </div>
+            <div className="md:w-[25vw] lg:w-[18vw] m-6">
+              <DraftCard blogs={blogData} />
+            </div>
+            <div className="md:w-[25vw] lg:w-[18vw] m-6">
+              <TrendingCard blogs={blogData} />
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

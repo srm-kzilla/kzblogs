@@ -8,6 +8,7 @@ const blogData: Blog[] = [
     likes: 50,
     content: "We are never getting back together.",
     trending: true,
+    bookmarked: true,
   },
   {
     id: 2,
@@ -18,6 +19,7 @@ const blogData: Blog[] = [
     likes: 100,
     content: "We are never getting back together.",
     trending: false,
+    bookmarked: false,
   },
   {
     id: 3,
@@ -28,6 +30,7 @@ const blogData: Blog[] = [
     likes: 150,
     content: "We are never getting back together.",
     trending: true,
+    bookmarked: true,
     // comments: [
     //   {
     //     authorId: "1234",
@@ -48,6 +51,7 @@ const blogData: Blog[] = [
     likes: 200,
     content: "We are never getting back together.",
     trending: false,
+    bookmarked: true,
     comments: [
       {
         userId: "1234",

@@ -4,7 +4,7 @@ interface ChallengesCardProps {
 
 const ChallengesCard = ({ challenges }: ChallengesCardProps) => {
   const challengesBlogs = challenges.filter(
-    (blog) => blog.ongoingStatus === true,
+    (blog) => blog.ongoingStatus,
   );
   const challengesNumber = challengesBlogs.length;
 

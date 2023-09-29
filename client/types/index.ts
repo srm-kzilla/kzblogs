@@ -13,6 +13,7 @@ type Blog = {
   comments?: Comments[];
   content: string;
   trending: boolean;
+  bookmarked: boolean;
 };
 
 type User = {
