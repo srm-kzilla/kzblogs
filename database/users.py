@@ -43,7 +43,9 @@ class User:
             return {"status": False, "message": "User does not exist"}
         bookmarks = user.get("bookmarks", [])
         bookmarks = list(
-            await self.blogs.find({"_id": {"$in": bookmarks}}) if bookmarks else []
+            await self.blogs.find({"_id": {"$in": bookmarks}}).to_list(length=None)
+            if bookmarks
+            else []
         )
         return bookmarks
 
