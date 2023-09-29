@@ -15,5 +15,7 @@ def verifyAuth(app: FastAPI):
                 return Response({"status": False, "message": "Invalid session ID"}, status_code=403)
             if is_admin_path and not session.get("is_admin", False):
                 return Response({"status": False, "message": "Only admin can access this path"}, status_code=403)
-        response = await call_next(request)
+        response: Response = await call_next(request)
+        if response.status_code == 500: 
+            return Response({"status": False, "message": "Oops! Something went wrong"}, status_code=500)
         return response
