@@ -66,8 +66,8 @@ class Blog:
             return {"status": False, "message": "Blog does not exist"}
         return {"status": True, "message": "Like removed successfully"}
 
-    async def add_comment(self, id: str, comment: dict):
-        if self.blogs.count_documents({"_id": ObjectId(id)}) == 0:
+    async def add_comment(self, comment: dict):
+        if self.blogs.count_documents({"_id": ObjectId(comment["blog_id"])}) == 0:
             return {"status": False, "message": "Blog does not exist"}
         await self.comments.insert_one(dict(comment))
         return {"status": True, "message": "Comment added successfully"}
