@@ -2,6 +2,7 @@ import AuthorCard from "@/components/AuthorCard";
 import ChallengesCard from "@/components/ChallengesCard";
 import Navbar from "@/components/Navbar";
 import challengeData from "@/mock-data/ChallengeData";
+import { SearchIcon } from "lucide-react";
 import Image from "next/image";
 const Explore = () => {
   return (
@@ -14,13 +15,14 @@ const Explore = () => {
       </div>
       <div className="flex flex-col items-center mt-10 lg:mt-20">
         <div>
-          <Image
+          <SearchIcon className="relative z-10 top-9 ml-4" />
+          {/* <Image
             width={12}
             height={12}
             src="/search.svg"
             alt="search"
             className="w-5 md:w-8 relative z-10 top-8 lg:top-10 ml-2"
-          />
+          /> */}
           <input
             type="text"
             name="Search"

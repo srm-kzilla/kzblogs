@@ -17,9 +17,7 @@ export default function RootLayout({
     <html lang="en">
       <body className="font-body bg-kz-primary">
         {children}
-        <footer>
-          <Footer />
-        </footer>
+        <Footer />
       </body>
     </html>
   );
