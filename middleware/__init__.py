@@ -4,7 +4,7 @@ from database import MongoDBConnection as Database
 from typing import Callable
 
 
-def verifyAuth(app: FastAPI):
+def verify_auth(app: FastAPI):
     db = Database()
 
     @app.middleware("http")
