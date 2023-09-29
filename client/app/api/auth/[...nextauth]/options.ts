@@ -12,8 +12,8 @@ export const options: NextAuthOptions = {
           name: profile.name,
           email: profile.email,
           image: profile.picture,
-          bookmarks:[],
-          is_admin:false,
+          bookmarks: [],
+          is_admin: false,
         };
       },
       clientId: process.env.GOOGLE_CLIENT_ID as string,
@@ -34,5 +34,3 @@ export const options: NextAuthOptions = {
     databaseName: process.env.DB_NAME,
   }),
 };
-
-
