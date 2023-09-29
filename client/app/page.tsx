@@ -1,3 +1,5 @@
+"use client";
+
 import BlogCard from "@/components/BlogCard";
 import Navbar from "@/components/Navbar";
 import AuthorCard from "@/components/AuthorCard";
