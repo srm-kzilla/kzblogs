@@ -49,4 +49,4 @@ class User:
 
     async def verify_session(self, session_id: str):
         session = await self.sessions.find_one({"sessionToken": session_id})
-        return None if not session else self.get_user(str(session.get("userId")))
+        return None if not session else await self.get_user(str(session.get("userId")))

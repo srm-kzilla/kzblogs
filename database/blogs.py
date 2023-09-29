@@ -22,7 +22,7 @@ class Blog:
             return blogs
         filter = {"_id": ObjectId(blog_id)}
         filter.update({"publish_status": True} if not show_all else {})
-        blog = self.blogs.find_one(filter)
+        blog = await self.blogs.find_one(filter)
         if blog:
             blog["_id"] = str(blog["_id"])
             return blog
