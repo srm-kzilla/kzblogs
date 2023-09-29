@@ -1,3 +1,5 @@
+"use client";
+
 import BlogCard from "@/components/BlogCard";
 import Navbar from "@/components/Navbar";
 import DraftCard from "@/components/DraftCard";
@@ -7,7 +9,7 @@ import BookmarkCard from "@/components/BookmarkCard";
 
 export default function Home() {
   const publishedBlogs = blogData.filter(
-    (blog) => blog.publishStatus === "published"
+    (blog) => blog.publishStatus === "published",
   );
   return (
     <div>
