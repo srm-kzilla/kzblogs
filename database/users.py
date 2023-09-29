@@ -46,7 +46,7 @@ class User:
             await self.blogs.find({"_id": {"$in": bookmarks}}) if bookmarks else []
         )
         return bookmarks
-    
+
     async def verify_session(self, session_id: str):
         session = await self.sessions.find_one({"session_id": session_id})
         return None if not session else self.get_user(str(session.get("user_id")))

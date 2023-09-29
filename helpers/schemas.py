@@ -8,6 +8,7 @@ class Blog(BaseModel):
     likes: list
     content: str
 
+
 class Comment(BaseModel):
     content: str
     author_id: str

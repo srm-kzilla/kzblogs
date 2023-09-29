@@ -11,4 +11,3 @@ class DB_SETTINGS:
     USERS = "users"
     COMMENTS = "comments"
     SESSIONS = "sessions"
-    
