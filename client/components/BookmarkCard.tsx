@@ -1,12 +1,13 @@
 import React from "react";
 import { UserCircle2 } from "lucide-react";
+import Link from "next/link";
 
 interface BookmarkCardProps {
   blogs: Blog[];
 }
 
 const BookmarkCard = ({ blogs }: BookmarkCardProps) => {
-  const bookmarkBlogs = blogs.filter((blog) => blog.bookmarked === true);
+  const bookmarkBlogs = blogs.filter((blog) => blog.bookmarked);
   const bookmarkNumber = bookmarkBlogs.length;
 
   return (
@@ -29,7 +30,7 @@ const BookmarkCard = ({ blogs }: BookmarkCardProps) => {
             Bookmarked ( {bookmarkNumber} )
           </h1>
           <div className="flex max-h-40 no-scrollbar overflow-y-scroll flex-col mt-3">
-            {blogs.map(({ bookmarked, id, title, author }) => (
+            {bookmarkBlogs.map(({ bookmarked, id, title, author }) => (
               <div key={id} className="flex items-center justify-left my-3">
                 <button className="mx-2">
                   <UserCircle2 width={30} height={30} />
@@ -45,9 +46,11 @@ const BookmarkCard = ({ blogs }: BookmarkCardProps) => {
             ))}
           </div>
           <div className="text-kz-primary font-sans text-xs flex justify-center items-center">
-            <button className="bg-kz-secondary mt-1 px-3 py-1 rounded-3xl">
-              See All
-            </button>
+            <Link href="/bookmarks">
+              <button className="bg-kz-secondary mt-1 px-3 py-1 rounded-3xl">
+                See All
+              </button>
+            </Link>
           </div>
         </div>
       )}
