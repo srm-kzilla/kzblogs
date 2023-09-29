@@ -14,8 +14,10 @@ class Blog:
 
     async def get_blog(self, blog_id: Union[str, None] = None, show_all: bool = True):
         if not blog_id:
-            blogs = await self.blogs.find(
-                {"publish_status": True} if not show_all else {}
+            blogs = list(
+                await self.blogs.find(
+                    {"publish_status": True} if not show_all else {}
+                ).to_list(length=None)
             )
             for i in range(len(blogs)):
                 blogs[i]["_id"] = str(blogs[i]["_id"])
