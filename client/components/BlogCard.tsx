@@ -3,6 +3,8 @@ import {
   HeartIcon,
   MessageSquare,
   UserCircleIcon,
+  BookmarkCheck,
+  BookMarked,
 } from "lucide-react";
 
 const BlogCard = ({
@@ -13,6 +15,7 @@ const BlogCard = ({
   likes,
   lastEdited,
   comments,
+  bookmarked,
 }: Blog) => {
   return (
     <div className="p-3 bg-kz-card-light text-kz-secondary rounded-2xl w-full h-fit">
@@ -45,7 +48,8 @@ const BlogCard = ({
           </button>
         </div>
         <button className="flex flex-row gap-1">
-          <Bookmark width={14} />
+          {bookmarked ? <BookmarkCheck width={14} /> : 
+          <Bookmark width={14} />}
         </button>
       </div>
     </div>
