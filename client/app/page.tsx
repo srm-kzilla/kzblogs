@@ -1,3 +1,5 @@
+"use client";
+
 import BlogCard from "@/components/BlogCard";
 import Navbar from "@/components/Navbar";
 import AuthorCard from "@/components/AuthorCard";
@@ -10,7 +12,7 @@ import Footer from "@/components/Footer";
 
 export default function Home() {
   const publishedBlogs = blogData.filter(
-    (blog) => blog.publishStatus === "published"
+    (blog) => blog.publishStatus === "published",
   );
   return (
     <div>
@@ -35,14 +37,14 @@ export default function Home() {
         <TrendingCard blogs={blogData} />
       </div>
       <div className="w-[15vw] m-6">
-        <ChallengesCard challenges={challengeData}/>
+        <ChallengesCard challenges={challengeData} />
       </div>
       <div className="w-[15vw] m-6">
         <ChallengesCard challenges={challengeData} />
       </div>
       <div className="w-full">
-        <Footer/>
-       </div>
+        <Footer />
+      </div>
     </div>
   );
 }
