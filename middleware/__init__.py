@@ -12,13 +12,13 @@ def verify_auth(app: FastAPI):
         if (
             is_admin_path := request.url.path.startswith("/admin")
         ) or request.url.path.startswith("/api"):
-            if "sessionID" not in request.headers:
+            if "X-Session-ID" not in request.headers:
                 return Response(
                     {"status": False, "message": "Session ID not found"},
                     status_code=403,
                 )
             user = await db.users.verify_session(
-                session_id=request.headers["sessionID"]
+                session_id=request.headers["X-Session-ID"]
             )
             if not user:
                 return Response(

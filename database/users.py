@@ -43,13 +43,13 @@ class User:
             return {"status": False, "message": "User does not exist"}
         bookmarks = user.get("bookmarks", [])
         bookmarks = list(
-            await self.blogs.find({"_id": {"$in": [ObjectId(i) for i in bookmarks]}}).to_list(length=None)
+            await self.blogs.find(
+                {"_id": {"$in": [ObjectId(i) for i in bookmarks]}}
+            ).to_list(length=None)
             if bookmarks
             else []
         )
-        for i in range(len(bookmarks)):
-            bookmarks[i]["_id"] = str(bookmarks[i]["_id"])
-        return bookmarks
+        return list(map(lambda x: x.update({"_id": str(x.get("_id"))}), bookmarks))
 
     async def verify_session(self, session_id: str):
         session = await self.sessions.find_one({"sessionToken": session_id})
