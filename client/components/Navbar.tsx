@@ -2,13 +2,22 @@
 import Link from "next/link";
 import { useState } from "react";
 import Image from "next/image";
-import { ChevronsLeftIcon, PenSquare } from "lucide-react";
+import { PenSquare } from "lucide-react";
 import { signIn, useSession } from "next-auth/react";
+import { usePathname } from "next/navigation";
+
+const menuItems = [
+  { path: "/", name: "Home" },
+  { path: "/explore", name: "Explore" },
+  { path: "/bookmarks", name: "Bookmarks" },
+];
 
 const Navbar = () => {
+  const pathname = usePathname();
   const { data, status } = useSession();
   const loggedIn = status === "authenticated";
   const [navbarOpen, setNavbarOpen] = useState(false);
+
   return (
     <div className="shadow-box p-2 font-body flex lg:flex-row flex-col lg:items-center">
       <div className="flex flex-row items-center gap-5">
@@ -25,35 +34,28 @@ const Navbar = () => {
         <Image src="/menu.svg" alt="Menu" width={32} height={32} />
       </button>
       <div
-        className={
-          "lg:flex flex-grow justify-center items-center text-kz-secondary lg:gap-6" +
-          (navbarOpen ? " flex flex-col items-end" : " hidden")
-        }
+        className={`lg:flex flex-grow justify-center items-center text-kz-secondary lg:gap-6 ${
+          navbarOpen ? "flex flex-col items-end" : "hidden"
+        }`}
       >
-        <Link
-          href="/"
-          className="active:text-kz-highlight-light hover:text-kz-highlight-light"
-        >
-          Home
-        </Link>
-        <Link
-          href="/explore"
-          className="active:text-kz-highlight-light hover:text-kz-highlight-light"
-        >
-          Explore
-        </Link>
-        <Link
-          href="/bookmarks"
-          className="active:text-kz-highlight-light hover:text-kz-highlight-light"
-        >
-          Bookmarks
-        </Link>
+        {menuItems.map(({ path, name }) => (
+          <Link
+            key={path}
+            href={path}
+            className={`${
+              pathname === path
+                ? "text-kz-highlight-light"
+                : "text-kz-secondary"
+            } hover:text-kz-highlight-light`}
+          >
+            {name}
+          </Link>
+        ))}
       </div>
       <div
-        className={
-          "lg:flex items-center text-kz-secondary lg:gap-6 lg:mr-4" +
-          (navbarOpen ? " flex flex-col" : " hidden")
-        }
+        className={`lg:flex items-center text-kz-secondary lg:gap-6 lg:mr-4 ${
+          navbarOpen ? "flex flex-col" : "hidden"
+        }`}
       >
         <Link
           href="/write"
