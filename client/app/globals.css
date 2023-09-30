@@ -21,8 +21,7 @@
     border-radius: 10px;
     border: 1px solid #151319;
   }
-@layer utilities {
-  @variants responsive {
+  @layer utilities {
     .no-scrollbar::-webkit-scrollbar {
       display: none;
     }
@@ -31,5 +30,3 @@
       scrollbar-width: none; 
     }
   }
-}
-

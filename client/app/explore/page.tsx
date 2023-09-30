@@ -2,7 +2,8 @@ import AuthorCard from "@/components/AuthorCard";
 import ChallengesCard from "@/components/ChallengesCard";
 import Navbar from "@/components/Navbar";
 import challengeData from "@/mock-data/ChallengeData";
-import { SearchIcon } from "lucide-react";
+import blogData from "@/mock-data/data";
+import { Divide, SearchIcon } from "lucide-react";
 
 const Explore = () => {
   return (
@@ -10,7 +11,11 @@ const Explore = () => {
       <Navbar />
       <div className="flex flex-col items-center mt-12">
         <div className="text-kz-secondary text-2xl md:text-4xl lg:text-6xl font-serif text-center w-[60vw]">
-          <h1>Discover the new article that will blow your mind.</h1>
+          <h1>
+            Discover the{" "}
+            <span className="text-kz-highlight-light">new article</span> that
+            will blow your mind.
+          </h1>
         </div>
       </div>
       <div className="flex flex-col items-center mt-10 lg:mt-20">
@@ -30,7 +35,11 @@ const Explore = () => {
             <h1 className="text-kz-secondary text-left mb-4 lg:mb-7 text-2xl lg:text-3xl font-serif">
               Trending Writers
             </h1>
-            <AuthorCard />
+            {blogData.map((blog) => (
+              <div key={blog.id} className="m-3">
+                <AuthorCard {...blog} />
+              </div>
+            ))}
           </div>
           <div className="md:w-[30vw] mt-5 md:mt-12 lg:mt-16">
             <ChallengesCard challenges={challengeData} />
