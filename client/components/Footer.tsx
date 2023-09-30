@@ -1,8 +1,8 @@
 const Footer = () => {
   return (
-    <div className="flex justify-center w-full h-fit text-slate-50 ">
+    <footer className="flex justify-center w-full h-fit mb-2 text-xs text-kz-secondary ">
       <span>Made with 🧡 by SRMKZILLA</span>
-    </div>
+    </footer>
   );
 };
 export default Footer;

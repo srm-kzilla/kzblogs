@@ -1,13 +1,13 @@
 import { UserCircleIcon, UserPlus } from "lucide-react";
 
-const AuthorCard = ({ author, lastEdited }: Blog) => {
+const AuthorCard = ({ id, lastEdited, author }: Blog) => {
   return (
-    <div className="p-3 bg-kz-card-light text-kz-secondary rounded-lg w-full h-fit">
-      <div className="flex flex-row items-center justify-between gap-3">
-        <div className="flex flex-row gap-3">
-          <p className="text-xl lg:text-2xl font-medium mt-1">#1</p>
+    <div className="p-1 px-3 bg-kz-card-light text-kz-secondary rounded-lg w-full h-fit">
+      <div className="flex flex-row items-start align-top justify-between mx-1 my-3 gap-3">
+        <div className="flex flex-row gap-2">
+          <p className="text-xl lg:text-xl font-medium m-1"># {id}</p>
           <UserCircleIcon
-            className="text-kz-highlight-light mt-1"
+            className="text-kz-highlight-light"
             width={32}
             height={32}
           />
