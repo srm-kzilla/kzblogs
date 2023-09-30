@@ -14,13 +14,17 @@ class Blog:
 
     async def get_blog(self, blog_id: Union[str, None] = None, show_all: bool = True):
         if not blog_id:
-            blogs = await self.blogs.find(
-                {"publish_status": True} if not show_all else {}
-            ).to_list()
+            blogs = list(
+                await self.blogs.find(
+                    {"publish_status": True} if not show_all else {}
+                ).to_list(length=None)
+            )
             for i in range(len(blogs)):
                 blogs[i]["_id"] = str(blogs[i]["_id"])
             return blogs
-        blog = self.blogs.find_one({"_id": ObjectId(blog_id)})
+        filter = {"_id": ObjectId(blog_id)}
+        filter.update({"publish_status": True} if not show_all else {})
+        blog = await self.blogs.find_one(filter)
         if blog:
             blog["_id"] = str(blog["_id"])
             return blog
@@ -62,8 +66,8 @@ class Blog:
             return {"status": False, "message": "Blog does not exist"}
         return {"status": True, "message": "Like removed successfully"}
 
-    async def add_comment(self, id: str, comment: dict):
-        if self.blogs.count_documents({"_id": ObjectId(id)}) == 0:
+    async def add_comment(self, comment: dict):
+        if self.blogs.count_documents({"_id": ObjectId(comment["blog_id"])}) == 0:
             return {"status": False, "message": "Blog does not exist"}
         await self.comments.insert_one(dict(comment))
         return {"status": True, "message": "Comment added successfully"}
