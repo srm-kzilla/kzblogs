@@ -2,10 +2,12 @@
 import Link from "next/link";
 import { useState } from "react";
 import Image from "next/image";
-import { ChevronsLeftIcon, PenSquare } from "lucide-react";
+import { PenSquare } from "lucide-react";
 import { signIn, useSession } from "next-auth/react";
+import { usePathname } from "next/navigation";
 
 const Navbar = () => {
+  const pathname = usePathname();
   const { data, status } = useSession();
   const loggedIn = status === "authenticated";
   const [navbarOpen, setNavbarOpen] = useState(false);
@@ -32,19 +34,29 @@ const Navbar = () => {
       >
         <Link
           href="/"
-          className="active:text-kz-highlight-light hover:text-kz-highlight-light"
+          className={`${
+            pathname === "/" ? "text-kz-highlight-light" : "text-kz-secondary"
+          } hover:text-kz-highlight-light`}
         >
           Home
         </Link>
         <Link
           href="/explore"
-          className="active:text-kz-highlight-light hover:text-kz-highlight-light"
+          className={`${
+            pathname === "/explore"
+              ? "text-kz-highlight-light"
+              : "text-kz-secondary"
+          } hover:text-kz-highlight-light`}
         >
           Explore
         </Link>
         <Link
           href="/bookmarks"
-          className="active:text-kz-highlight-light hover:text-kz-highlight-light"
+          className={`${
+            pathname === "/bookmarks"
+              ? "text-kz-highlight-light"
+              : "text-kz-secondary"
+          } hover:text-kz-highlight-light`}
         >
           Bookmarks
         </Link>
