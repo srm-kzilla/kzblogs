@@ -38,17 +38,17 @@ const Navbar = () => {
           navbarOpen ? "flex flex-col items-end" : "hidden"
         }`}
       >
-        {menuItems.map((item) => (
+        {menuItems.map(({ path, name }) => (
           <Link
-            key={item.path}
-            href={item.path}
+            key={path}
+            href={path}
             className={`${
-              pathname === item.path
+              pathname === path
                 ? "text-kz-highlight-light"
                 : "text-kz-secondary"
             } hover:text-kz-highlight-light`}
           >
-            {item.name}
+            {name}
           </Link>
         ))}
       </div>
