@@ -13,7 +13,7 @@ const Button = ({ onClick, children, variant }: any) => {
   };
 
   return (
-    <button className={`${getButtonStyles()}`} onClick={onClick}>
+    <button className={getButtonStyles()} onClick={onClick}>
       {children}
     </button>
   );
