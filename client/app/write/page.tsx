@@ -55,6 +55,7 @@ const CreatePage = () => {
                 <ReactMarkdown
                   children={markdownInput}
                   remarkPlugins={[remarkGfm]}
+                  className="prose prose-invert"
                 />
               </div>
             </div>
