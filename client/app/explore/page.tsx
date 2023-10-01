@@ -36,7 +36,7 @@ const Explore = () => {
               Trending Writers
             </h1>
             {blogData.map((blog) => (
-              <div key={blog.id} className="m-3">
+              <div key={blog._id} className="m-3">
                 <AuthorCard {...blog} />
               </div>
             ))}

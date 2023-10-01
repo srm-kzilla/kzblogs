@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import "cal-sans";
 import Footer from "@/components/Footer";
 import AuthProvider from "@/components/AuthProvider";
+import { cookieMiddleware } from "./utils/cookie";
 
 export const metadata: Metadata = {
   title: "KZBlogs",
@@ -16,7 +17,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="font-body bg-kz-primary">        
+      <body className="font-body bg-kz-primary">
         <main>
           <AuthProvider>{children}</AuthProvider>
         </main>

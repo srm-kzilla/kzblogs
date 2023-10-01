@@ -27,10 +27,10 @@ const DraftCard = ({ blogs }: DraftCardProps) => {
         <div>
           <h1 className="text-xl">Drafts ( {draftNumber} )</h1>
           <div className="flex flex-col mt-3">
-            {draftBlogs.map(({ id, title, lastEdited }) => (
+            {draftBlogs.map(({ id, name, lastEdited }) => (
               <div key={id} className="flex justify-between items-end my-3">
                 <div>
-                  <h1>{title}</h1>
+                  <h1>{name}</h1>
                   <p className="text-xs font-extralight font-sans">
                     {lastEdited}
                   </p>
