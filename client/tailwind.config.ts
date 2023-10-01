@@ -1,5 +1,4 @@
 import type { Config } from "tailwindcss";
-const plugin = require("tailwindcss/plugin");
 
 const config: Config = {
   content: [
@@ -32,6 +31,8 @@ const config: Config = {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    require('@tailwindcss/typography')
+  ]
 };
 export default config;
