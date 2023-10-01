@@ -30,13 +30,13 @@ const BookmarkCard = ({ blogs }: BookmarkCardProps) => {
             Bookmarked ( {bookmarkNumber} )
           </h1>
           <div className="flex max-h-40 no-scrollbar overflow-y-scroll flex-col mt-3">
-            {bookmarkBlogs.map(({ bookmarked, id, title, author }) => (
-              <div key={id} className="flex items-center justify-left my-3">
+            {bookmarkBlogs.map(({ bookmarked, _id, name, author }) => (
+              <div key={_id} className="flex items-center justify-left my-3">
                 <button className="mx-2">
                   <UserCircle2 width={30} height={30} />
                 </button>
                 <div className="mx-1 text-ellipsis">
-                  <p className="text-sm">{title}</p>
+                  <p className="text-sm">{name}</p>
                   <p className="text-xs font-extralight font-sans">
                     subtitle
                     {/* subtitle data source not set yet */}

@@ -1,15 +1,9 @@
-import {
-  Bookmark,
-  HeartIcon,
-  MessageSquare,
-  UserCircleIcon,
-  BookmarkCheck,
-  BookMarked,
-} from "lucide-react";
+import { HeartIcon, MessageSquare, UserCircleIcon } from "lucide-react";
+import BookmarkButton from "./BookmarkButton";
 
 const BlogCard = ({
-  id,
-  title,
+  _id,
+  name,
   author,
   content,
   likes,
@@ -32,7 +26,7 @@ const BlogCard = ({
           </div>
         </div>
         <div className="md:w-[60%]">
-          <h1 className="text-lg md:text-right md:text-2xl md:ml-9">{title}</h1>
+          <h1 className="text-lg md:text-right md:text-2xl md:ml-9">{name}</h1>
         </div>
       </div>
       <p className="font-sans text-xs font-light mt-3 md:text-lg">{content}</p>
@@ -40,16 +34,15 @@ const BlogCard = ({
         <div className="flex flex-row gap-2 items-center">
           <button className="flex flex-row gap-1 items-center">
             <HeartIcon width={14} />
-            <p>{likes}</p>
+            <p>{likes ? likes.length : 0}</p>
           </button>
           <button className="flex flex-row gap-1 items-center">
             <MessageSquare width={14} />
             <p>{comments ? comments.length : 0}</p>
+            {_id}
           </button>
         </div>
-        <button className="flex flex-row gap-1">
-          {bookmarked ? <BookmarkCheck width={14} /> : <Bookmark width={14} />}
-        </button>
+        <BookmarkButton id={_id} />
       </div>
     </div>
   );
