@@ -12,23 +12,25 @@ def verify_auth(app: FastAPI):
         if (
             is_admin_path := request.url.path.startswith("/admin")
         ) or request.url.path.startswith("/api"):
-            if "X-Session-ID" not in request.headers:
-                return Response(
-                    {"status": False, "message": "Session ID not found"},
-                    status_code=403,
+            if request.method != "OPTIONS":
+                if "x-session-id" not in request.headers:
+                    return Response(
+                        {"status": False, "message": "Session ID not found"},
+                        status_code=403,
+                    )
+                user = await db.users.verify_session(
+                    session_id=request.headers["x-session-id"]
                 )
-            user = await db.users.verify_session(
-                session_id=request.headers["X-Session-ID"]
-            )
-            if not user:
-                return Response(
-                    {"status": False, "message": "Invalid session ID"}, status_code=403
-                )
-            if is_admin_path and not user.get("is_admin", False):
-                return Response(
-                    {"status": False, "message": "Only admin can access this path"},
-                    status_code=403,
-                )
+                if not user:
+                    return Response(
+                        {"status": False, "message": "Invalid session ID"},
+                        status_code=403,
+                    )
+                if is_admin_path and not user.get("is_admin", False):
+                    return Response(
+                        {"status": False, "message": "Only admin can access this path"},
+                        status_code=403,
+                    )
         response: Response = await call_next(request)
         if response.status_code == 500:
             return Response(
