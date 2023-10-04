@@ -6,6 +6,7 @@ from typing import Callable
 
 is_ignored = lambda x: any([x.startswith(i) for i in IGNORED_ROUTES])
 
+
 def verify_auth(app: FastAPI):
     db = Database()
 
