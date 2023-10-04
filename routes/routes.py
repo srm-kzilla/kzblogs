@@ -1,6 +1,6 @@
 from fastapi import Response, Request, APIRouter as Router
 from database import MongoDBConnection as Database
-from helpers.schemas import Comment
+from helpers.schemas import Comment, Like, Bookmark
 from helpers.response import Response
 
 router = Router()
@@ -15,7 +15,7 @@ async def add_like(request: Request, blog_id: str):
     return Response(await db.blogs.add_like(id=blog_id, user_id=user["_id"]))
 
 
-@router.post("/likes/remove/{blog_id}")
+@router.delete("/likes/{blog_id}")
 async def remove_like(request: Request, blog_id: str):
     user_id = str(
         (await db.users.verify_session(request.headers["x-session-id"]))["_id"]
@@ -23,9 +23,10 @@ async def remove_like(request: Request, blog_id: str):
     return Response(await db.blogs.remove_like(id=blog_id, user_id=user_id))
 
 
-@router.get("/comments/{blog_id}")  
+@router.get("/comments/{blog_id}")
 async def get_comments(request: Request, blog_id: str):
     return Response(await db.blogs.get_comments(blog_id))
+
 
 @router.post("/comments")
 async def add_comment(request: Request, comment_data: Comment):
@@ -42,11 +43,13 @@ async def delete_comment(request: Request, comment_id: str):
     return Response(await db.blogs.delete_comment(comment_id, str(user["_id"])))
 
 
-@router.post("/bookmarks/{blog_id}")
-async def add_bookmark(request: Request, blog_id: str):
+@router.post("/bookmarks")
+async def add_bookmark(request: Request, bookmark_data: Bookmark):
     user = await db.users.verify_session(request.headers["x-session-id"])
     return Response(
-        await db.users.add_bookmark(user_id=str(user["_id"]), blog_id=blog_id)
+        await db.users.add_bookmark(
+            user_id=str(user["_id"]), blog_id=bookmark_data.blog_id
+        )
     )
 
 
@@ -71,6 +74,7 @@ async def get_trending(request: Request, count: int = 5):
     return Response(await db.blogs.get_trending())
 
 
-@router.get("/all")
-async def get_all(request: Request):
-    return Response(await db.blogs.get_blog(show_all=False))
+@router.get("/blogs/{blog_id}")
+async def get_blogs(request: Request, blog_id: str = "all"):
+    blog_id = None if blog_id == "all" else blog_id
+    return Response(await db.blogs.get_blog(blog_id, show_all=False))

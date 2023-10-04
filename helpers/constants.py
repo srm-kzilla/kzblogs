@@ -11,3 +11,6 @@ class DB_SETTINGS:
     USERS = "users"
     COMMENTS = "comments"
     SESSIONS = "sessions"
+
+
+IGNORED_ROUTES = ["/docs", "/openapi.json", "/redoc", "/api/blogs", "/api/trending"]

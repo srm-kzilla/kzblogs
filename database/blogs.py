@@ -74,7 +74,7 @@ class Blog:
             return {"status": False, "message": "Blog does not exist"}
         await self.comments.insert_one(dict(comment))
         return {"status": True, "message": "Comment added successfully"}
-    
+
     async def delete_comment(self, comment_id: str):
         output = await self.comments.delete_one({"_id": ObjectId(comment_id)})
         if output.deleted_count == 0:

@@ -19,3 +19,11 @@ class AddBlog(BaseModel):
     content: str
     publish_status: bool
     author: str
+
+
+class Bookmark(BaseModel):
+    blog_id: str
+
+
+class Like(BaseModel):
+    blog_id: str
