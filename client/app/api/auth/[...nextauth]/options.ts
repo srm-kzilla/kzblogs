@@ -28,8 +28,12 @@ export const options: NextAuthOptions = {
     }),
   ],
   callbacks: {
-    session({ session, token, user }) {
-      return session // The return type will match the one returned in `useSession()`
+    session({ session, user }) {
+      if(session?.user){
+        session.user.email=user.id;
+      }
+      
+      return session
     },
   },
   pages: {

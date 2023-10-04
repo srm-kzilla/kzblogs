@@ -4,9 +4,13 @@ import DraftCard from "@/components/DraftCard";
 import blogData from "@/mock-data/data";
 import TrendingCard from "@/components/TrendingCard";
 import BookmarkCard from "@/components/BookmarkCard";
-import { getAllBlogs } from "./utils/helpers";
+import { getAllBlogs } from "./utils/help";
+import { getSession } from "next-auth/react";
+
 export default async function Home() {
   const blogs = await getAllBlogs();
+  const session = await getSession();
+  console.log(session);
   return (
     <div>
       <Navbar />
@@ -14,7 +18,11 @@ export default async function Home() {
         <div className="w-full md:w-9/12 flex justify-center md:justify-start">
           <div>
             <div className="font-serif text-3xl text-kz-secondary m-3">
-              What’s <span className="text-kz-highlight-light">New</span>{" "}
+              What’s{" "}
+              <span className="text-kz-highlight-light">
+                {" "}
+                {session?.user?.name}
+              </span>{" "}
             </div>
             {blogs.map((blogs: Blog) => (
               <div key={blogs._id} className="w-[80vw] mb-10 md:w-[50vw] m-3">
@@ -26,7 +34,7 @@ export default async function Home() {
         <div className="hidden md:flex w-3/12 justify-end mt-10">
           <div>
             <div className="md:w-[25vw] lg:w-[18vw] m-6">
-              <BookmarkCard blogs={blogData} />
+              {/* <BookmarkCard /> */}
             </div>
             <div className="md:w-[25vw] lg:w-[18vw] m-6">
               <DraftCard blogs={blogData} />

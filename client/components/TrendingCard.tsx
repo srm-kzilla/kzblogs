@@ -1,16 +1,11 @@
+import { getTrending } from "@/app/utils/help";
+
 interface TrendingCardProps {
   blogs: Blog[];
 }
 
 const TrendingCard = async () => {
-  const response = await fetch(`http://127.0.0.1:8000/admin/all`, {
-    method: "GET",
-    cache: "no-store",
-    headers: {
-      "X-Session-Id": "53c0b781-cd91-4958-82d3-c1e1eb65971c",
-    },
-  });
-  const data = await response.json();
+  const data = await getTrending();
 
   return (
     <div className="bg-kz-card-dark p-4 w-full h-fit text-kz-secondary rounded-xl">
