@@ -1,6 +1,6 @@
 from fastapi import Response, Request, APIRouter as Router
 from database import MongoDBConnection as Database
-from helpers.schemas import Comment, Like, Bookmark
+from helpers.schemas import Comment
 from helpers.response import Response
 
 router = Router()
@@ -8,40 +8,53 @@ db = Database()
 
 
 @router.post("/likes/{blog_id}")
-async def add_like(request: Request, blog_id: str, like: Like):
-    if (
-        str((await db.users.verify_session(request.headers["x-session-id"]))["_id"])
-        != like.user_id
-    ):
-        return Response(
-            {"status": False, "message": "User ID mismatch"}, status_code=403
-        )
-    return Response(await db.blogs.add_like(id=blog_id, user_id=like.user_id))
+async def add_like(request: Request, blog_id: str):
+    user = await db.users.verify_session(request.headers["x-session-id"])
+    if not user:
+        return Response({"status": False, "message": "User not found"}, status_code=403)
+    return Response(await db.blogs.add_like(id=blog_id, user_id=user["_id"]))
 
+
+@router.post("/likes/remove/{blog_id}")
+async def remove_like(request: Request, blog_id: str):
+    user_id = str(
+        (await db.users.verify_session(request.headers["x-session-id"]))["_id"]
+    )
+    return Response(await db.blogs.remove_like(id=blog_id, user_id=user_id))
+
+
+@router.get("/comments/{blog_id}")  
+async def get_comments(request: Request, blog_id: str):
+    return Response(await db.blogs.get_comments(blog_id))
 
 @router.post("/comments")
 async def add_comment(request: Request, comment_data: Comment):
-    if (
-        str((await db.users.verify_session(request.headers["x-session-id"]))["_id"])
-        != comment_data.author_id
-    ):
-        return Response(
-            {"status": False, "message": "User ID mismatch"}, status_code=403
-        )
-    return Response(await db.blogs.add_comment(dict(comment_data)))
+    comment = dict(comment_data)
+    comment["author_id"] = (
+        await db.users.verify_session(request.headers["x-session-id"])
+    )["_id"]
+    return Response(await db.blogs.add_comment(comment_data))
+
+
+@router.delete("/comments/{comment_id}")
+async def delete_comment(request: Request, comment_id: str):
+    user = await db.users.verify_session(request.headers["x-session-id"])
+    return Response(await db.blogs.delete_comment(comment_id, str(user["_id"])))
 
 
 @router.post("/bookmarks/{blog_id}")
-async def add_bookmark(request: Request, blog_id: str, bookmark: Bookmark):
-    if (
-        str((await db.users.verify_session(request.headers["x-session-id"]))["_id"])
-        != bookmark.user_id
-    ):
-        return Response(
-            {"status": False, "message": "User ID mismatch"}, status_code=403
-        )
+async def add_bookmark(request: Request, blog_id: str):
+    user = await db.users.verify_session(request.headers["x-session-id"])
     return Response(
-        await db.users.add_bookmark(user_id=bookmark.user_id, blog_id=blog_id)
+        await db.users.add_bookmark(user_id=str(user["_id"]), blog_id=blog_id)
+    )
+
+
+@router.delete("/bookmarks/{blog_id}")
+async def remove_bookmark(request: Request, blog_id: str):
+    user = await db.users.verify_session(request.headers["x-session-id"])
+    return Response(
+        await db.users.remove_bookmark(user_id=str(user["_id"]), blog_id=blog_id)
     )
 
 

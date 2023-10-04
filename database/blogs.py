@@ -74,8 +74,14 @@ class Blog:
             return {"status": False, "message": "Blog does not exist"}
         await self.comments.insert_one(dict(comment))
         return {"status": True, "message": "Comment added successfully"}
+    
+    async def delete_comment(self, comment_id: str):
+        output = await self.comments.delete_one({"_id": ObjectId(comment_id)})
+        if output.deleted_count == 0:
+            return {"status": False, "message": "Comment does not exist"}
+        return {"status": True, "message": "Comment deleted successfully"}
 
-    async def get_comments(self, blog_id):
+    async def get_comments(self, blog_id: str):
         return list(await self.comments.find({"blog_id": blog_id}))
 
     async def get_trending(self, count: int = 5):
