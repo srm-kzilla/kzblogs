@@ -10,9 +10,8 @@ db = Database()
 @router.post("/likes/{blog_id}")
 async def add_like(request: Request, blog_id: str):
     user = await db.users.verify_session(request.headers["x-session-id"])
-    if not user:
-        return Response({"status": False, "message": "User not found"}, status_code=403)
-    return Response(await db.blogs.add_like(blog_id=blog_id, user_id=user["_id"]))
+    response = await db.blogs.add_like(blog_id=blog_id, user_id=str(user["_id"]))
+    return Response(response, status_code=200 if response["status"] else 400)
 
 
 @router.delete("/likes/{blog_id}")
@@ -20,7 +19,8 @@ async def remove_like(request: Request, blog_id: str):
     user_id = str(
         (await db.users.verify_session(request.headers["x-session-id"]))["_id"]
     )
-    return Response(await db.blogs.remove_like(id=blog_id, user_id=user_id))
+    response = await db.blogs.remove_like(id=blog_id, user_id=user_id)
+    return Response(response, status_code=200 if response["status"] else 400)
 
 
 @router.get("/comments/{blog_id}")

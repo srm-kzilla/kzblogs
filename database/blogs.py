@@ -54,19 +54,22 @@ class Blog:
         blog = await self.blogs.find_one({"_id": ObjectId(blog_id)})
         if not blog:
             return {"status": False, "message": "Blog does not exist"}
-        if user_id in blog["likes"]:
+        if user_id in list(blog["likes"]):
             return {"status": False, "message": "User already liked the blog"}
         await self.blogs.update_one(
-            {"_id": ObjectId(blog_id)}, {"$push": {"likes": user_id}}
+            {"_id": ObjectId(blog_id)}, {"$push": {"likes": str(user_id)}}
         )
         return {"status": True, "message": "Like added successfully"}
 
     async def remove_like(self, id: str, user_id: str):
+        blog = await self.blogs.find_one({"_id": ObjectId(id)})
+        if user_id not in list(blog["likes"]):
+            return {"status": False, "message": "User did not like the blog"}
         output = await self.blogs.update_one(
             {"_id": ObjectId(id)}, {"$pull": {"likes": user_id}}
         )
         if output.modified_count == 0:
-            return {"status": False, "message": "Blog does not exist"}
+            return {"status": False, "message": "Blog does not exist"} 
         return {"status": True, "message": "Like removed successfully"}
 
     async def add_comment(self, comment: dict):
