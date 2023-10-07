@@ -51,7 +51,7 @@ class Blog:
         return {"status": True, "message": "Blog updated successfully"}
 
     async def add_like(self, blog_id: str, user_id: str):
-        blog = self.blogs.find_one({"_id": blog_id})
+        blog = await self.blogs.find_one({"_id": ObjectId(blog_id)})
         if not blog:
             return {"status": False, "message": "Blog does not exist"}
         if user_id in blog["likes"]:

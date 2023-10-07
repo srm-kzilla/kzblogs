@@ -12,7 +12,7 @@ async def add_like(request: Request, blog_id: str):
     user = await db.users.verify_session(request.headers["x-session-id"])
     if not user:
         return Response({"status": False, "message": "User not found"}, status_code=403)
-    return Response(await db.blogs.add_like(id=blog_id, user_id=user["_id"]))
+    return Response(await db.blogs.add_like(blog_id=blog_id, user_id=user["_id"]))
 
 
 @router.delete("/likes/{blog_id}")
