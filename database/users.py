@@ -1,6 +1,7 @@
 from helpers.constants import DB_SETTINGS
 from motor.motor_asyncio import AsyncIOMotorClient
 from bson import ObjectId
+from typing import List
 
 
 class User:
@@ -52,14 +53,14 @@ class User:
         if not user:
             return {"status": False, "message": "User does not exist"}
         bookmarks = user.get("bookmarks", [])
-        bookmarks = list(
+        bookmarks: List[dict] = list(
             await self.blogs.find(
                 {"_id": {"$in": [ObjectId(i) for i in bookmarks]}}
             ).to_list(length=None)
             if bookmarks
             else []
         )
-        return list(map(lambda x: x.update({"_id": str(x.get("_id"))}), bookmarks))
+        return [(i.update({"_id": str(i["_id"])}) or i) for i in bookmarks]
 
     async def verify_session(self, session_id: str):
         session = await self.sessions.find_one({"sessionToken": session_id})
