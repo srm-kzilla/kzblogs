@@ -24,9 +24,7 @@ class User:
 
     async def add_bookmark(self, user_id: str, blog_id: str):
         user = await self.get_user(user_id)
-        if not user:
-            return {"status": False, "message": "User does not exist"}
-        if ObjectId(blog_id) in user["bookmarks"]:
+        if blog_id in user["bookmarks"]:
             return {"status": False, "message": "Blog already bookmarked"}
         output = await self.users.update_one(
             {"_id": ObjectId(user_id)}, {"$push": {"bookmarks": blog_id}}
@@ -37,8 +35,6 @@ class User:
 
     async def remove_bookmark(self, user_id: str, blog_id: str):
         user = await self.get_user(user_id)
-        if not user:
-            return {"status": False, "message": "User does not exist"}
         if blog_id not in user["bookmarks"]:
             return {"status": False, "message": "Blog not bookmarked"}
         output = await self.users.update_one(

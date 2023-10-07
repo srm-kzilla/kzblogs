@@ -1,6 +1,6 @@
 from fastapi import Response, Request, APIRouter as Router
 from database import MongoDBConnection as Database
-from helpers.schemas import Comment, Like, Bookmark
+from helpers.schemas import Comment, Bookmark
 from helpers.response import Response
 
 router = Router()
@@ -46,19 +46,15 @@ async def delete_comment(request: Request, comment_id: str):
 @router.post("/bookmarks")
 async def add_bookmark(request: Request, bookmark_data: Bookmark):
     user = await db.users.verify_session(request.headers["x-session-id"])
-    return Response(
-        await db.users.add_bookmark(
-            user_id=str(user["_id"]), blog_id=bookmark_data.blog_id
-        )
-    )
+    response = await db.users.add_bookmark(str(user["_id"]), bookmark_data.blog_id)
+    return Response(response, status_code=200 if response["status"] else 400)
 
 
 @router.delete("/bookmarks/{blog_id}")
 async def remove_bookmark(request: Request, blog_id: str):
     user = await db.users.verify_session(request.headers["x-session-id"])
-    return Response(
-        await db.users.remove_bookmark(user_id=str(user["_id"]), blog_id=blog_id)
-    )
+    response = await db.users.remove_bookmark(user_id=str(user["_id"]), blog_id=blog_id)
+    return Response(response, status_code=200 if response["status"] else 400)
 
 
 @router.get("/bookmarks/")

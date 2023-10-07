@@ -69,7 +69,7 @@ class Blog:
             {"_id": ObjectId(id)}, {"$pull": {"likes": user_id}}
         )
         if output.modified_count == 0:
-            return {"status": False, "message": "Blog does not exist"} 
+            return {"status": False, "message": "Blog does not exist"}
         return {"status": True, "message": "Like removed successfully"}
 
     async def add_comment(self, comment: dict):
