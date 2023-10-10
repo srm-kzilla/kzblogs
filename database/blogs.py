@@ -87,7 +87,10 @@ class Blog:
         return {"status": True, "message": "Comment deleted successfully"}
 
     async def get_comments(self, blog_id: str):
-        return list(await self.comments.find({"blog_id": blog_id}))
+        comments = await self.comments.find({"blog_id": blog_id}).to_list(length=None)
+        for i in range(len(comments)):
+            comments[i]["_id"] = str(comments[i]["_id"])
+        return comments
 
     async def get_trending(self, count: int = 5):
         output = await self.get_blog()
