@@ -31,16 +31,17 @@ async def get_comments(request: Request, blog_id: str):
 @router.post("/comments")
 async def add_comment(request: Request, comment_data: Comment):
     comment = dict(comment_data)
-    comment["author_id"] = (
-        await db.users.verify_session(request.headers["x-session-id"])
-    )["_id"]
-    return Response(await db.blogs.add_comment(comment_data))
+    comment["author_id"] = str(
+        (await db.users.verify_session(request.headers["x-session-id"]))["_id"]
+    )
+    return Response(await db.blogs.add_comment(comment))
 
 
 @router.delete("/comments/{comment_id}")
 async def delete_comment(request: Request, comment_id: str):
     user = await db.users.verify_session(request.headers["x-session-id"])
-    return Response(await db.blogs.delete_comment(comment_id, str(user["_id"])))
+    response = await db.blogs.delete_comment(comment_id, str(user["_id"]))
+    return Response(response, status_code=200 if response["status"] else 400)
 
 
 @router.post("/bookmarks")
