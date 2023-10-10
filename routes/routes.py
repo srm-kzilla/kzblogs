@@ -25,7 +25,8 @@ async def remove_like(request: Request, blog_id: str):
 
 @router.get("/comments/{blog_id}")
 async def get_comments(request: Request, blog_id: str):
-    return Response(await db.blogs.get_comments(blog_id))
+    response = await db.blogs.get_comments(blog_id)
+    return Response(response, status_code=200 if response else 404)
 
 
 @router.post("/comments")
