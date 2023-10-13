@@ -36,10 +36,11 @@ def verify_auth(app: FastAPI):
                         {"status": False, "message": "Only admin can access this path"},
                         status_code=403,
                     )
-        response: Response = await call_next(request)
-        if response.status_code == 500:
+        try:
+            return await call_next(request)
+        except Exception as e:
+            print(e)
             return Response(
                 {"status": False, "message": "Oops! Something went wrong"},
                 status_code=500,
             )
-        return response
