@@ -13,6 +13,7 @@ async def add_like(request: Request, blog_id: str):
     response = await db.blogs.like(blog_id=blog_id, user_id=str(user["_id"]))
     return Response(response, status_code=200 if response["status"] else 400)
 
+
 @router.get("/comments/{blog_id}")
 async def get_comments(request: Request, blog_id: str):
     response = await db.blogs.get_comments(blog_id)

@@ -64,8 +64,6 @@ class Blog:
                 {"_id": ObjectId(blog_id)}, {"$push": {"likes": str(user_id)}}
             )
             return {"status": True, "message": "Like added successfully"}
-        
-        
 
     async def add_comment(self, comment: dict):
         if self.blogs.count_documents({"_id": ObjectId(comment["blog_id"])}) == 0:
