@@ -2,12 +2,14 @@ from fastapi import Response, Request, APIRouter as Router
 from database import MongoDBConnection as Database
 from helpers.schemas import Comment, Bookmark
 from helpers.response import Response
+from middleware import middleware
 
 router = Router()
 db = Database()
 
 
 @router.post("/likes/{blog_id}")
+@middleware
 async def add_like(request: Request, blog_id: str):
     user = await db.users.verify_session(request.headers["x-session-id"])
     response = await db.blogs.like(blog_id=blog_id, user_id=str(user["_id"]))
@@ -21,6 +23,7 @@ async def get_comments(request: Request, blog_id: str):
 
 
 @router.post("/comments")
+@middleware
 async def add_comment(request: Request, comment_data: Comment):
     comment = dict(comment_data)
     comment["author_id"] = str(
@@ -30,6 +33,7 @@ async def add_comment(request: Request, comment_data: Comment):
 
 
 @router.delete("/comments/{comment_id}")
+@middleware
 async def delete_comment(request: Request, comment_id: str):
     user = await db.users.verify_session(request.headers["x-session-id"])
     response = await db.blogs.delete_comment(comment_id, str(user["_id"]))
@@ -44,6 +48,7 @@ async def add_bookmark(request: Request, bookmark_data: Bookmark):
 
 
 @router.delete("/bookmarks/{blog_id}")
+@middleware
 async def remove_bookmark(request: Request, blog_id: str):
     user = await db.users.verify_session(request.headers["x-session-id"])
     response = await db.users.remove_bookmark(user_id=str(user["_id"]), blog_id=blog_id)
@@ -51,6 +56,7 @@ async def remove_bookmark(request: Request, blog_id: str):
 
 
 @router.get("/bookmarks/")
+@middleware
 async def get_bookmarks(request: Request):
     bookmarks = await db.users.get_bookmarks(
         (await db.users.verify_session(request.headers["x-session-id"]))["_id"]
