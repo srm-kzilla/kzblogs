@@ -1,10 +1,11 @@
-from fastapi import Request
+from fastapi import Request, FastAPI
 from helpers.response import Response
 from database import MongoDBConnection as Database
 from typing import Callable
 from functools import wraps
 
 db = Database()
+
 
 def middleware(func: Callable):
     @wraps(func)
@@ -29,11 +30,19 @@ def middleware(func: Callable):
                     status_code=403,
                 )
         try:
-            return await func(*args, **kwargs)
+            response: Response = await func(request=request, *args, **kwargs)
+            print(user)
+            response.headers["is_admin"] = "no"
+            if user:
+                response.headers["is_admin"] = "yes" if user.get("is_admin") else "no"
+                response.headers["image"] = user.get("image")
+                response.headers["name"] = user.get("name")
+            return response
         except Exception as e:
             print(e)
             return Response(
                 {"status": False, "message": "Oops! Something went wrong"},
                 status_code=500,
             )
+
     return wrapper
