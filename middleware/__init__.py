@@ -31,7 +31,6 @@ def middleware(func: Callable):
                 )
         try:
             response: Response = await func(request=request, *args, **kwargs)
-            print(user)
             response.headers["is_admin"] = "no"
             if user:
                 response.headers["is_admin"] = "yes" if user.get("is_admin") else "no"
