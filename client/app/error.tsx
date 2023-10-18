@@ -13,7 +13,7 @@ export default function Error({ error }: ErrorProp) {
           </h1>
           <p className="mt-4 text-kz-secondary">{error.message}</p>
           <p className="mt-4 text-kz-secondary">
-            Something has gone really wrong for you to see this :( But no
+            Something has gone really wrong for you to see this :( <br /> But no
             worries we will fix it. Stay Updated!!
           </p>
 
