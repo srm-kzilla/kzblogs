@@ -25,6 +25,7 @@ type User = {
   googleId: string;
   isAdmin: boolean;
 };
+
 type Challenge = {
   id: number;
   name: string;
@@ -32,3 +33,7 @@ type Challenge = {
   endingDate: string;
   description: string;
 };
+
+type ErrorProp={
+  error: Error;
+}
