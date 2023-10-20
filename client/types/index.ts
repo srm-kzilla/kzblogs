@@ -33,7 +33,3 @@ type Challenge = {
   endingDate: string;
   description: string;
 };
-
-type ErrorProp={
-  error: Error;
-}

@@ -2,16 +2,20 @@
 import Navbar from "@/components/Navbar";
 import Link from "next/link";
 
-export default function Error({ error }: ErrorProp) {
+type ErrorProp = {
+  error: Error;
+};
+
+export default function Error({ error: { name, message } }: ErrorProp) {
   return (
     <div>
       <Navbar />
       <div className="grid h-[87vh] px-4 bg-kz-primary place-content-center">
         <div className="text-center">
           <h1 className="font-black text-kz-highlight-light text-3xl md:text-5xl lg:text-6xl">
-            {error.name}
+            {name}
           </h1>
-          <p className="mt-4 text-kz-secondary">{error.message}</p>
+          <p className="mt-4 text-kz-secondary">{message}</p>
           <p className="mt-4 text-kz-secondary">
             Something has gone really wrong for you to see this :( <br /> But no
             worries we will fix it. Stay Updated!!
