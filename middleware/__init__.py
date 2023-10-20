@@ -24,7 +24,9 @@ def middleware(func: Callable):
                     {"status": False, "message": "Invalid session ID"},
                     status_code=403,
                 )
-            if request.url.path.startswith("/admin") and not user.get("is_admin", False):
+            if request.url.path.startswith("/admin") and not user.get(
+                "is_admin", False
+            ):
                 return Response(
                     {"status": False, "message": "Only admin can access this path"},
                     status_code=403,
