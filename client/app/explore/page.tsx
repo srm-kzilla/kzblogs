@@ -3,7 +3,7 @@ import ChallengesCard from "@/components/ChallengesCard";
 import Navbar from "@/components/Navbar";
 import challengeData from "@/mock-data/ChallengeData";
 import blogData from "@/mock-data/data";
-import { Divide, SearchIcon } from "lucide-react";
+import { SearchIcon } from "lucide-react";
 
 const Explore = () => {
   return (
