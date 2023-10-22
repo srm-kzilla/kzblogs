@@ -11,7 +11,6 @@ class Blog(BaseModel):
 
 class Comment(BaseModel):
     content: str
-    author_id: str
     blog_id: str
 
 
@@ -22,9 +21,9 @@ class AddBlog(BaseModel):
     author: str
 
 
-class Like(BaseModel):
-    user_id: str
-
-
 class Bookmark(BaseModel):
-    user_id: str
+    blog_id: str
+
+
+class Like(BaseModel):
+    blog_id: str

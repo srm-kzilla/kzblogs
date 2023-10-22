@@ -50,21 +50,20 @@ class Blog:
             return {"status": False, "message": "Blog does not exist"}
         return {"status": True, "message": "Blog updated successfully"}
 
-    async def add_like(self, id: str, user_id: str):
-        output = await self.blogs.update_one(
-            {"_id": ObjectId(id)}, {"$push": {"likes": user_id}}
-        )
-        if output.modified_count == 0:
+    async def like(self, blog_id: str, user_id: str):
+        blog = await self.blogs.find_one({"_id": ObjectId(blog_id)})
+        if not blog:
             return {"status": False, "message": "Blog does not exist"}
-        return {"status": True, "message": "Like added successfully"}
-
-    async def remove_like(self, id: str, user_id: str):
-        output = await self.blogs.update_one(
-            {"_id": ObjectId(id)}, {"$pull": {"likes": user_id}}
-        )
-        if output.modified_count == 0:
-            return {"status": False, "message": "Blog does not exist"}
-        return {"status": True, "message": "Like removed successfully"}
+        if user_id in list(blog["likes"]):
+            await self.blogs.update_one(
+                {"_id": ObjectId(blog_id)}, {"$pull": {"likes": str(user_id)}}
+            )
+            return {"status": True, "message": "Like removed successfully"}
+        else:
+            await self.blogs.update_one(
+                {"_id": ObjectId(blog_id)}, {"$push": {"likes": str(user_id)}}
+            )
+            return {"status": True, "message": "Like added successfully"}
 
     async def add_comment(self, comment: dict):
         if self.blogs.count_documents({"_id": ObjectId(comment["blog_id"])}) == 0:
@@ -72,8 +71,19 @@ class Blog:
         await self.comments.insert_one(dict(comment))
         return {"status": True, "message": "Comment added successfully"}
 
-    async def get_comments(self, blog_id):
-        return list(await self.comments.find({"blog_id": blog_id}))
+    async def delete_comment(self, comment_id: str, user_id: str):
+        output = await self.comments.delete_one(
+            {"_id": ObjectId(comment_id), "author_id": str(user_id)}
+        )
+        if output.deleted_count == 0:
+            return {"status": False, "message": "Comment does not exist"}
+        return {"status": True, "message": "Comment deleted successfully"}
+
+    async def get_comments(self, blog_id: str):
+        comments = await self.comments.find({"blog_id": blog_id}).to_list(length=None)
+        for i in range(len(comments)):
+            comments[i]["_id"] = str(comments[i]["_id"])
+        return comments
 
     async def get_trending(self, count: int = 5):
         output = await self.get_blog()

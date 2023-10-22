@@ -13,10 +13,9 @@ async def get_admin(request: Request, id: str = "all"):
     id = None if id == "all" else id
     result = await db.blogs.get_blog(blog_id=id)
     if isinstance(result, dict) and "status" not in result:
-        result["_id"] = str(result["_id"])
+        result.update({"_id": str(result["_id"])})
     elif isinstance(result, list):
-        for i in range(len(result)):
-            result[i]["_id"] = str(result[i]["_id"])
+        result = map(lambda x: x.update({"_id": str(x["_id"])}) or x, result)
     return Response(
         result, status_code=404 if "status" in result and not result["status"] else 200
     )

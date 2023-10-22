@@ -1,6 +1,7 @@
 from helpers.constants import DB_SETTINGS
 from motor.motor_asyncio import AsyncIOMotorClient
 from bson import ObjectId
+from typing import List
 
 
 class User:
@@ -22,19 +23,25 @@ class User:
         return {"status": True, "message": "User deleted successfully"}
 
     async def add_bookmark(self, user_id: str, blog_id: str):
+        user = await self.get_user(user_id)
+        if blog_id in user["bookmarks"]:
+            return {"status": False, "message": "Blog already bookmarked"}
         output = await self.users.update_one(
             {"_id": ObjectId(user_id)}, {"$push": {"bookmarks": blog_id}}
         )
         if output.modified_count == 0:
-            return {"status": False, "message": "User does not exist"}
+            return {"status": False, "message": "Failed to add bookmark"}
         return {"status": True, "message": "Bookmark added successfully"}
 
     async def remove_bookmark(self, user_id: str, blog_id: str):
+        user = await self.get_user(user_id)
+        if blog_id not in user["bookmarks"]:
+            return {"status": False, "message": "Blog not bookmarked"}
         output = await self.users.update_one(
             {"_id": ObjectId(user_id)}, {"$pull": {"bookmarks": blog_id}}
         )
         if output.modified_count == 0:
-            return {"status": False, "message": "User does not exist"}
+            return {"status": False, "message": "Failed to remove bookmark"}
         return {"status": True, "message": "Bookmark removed successfully"}
 
     async def get_bookmarks(self, user_id: str):
@@ -42,14 +49,14 @@ class User:
         if not user:
             return {"status": False, "message": "User does not exist"}
         bookmarks = user.get("bookmarks", [])
-        bookmarks = list(
+        bookmarks: List[dict] = list(
             await self.blogs.find(
                 {"_id": {"$in": [ObjectId(i) for i in bookmarks]}}
             ).to_list(length=None)
             if bookmarks
             else []
         )
-        return list(map(lambda x: x.update({"_id": str(x.get("_id"))}), bookmarks))
+        return [(i.update({"_id": str(i["_id"])}) or i) for i in bookmarks]
 
     async def verify_session(self, session_id: str):
         session = await self.sessions.find_one({"sessionToken": session_id})
