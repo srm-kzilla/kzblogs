@@ -17,7 +17,7 @@ async def get_admin(request: Request, id: str = "all"):
     if isinstance(result, dict) and "status" not in result:
         result.update({"_id": str(result["_id"])})
     elif isinstance(result, list):
-        result = map(lambda x: x.update({"_id": str(x["_id"])}) or x, result)
+        result = list(map(lambda x: x.update({"_id": str(x["_id"])}) or x, result))
     return Response(
         result, status_code=404 if "status" in result and not result["status"] else 200
     )
