@@ -1,7 +1,10 @@
 from fastapi import FastAPI, Request
 from helpers.response import Response
+from helpers.constants import IGNORED_ROUTES
 from database import MongoDBConnection as Database
 from typing import Callable
+
+is_ignored = lambda x: any([x.startswith(i) for i in IGNORED_ROUTES])
 
 
 def verify_auth(app: FastAPI):
@@ -9,7 +12,9 @@ def verify_auth(app: FastAPI):
 
     @app.middleware("http")
     async def verify_auth(request: Request, call_next: Callable):
-        if (
+        if is_ignored(request.url.path):
+            pass
+        elif (
             is_admin_path := request.url.path.startswith("/admin")
         ) or request.url.path.startswith("/api"):
             if request.method != "OPTIONS":
@@ -31,10 +36,11 @@ def verify_auth(app: FastAPI):
                         {"status": False, "message": "Only admin can access this path"},
                         status_code=403,
                     )
-        response: Response = await call_next(request)
-        if response.status_code == 500:
+        try:
+            return await call_next(request)
+        except Exception as e:
+            print(e)
             return Response(
                 {"status": False, "message": "Oops! Something went wrong"},
                 status_code=500,
             )
-        return response
