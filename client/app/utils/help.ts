@@ -1,23 +1,22 @@
-"use server"
+"use server";
 import { cookies } from "next/headers";
 import axios from "axios";
 
 const API = {
   BASE_URL: process.env.API_BASE_URL,
   ENDPOINTS: {
-    ADMIN:{
-      ADD:"/admin",
+    ADMIN: {
+      ADD: "/admin",
     },
     BLOGS: {
       ALL: "/api/blogs/all",
-      GET: (id:string) => `/admin/${id}`,
+      GET: (id: string) => `/admin/${id}`,
       TRENDING: "/api/trending",
       BOOKMARKS: "/api/bookmarks/",
-      LIKES: (id:string) => `/api/likes/${id}`,
+      LIKES: (id: string) => `/api/likes/${id}`,
     },
   },
 };
-
 
 async function getSessionToken() {
   const cookieStore = cookies();
@@ -46,11 +45,14 @@ export async function getBlog(_id: string) {
   const sessionToken = await getSessionToken();
   if (sessionToken !== undefined) {
     try {
-      const response = await axios.get(API.BASE_URL + API.ENDPOINTS.BLOGS.GET(_id), {
-        headers: {
-          "X-Session-ID": sessionToken,
+      const response = await axios.get(
+        API.BASE_URL + API.ENDPOINTS.BLOGS.GET(_id),
+        {
+          headers: {
+            "X-Session-ID": sessionToken,
+          },
         },
-      });
+      );
       console.log(response.headers);
       return response.data;
     } catch (error) {
@@ -65,11 +67,14 @@ export async function getTrending() {
   const sessionToken = await getSessionToken();
   if (sessionToken !== undefined) {
     try {
-      const response = await axios.get(API.BASE_URL + API.ENDPOINTS.BLOGS.TRENDING, {
-        headers: {
-          "X-Session-ID": sessionToken,
+      const response = await axios.get(
+        API.BASE_URL + API.ENDPOINTS.BLOGS.TRENDING,
+        {
+          headers: {
+            "X-Session-ID": sessionToken,
+          },
         },
-      });
+      );
       return response.data;
     } catch (error) {
       console.log(error);
@@ -79,22 +84,26 @@ export async function getTrending() {
   }
 }
 
-export async function addBookmark(id:string) {
+export async function addBookmark(id: string) {
   const sessionToken = await getSessionToken();
   if (sessionToken !== undefined) {
     try {
-      await axios.post(API.BASE_URL + API.ENDPOINTS.BLOGS.BOOKMARKS, { blog_id: id }, {
-        headers: {
-          "X-Session-ID": sessionToken,
+      await axios.post(
+        API.BASE_URL + API.ENDPOINTS.BLOGS.BOOKMARKS,
+        { blog_id: id },
+        {
+          headers: {
+            "X-Session-ID": sessionToken,
+          },
         },
-      });
+      );
     } catch (error) {
       console.log(error);
     }
   }
 }
 
-export async function addLike(id:string) {
+export async function addLike(id: string) {
   const sessionToken = await getSessionToken();
   if (sessionToken !== undefined) {
     try {
@@ -113,11 +122,14 @@ export async function getBookmarkBlogs() {
   const sessionToken = await getSessionToken();
   if (sessionToken !== undefined) {
     try {
-      const response = await axios.get(API.BASE_URL + API.ENDPOINTS.BLOGS.BOOKMARKS, {
-        headers: {
-          "X-Session-ID": sessionToken,
+      const response = await axios.get(
+        API.BASE_URL + API.ENDPOINTS.BLOGS.BOOKMARKS,
+        {
+          headers: {
+            "X-Session-ID": sessionToken,
+          },
         },
-      });
+      );
       return response.data;
     } catch (error) {
       console.log(error);
@@ -127,16 +139,18 @@ export async function getBookmarkBlogs() {
   }
 }
 
-export async function addBlog(data:any) {
-  const sessionToken = await getSessionToken()
-  axios.post(API.BASE_URL+API.ENDPOINTS.ADMIN.ADD, data,{
-  headers: {
-    "X-Session-ID": sessionToken,
-  }})
-    .then(response => {
-      console.log('POST request successful:', response.data);
+export async function addBlog(data: any) {
+  const sessionToken = await getSessionToken();
+  axios
+    .post(API.BASE_URL + API.ENDPOINTS.ADMIN.ADD, data, {
+      headers: {
+        "X-Session-ID": sessionToken,
+      },
     })
-    .catch(error => {
-      console.error('Error making POST request:', error);
+    .then((response) => {
+      console.log("POST request successful:", response.data);
+    })
+    .catch((error) => {
+      console.error("Error making POST request:", error);
     });
 }

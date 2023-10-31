@@ -4,7 +4,7 @@ type Comments = {
 };
 
 type Blog = {
-  index:number;
+  index: number;
   _id: string;
   name: string;
   publishStatus: boolean;

@@ -1,4 +1,8 @@
-import { DB_NAME, GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET } from "@/app/utils/env";
+import {
+  DB_NAME,
+  GOOGLE_CLIENT_ID,
+  GOOGLE_CLIENT_SECRET,
+} from "@/app/utils/env";
 import { dbClientPromise } from "@/app/utils/mongo";
 import { MongoDBAdapter } from "@auth/mongodb-adapter";
 import type { NextAuthOptions } from "next-auth";
@@ -17,8 +21,8 @@ export const options: NextAuthOptions = {
           is_admin: false,
         };
       },
-      clientId: GOOGLE_CLIENT_ID ,
-      clientSecret:GOOGLE_CLIENT_SECRET ,
+      clientId: GOOGLE_CLIENT_ID,
+      clientSecret: GOOGLE_CLIENT_SECRET,
       authorization: {
         params: {
           prompt: "consent",
