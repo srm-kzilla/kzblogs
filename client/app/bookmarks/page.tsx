@@ -1,16 +1,9 @@
 import BlogCard from "@/components/BlogCard";
 import Navbar from "@/components/Navbar";
+import { getBookmarkBlogs } from "../utils/help";
 
 export default async function Home() {
-  const response = await fetch(`http://127.0.0.1:8000/api/bookmarks`, {
-    method: "GET",
-    cache: "no-store",
-    headers: {
-      "X-Session-Id": "53c0b781-cd91-4958-82d3-c1e1eb65971c",
-    },
-  });
-  const data = await response.json();
-
+  const bookmarkBlogs = await getBookmarkBlogs();
   return (
     <div>
       <Navbar />
@@ -20,7 +13,7 @@ export default async function Home() {
             All your <span className="text-kz-highlight-light">favorite</span>{" "}
             articles in one place
           </div>
-          {data.map((blogs: Blog) => (
+          {bookmarkBlogs.map((blogs: Blog) => (
             <div key={blogs._id} className=" my-6 m-3">
               <BlogCard {...blogs} />
             </div>

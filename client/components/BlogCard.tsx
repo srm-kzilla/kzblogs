@@ -7,7 +7,6 @@ import {
   UserCircleIcon,
 } from "lucide-react";
 import { addBookmark, addLike } from "@/app/utils/help";
-import { useState } from "react";
 
 const BlogCard = ({
   _id,
@@ -20,7 +19,7 @@ const BlogCard = ({
   bookmarked,
 }: Blog) => {
   const isLiked = false,
-    isBookmarked = false;
+    isBookmarked = bookmarked;
   return (
     <div className="p-3 bg-kz-card-light text-kz-secondary rounded-2xl w-full h-fit">
       <div className="flex flex-col md:flex-row justify-between gap-3">

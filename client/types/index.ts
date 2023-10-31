@@ -4,9 +4,10 @@ type Comments = {
 };
 
 type Blog = {
+  index:number;
   _id: string;
   name: string;
-  publishStatus: "draft" | "published";
+  publishStatus: boolean;
   lastEdited: string;
   author: string;
   likes: string[];

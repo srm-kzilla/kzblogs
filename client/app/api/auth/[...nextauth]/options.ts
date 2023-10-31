@@ -28,15 +28,6 @@ export const options: NextAuthOptions = {
       },
     }),
   ],
-  callbacks: {
-    session({ session, user }) {
-      if(session?.user){
-        session.user.email=user.id;
-      }
-      
-      return session
-    },
-  },
   pages: {
     signIn: "/auth/signin",
   },

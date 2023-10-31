@@ -6,7 +6,6 @@ import { getBookmarkBlogs } from "@/app/utils/help";
 const BookmarkCard = async () => {
   const bookmarkBlogs = await getBookmarkBlogs();
   const bookmarkNumber = bookmarkBlogs.length;
-  console.log(bookmarkBlogs);
   return (
     <div>
       {bookmarkNumber === 0 ? (
@@ -24,7 +23,7 @@ const BookmarkCard = async () => {
         <div className="bg-kz-card-dark p-4 w-full h-fit text-kz-secondary rounded-xl">
           <h1 className="text-xl text-transparent bg-clip-text bg-gradient-to-tr from-kz-highlight-dark via-kz-highlight-light via-40% to-kz-secondary to-90%">
             {" "}
-            Bookmarked ( {bookmarkNumber} ){bookmarkBlogs}
+            Bookmarked ( {bookmarkNumber} )
           </h1>
           <div className="flex max-h-40 no-scrollbar overflow-y-scroll flex-col mt-3">
             {bookmarkBlogs.map(({ _id, name, content }: Blog) => (
@@ -41,7 +40,7 @@ const BookmarkCard = async () => {
           </div>
           <div className="text-kz-primary font-sans text-xs flex justify-center items-center">
             <Link href="/bookmarks">
-              <button className="bg-kz-secondary mt-1 px-3 py-1 rounded-3xl">
+              <button className="bg-kz-secondary mt-3 px-3 py-1 rounded-3xl">
                 See All
               </button>
             </Link>

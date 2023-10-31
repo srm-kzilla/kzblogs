@@ -1,14 +1,27 @@
 "use client";
+import React, { useState } from "react";
 import Button from "@/components/Button";
 import Navbar from "@/components/Navbar";
-import { Image, PenSquareIcon } from "lucide-react";
-import { useState } from "react";
+import { Image } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import { addBlog } from "../utils/help";
 
 const CreatePage = () => {
   const [markdownInput, setMarkdownInput] = useState("");
-  const [subtitle, setSubtitle] = useState(false);
+  const [author, setAuthor] = useState("");
+  const [title, setTitle] = useState("");
+
+  const publishData = () => {
+    const dataToPublish = {
+      name: title,
+      content: markdownInput,
+      publish_status: true,
+      author: author,
+    };
+    addBlog(dataToPublish);
+  };
+
   return (
     <div className="flex flex-col items-center justify-center min-h-screen overflow-y-scroll w-full overflow-x-hidden">
       <div className="flex h-screen w-full flex-col">
@@ -20,12 +33,10 @@ const CreatePage = () => {
                 <Image className="h-4 md:h-6" />
                 <p>Add Cover Image</p>
               </Button>
-              <Button variant="primary" onClick={() => setSubtitle(!subtitle)}>
-                <PenSquareIcon className="h-4 md:h-6" />
-                <p>Add Subtitle</p>
-              </Button>
             </div>
-            <Button variant="secondary">Publish</Button>
+            <Button onClick={publishData} variant="secondary">
+              Publish
+            </Button>
           </div>
           <form className="px-5">
             <div className="flex flex-col">
@@ -33,15 +44,15 @@ const CreatePage = () => {
                 id="title"
                 className="mt-5 w-full text-white bg-transparent text-2xl resize-none outline-none lg:text-5xl"
                 placeholder="Title"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
               ></textarea>
               <textarea
-                id="tagline"
-                className={
-                  (subtitle
-                    ? "resize-none outline-none w-full text-kz-secondary ml-2 bg-transparent text-xs md:text-base lg:text-xl"
-                    : "hidden") + ""
-                }
-                placeholder="Tagline"
+                id="author"
+                value={author}
+                onChange={(e) => setAuthor(e.target.value)}
+                className="resize-none outline-none w-full text-kz-secondary ml-2 bg-transparent text-xs md:text-base lg:text-xl"
+                placeholder="Author Name"
               ></textarea>
             </div>
             <div className="flex flex-col lg:flex-row justify-evenly gap-20 text-white">
