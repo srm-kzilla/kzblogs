@@ -40,18 +40,11 @@ async def delete_comment(request: Request, comment_id: str):
     return Response(response, status_code=200 if response["status"] else 400)
 
 
-@router.post("/bookmarks")
-async def add_bookmark(request: Request, bookmark_data: Bookmark):
-    user = await db.users.verify_session(request.headers["x-session-id"])
-    response = await db.users.add_bookmark(str(user["_id"]), bookmark_data.blog_id)
-    return Response(response, status_code=200 if response["status"] else 400)
-
-
-@router.delete("/bookmarks/{blog_id}")
+@router.post("/bookmarks/{blog_id}")
 @middleware
-async def remove_bookmark(request: Request, blog_id: str):
+async def bookmark(request: Request, blog_id: str):
     user = await db.users.verify_session(request.headers["x-session-id"])
-    response = await db.users.remove_bookmark(user_id=str(user["_id"]), blog_id=blog_id)
+    response = await db.users.bookmark(str(user["_id"]), blog_id)
     return Response(response, status_code=200 if response["status"] else 400)
 
 

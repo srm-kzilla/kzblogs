@@ -25,6 +25,7 @@ type User = {
   googleId: string;
   isAdmin: boolean;
 };
+
 type Challenge = {
   id: number;
   name: string;
