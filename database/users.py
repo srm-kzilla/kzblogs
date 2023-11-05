@@ -22,27 +22,20 @@ class User:
             return {"status": False, "message": "User does not exist"}
         return {"status": True, "message": "User deleted successfully"}
 
-    async def add_bookmark(self, user_id: str, blog_id: str):
+    async def bookmark(self, user_id: str, blog_id: str):
         user = await self.get_user(user_id)
-        if blog_id in user["bookmarks"]:
-            return {"status": False, "message": "Blog already bookmarked"}
-        output = await self.users.update_one(
-            {"_id": ObjectId(user_id)}, {"$push": {"bookmarks": blog_id}}
-        )
-        if output.modified_count == 0:
-            return {"status": False, "message": "Failed to add bookmark"}
-        return {"status": True, "message": "Bookmark added successfully"}
-
-    async def remove_bookmark(self, user_id: str, blog_id: str):
-        user = await self.get_user(user_id)
-        if blog_id not in user["bookmarks"]:
-            return {"status": False, "message": "Blog not bookmarked"}
-        output = await self.users.update_one(
-            {"_id": ObjectId(user_id)}, {"$pull": {"bookmarks": blog_id}}
-        )
-        if output.modified_count == 0:
-            return {"status": False, "message": "Failed to remove bookmark"}
-        return {"status": True, "message": "Bookmark removed successfully"}
+        if blog_id in user.get("bookmarks", []):
+            await self.users.update_one(
+                {"_id": ObjectId(user_id)},
+                {"$pull": {"bookmarks": blog_id}},
+            )
+            return {"status": True, "message": "Bookmark removed successfully"}
+        else:
+            await self.users.update_one(
+                {"_id": ObjectId(user_id)},
+                {"$push": {"bookmarks": blog_id}},
+            )
+            return {"status": True, "message": "Bookmark added successfully"}
 
     async def get_bookmarks(self, user_id: str):
         user = await self.get_user(user_id)
