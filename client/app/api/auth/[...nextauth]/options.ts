@@ -2,8 +2,8 @@ import {
   DB_NAME,
   GOOGLE_CLIENT_ID,
   GOOGLE_CLIENT_SECRET,
-} from "@/app/utils/env";
-import { dbClientPromise } from "@/app/utils/mongo";
+} from "@/utils/env";
+import { dbClientPromise } from "@/utils/mongo";
 import { MongoDBAdapter } from "@auth/mongodb-adapter";
 import type { NextAuthOptions } from "next-auth";
 import GoogleProvider, { GoogleProfile } from "next-auth/providers/google";

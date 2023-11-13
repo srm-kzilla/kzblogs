@@ -1,6 +1,6 @@
 import BlogCard from "@/components/BlogCard";
 import Navbar from "@/components/Navbar";
-import { getBookmarkBlogs } from "../utils/help";
+import { getBookmarkBlogs } from "@/utils/api";
 
 export default async function Home() {
   const bookmarkBlogs = await getBookmarkBlogs();

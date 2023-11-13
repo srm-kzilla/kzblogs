@@ -3,7 +3,7 @@ import Navbar from "@/components/Navbar";
 import DraftCard from "@/components/DraftCard";
 import TrendingCard from "@/components/TrendingCard";
 import BookmarkCard from "@/components/BookmarkCard";
-import { getAllBlogs } from "./utils/help";
+import { getAllBlogs } from "@/utils/api";
 
 export default async function Home() {
   const blogs = await getAllBlogs();

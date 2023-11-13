@@ -3,7 +3,7 @@ import ChallengesCard from "@/components/ChallengesCard";
 import Navbar from "@/components/Navbar";
 import challengeData from "@/mock-data/ChallengeData";
 import { SearchIcon } from "lucide-react";
-import { getTrending } from "../utils/help";
+import { getTrending } from "@/utils/api";
 
 const Explore = async () => {
   const data = await getTrending();

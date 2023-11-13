@@ -1,7 +1,7 @@
 import React from "react";
 import { UserCircle2 } from "lucide-react";
 import Link from "next/link";
-import { getBookmarkBlogs } from "@/app/utils/help";
+import { getBookmarkBlogs } from "@/utils/api";
 
 const BookmarkCard = async () => {
   const bookmarkBlogs = await getBookmarkBlogs();

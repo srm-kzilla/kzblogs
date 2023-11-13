@@ -1,4 +1,4 @@
-import { getAllBlogs } from "@/app/utils/help";
+import { getAllBlogs } from "@/utils/api";
 import { PenLine, PlusCircleIcon } from "lucide-react";
 import Link from "next/link";
 

@@ -5,7 +5,7 @@ import Navbar from "@/components/Navbar";
 import { Image } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import { addBlog } from "../utils/help";
+import { addBlog } from "@/utils/api";
 
 const CreatePage = () => {
   const [markdownInput, setMarkdownInput] = useState("");

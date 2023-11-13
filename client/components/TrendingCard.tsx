@@ -1,4 +1,4 @@
-import { getTrending } from "@/app/utils/help";
+import { getTrending } from "@/utils/api";
 
 interface TrendingCardProps {
   blogs: Blog[];

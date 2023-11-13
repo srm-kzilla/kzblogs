@@ -6,7 +6,7 @@ import {
   MessageSquare,
   UserCircleIcon,
 } from "lucide-react";
-import { addBookmark, addLike } from "@/app/utils/help";
+import { addBookmark, addLike } from "@/utils/api";
 
 const BlogCard = ({
   _id,

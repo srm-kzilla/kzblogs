@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import "cal-sans";
 import Footer from "@/components/Footer";
 import AuthProvider from "@/components/AuthProvider";
-import { cookieMiddleware } from "./utils/cookie";
+import { cookieMiddleware } from "@/utils/cookie";
 
 export const metadata: Metadata = {
   title: "KZBlogs",
