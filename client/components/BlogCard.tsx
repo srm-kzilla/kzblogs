@@ -6,7 +6,7 @@ import {
   MessageSquare,
   UserCircleIcon,
 } from "lucide-react";
-import { addBookmark, addLike } from "@/utils/api";
+import { toggleBookmark, toggleLike } from "@/utils/api";
 
 const BlogCard = ({
   _id,
@@ -42,7 +42,7 @@ const BlogCard = ({
       <div className="font-sans relative flex flex-row justify-between mt-2 text-xs font-extralight items-baseline">
         <div className="flex flex-row gap-2 items-center">
           <button
-            onClick={() => addLike(_id)}
+            onClick={() => toggleLike(_id)}
             className="flex flex-row gap-1 items-center"
           >
             <HeartIcon width={14} />
@@ -54,7 +54,7 @@ const BlogCard = ({
           </button>
         </div>
         <div>
-          <button onClick={() => addBookmark(_id)}>
+          <button onClick={() => toggleBookmark(_id)}>
             {isBookmarked ? (
               <BookmarkCheck width={14} />
             ) : (

@@ -84,7 +84,7 @@ export async function getTrending() {
   }
 }
 
-export async function addBookmark(id: string) {
+export async function toggleBookmark(id: string) {
   const sessionToken = await getSessionToken();
   if (sessionToken !== undefined) {
     try {
@@ -103,7 +103,7 @@ export async function addBookmark(id: string) {
   }
 }
 
-export async function addLike(id: string) {
+export async function toggleLike(id: string) {
   const sessionToken = await getSessionToken();
   if (sessionToken !== undefined) {
     try {
@@ -141,16 +141,19 @@ export async function getBookmarkBlogs() {
 
 export async function addBlog(data: any) {
   const sessionToken = await getSessionToken();
-  axios
-    .post(API.BASE_URL + API.ENDPOINTS.ADMIN.ADD, data, {
-      headers: {
-        "X-Session-ID": sessionToken,
-      },
-    })
-    .then((response) => {
-      console.log("POST request successful:", response.data);
-    })
-    .catch((error) => {
-      console.error("Error making POST request:", error);
-    });
+  if(sessionToken !== undefined){
+    try{
+      axios
+      .post(API.BASE_URL + API.ENDPOINTS.ADMIN.ADD, data, {
+        headers: {
+          "X-Session-ID": sessionToken,
+        },
+      })
+    }
+    catch(error){
+      console.log(error);
+    }
+  } else {
+    console.log("SESSION TOKEN NOT DEFINED");
+  }
 }
