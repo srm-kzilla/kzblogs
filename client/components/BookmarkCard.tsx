@@ -1,15 +1,11 @@
 import React from "react";
 import { UserCircle2 } from "lucide-react";
 import Link from "next/link";
+import { getBookmarkBlogs } from "@/utils/api";
 
-interface BookmarkCardProps {
-  blogs: Blog[];
-}
-
-const BookmarkCard = ({ blogs }: BookmarkCardProps) => {
-  const bookmarkBlogs = blogs.filter((blog) => blog.bookmarked);
+const BookmarkCard = async () => {
+  const bookmarkBlogs = await getBookmarkBlogs();
   const bookmarkNumber = bookmarkBlogs.length;
-
   return (
     <div>
       {bookmarkNumber === 0 ? (
@@ -30,24 +26,21 @@ const BookmarkCard = ({ blogs }: BookmarkCardProps) => {
             Bookmarked ( {bookmarkNumber} )
           </h1>
           <div className="flex max-h-40 no-scrollbar overflow-y-scroll flex-col mt-3">
-            {bookmarkBlogs.map(({ bookmarked, id, title, author }) => (
-              <div key={id} className="flex items-center justify-left my-3">
+            {bookmarkBlogs.map(({ _id, name, content }: Blog) => (
+              <div key={_id} className="flex items-center justify-left my-3">
                 <button className="mx-2">
                   <UserCircle2 width={30} height={30} />
                 </button>
                 <div className="mx-1 text-ellipsis">
-                  <p className="text-sm">{title}</p>
-                  <p className="text-xs font-extralight font-sans">
-                    subtitle
-                    {/* subtitle data source not set yet */}
-                  </p>
+                  <p className="text-sm">{name}</p>
+                  <p className="text-xs font-extralight font-sans">{content}</p>
                 </div>
               </div>
             ))}
           </div>
           <div className="text-kz-primary font-sans text-xs flex justify-center items-center">
             <Link href="/bookmarks">
-              <button className="bg-kz-secondary mt-1 px-3 py-1 rounded-3xl">
+              <button className="bg-kz-secondary mt-3 px-3 py-1 rounded-3xl">
                 See All
               </button>
             </Link>

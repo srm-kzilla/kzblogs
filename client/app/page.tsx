@@ -1,16 +1,12 @@
-"use client";
-
 import BlogCard from "@/components/BlogCard";
 import Navbar from "@/components/Navbar";
 import DraftCard from "@/components/DraftCard";
-import blogData from "@/mock-data/data";
 import TrendingCard from "@/components/TrendingCard";
 import BookmarkCard from "@/components/BookmarkCard";
+import { getAllBlogs } from "@/utils/api";
 
-export default function Home() {
-  const publishedBlogs = blogData.filter(
-    (blog) => blog.publishStatus === "published",
-  );
+export default async function Home() {
+  const blogs = await getAllBlogs();
   return (
     <div>
       <Navbar />
@@ -18,10 +14,10 @@ export default function Home() {
         <div className="w-full md:w-9/12 flex justify-center md:justify-start">
           <div>
             <div className="font-serif text-3xl text-kz-secondary m-3">
-              What’s <span className="text-kz-highlight-light">New</span>{" "}
+              What’s <span className="text-kz-highlight-light">New</span>
             </div>
-            {publishedBlogs.map((blogs: Blog) => (
-              <div key={blogs.id} className="w-[80vw] mb-10 md:w-[50vw] m-3">
+            {blogs.map((blogs: Blog) => (
+              <div key={blogs._id} className="w-[80vw] mb-10 md:w-[50vw] m-3">
                 <BlogCard {...blogs} />
               </div>
             ))}
@@ -30,13 +26,13 @@ export default function Home() {
         <div className="hidden md:flex w-3/12 justify-end mt-10">
           <div>
             <div className="md:w-[25vw] lg:w-[18vw] m-6">
-              <BookmarkCard blogs={blogData} />
+              <BookmarkCard />
             </div>
             <div className="md:w-[25vw] lg:w-[18vw] m-6">
-              <DraftCard blogs={blogData} />
+              <DraftCard />
             </div>
             <div className="md:w-[25vw] lg:w-[18vw] m-6">
-              <TrendingCard blogs={blogData} />
+              <TrendingCard />
             </div>
           </div>
         </div>

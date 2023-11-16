@@ -4,12 +4,13 @@ type Comments = {
 };
 
 type Blog = {
-  id: number;
-  title: string;
-  publishStatus: "draft" | "published";
+  index: number;
+  _id: string;
+  name: string;
+  publishStatus: boolean;
   lastEdited: string;
   author: string;
-  likes: number;
+  likes: string[];
   comments?: Comments[];
   content: string;
   trending: boolean;

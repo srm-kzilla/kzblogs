@@ -1,9 +1,11 @@
+import { getTrending } from "@/utils/api";
+
 interface TrendingCardProps {
   blogs: Blog[];
 }
 
-const TrendingCard = ({ blogs }: TrendingCardProps) => {
-  const trendingBlogs = blogs.filter((blog) => blog.trending);
+const TrendingCard = async () => {
+  const data = await getTrending();
 
   return (
     <div className="bg-kz-card-dark p-4 w-full h-fit text-kz-secondary rounded-xl">
@@ -12,10 +14,10 @@ const TrendingCard = ({ blogs }: TrendingCardProps) => {
           Trending
         </h1>
         <div className="flex flex-col mt-3">
-          {trendingBlogs.map(({ id, title, author }) => (
-            <div key={id} className="flex justify-between items-end my-3">
+          {data.map(({ _id, name, author }: Blog) => (
+            <div key={_id} className="flex justify-between items-end my-3">
               <div>
-                <h1>{title}</h1>
+                <h1>{name}</h1>
                 <p className="text-xs font-extralight font-sans">{author}</p>
               </div>
             </div>

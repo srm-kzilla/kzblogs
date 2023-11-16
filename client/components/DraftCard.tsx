@@ -1,11 +1,10 @@
+import { getAllBlogs } from "@/utils/api";
 import { PenLine, PlusCircleIcon } from "lucide-react";
+import Link from "next/link";
 
-interface DraftCardProps {
-  blogs: Blog[];
-}
-
-const DraftCard = ({ blogs }: DraftCardProps) => {
-  const draftBlogs = blogs.filter((blog) => blog.publishStatus === "draft");
+const DraftCard = async () => {
+  const blogs = await getAllBlogs();
+  const draftBlogs = blogs.filter((blog: Blog) => blog.publishStatus === false);
   const draftNumber = draftBlogs.length;
 
   return (
@@ -14,9 +13,9 @@ const DraftCard = ({ blogs }: DraftCardProps) => {
         <div>
           <div className="flex flex-row justify-between gap-5">
             <h1 className="text-lg md:text-2xl">Drafts ( {draftNumber} )</h1>
-            <button>
+            <Link href="/write">
               <PlusCircleIcon />
-            </button>
+            </Link>
           </div>
           <p className="mt-4 font-sans text-xs">
             No drafts yet :(
@@ -27,13 +26,13 @@ const DraftCard = ({ blogs }: DraftCardProps) => {
         <div>
           <h1 className="text-xl">Drafts ( {draftNumber} )</h1>
           <div className="flex flex-col mt-3">
-            {draftBlogs.map(({ id, title, lastEdited }) => (
-              <div key={id} className="flex justify-between items-end my-3">
+            {draftBlogs.map(({ _id, name }: Blog) => (
+              <div key={_id} className="flex justify-between items-end my-3">
                 <div>
-                  <h1>{title}</h1>
-                  <p className="text-xs font-extralight font-sans">
+                  <h1>{name}</h1>
+                  {/* <p className="text-xs font-extralight font-sans">
                     {lastEdited}
-                  </p>
+                  </p> */}
                 </div>
                 <button>
                   <PenLine width={18} height={18} />

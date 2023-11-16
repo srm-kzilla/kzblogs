@@ -1,15 +1,16 @@
+"use client";
 import {
   Bookmark,
+  BookmarkCheck,
   HeartIcon,
   MessageSquare,
   UserCircleIcon,
-  BookmarkCheck,
-  BookMarked,
 } from "lucide-react";
+import { toggleBookmark, toggleLike } from "@/utils/api";
 
 const BlogCard = ({
-  id,
-  title,
+  _id,
+  name,
   author,
   content,
   likes,
@@ -17,6 +18,8 @@ const BlogCard = ({
   comments,
   bookmarked,
 }: Blog) => {
+  const isLiked = false,
+    isBookmarked = bookmarked;
   return (
     <div className="p-3 bg-kz-card-light text-kz-secondary rounded-2xl w-full h-fit">
       <div className="flex flex-col md:flex-row justify-between gap-3">
@@ -32,24 +35,33 @@ const BlogCard = ({
           </div>
         </div>
         <div className="md:w-[60%]">
-          <h1 className="text-lg md:text-right md:text-2xl md:ml-9">{title}</h1>
+          <h1 className="text-lg md:text-right md:text-2xl md:ml-9">{name}</h1>
         </div>
       </div>
       <p className="font-sans text-xs font-light mt-3 md:text-lg">{content}</p>
       <div className="font-sans relative flex flex-row justify-between mt-2 text-xs font-extralight items-baseline">
         <div className="flex flex-row gap-2 items-center">
-          <button className="flex flex-row gap-1 items-center">
+          <button
+            onClick={() => toggleLike(_id)}
+            className="flex flex-row gap-1 items-center"
+          >
             <HeartIcon width={14} />
-            <p>{likes}</p>
+            <p>{likes.length}</p>
           </button>
           <button className="flex flex-row gap-1 items-center">
             <MessageSquare width={14} />
             <p>{comments ? comments.length : 0}</p>
           </button>
         </div>
-        <button className="flex flex-row gap-1">
-          {bookmarked ? <BookmarkCheck width={14} /> : <Bookmark width={14} />}
-        </button>
+        <div>
+          <button onClick={() => toggleBookmark(_id)}>
+            {isBookmarked ? (
+              <BookmarkCheck width={14} />
+            ) : (
+              <Bookmark width={14} />
+            )}
+          </button>
+        </div>
       </div>
     </div>
   );
