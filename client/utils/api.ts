@@ -89,11 +89,10 @@ export async function toggleBookmark(id: string) {
   if (sessionToken !== undefined) {
     try {
       await axios.post(
-        API.BASE_URL + API.ENDPOINTS.BLOGS.BOOKMARKS,
-        { blog_id: id },
+        API.BASE_URL + API.ENDPOINTS.BLOGS.BOOKMARKS + id , null, 
         {
           headers: {
-            "X-Session-ID": sessionToken,
+            "x-session-id": sessionToken,
           },
         },
       );
@@ -107,9 +106,9 @@ export async function toggleLike(id: string) {
   const sessionToken = await getSessionToken();
   if (sessionToken !== undefined) {
     try {
-      await axios.post(API.BASE_URL + API.ENDPOINTS.BLOGS.LIKES(id), null, {
+      await axios.post(API.BASE_URL + API.ENDPOINTS.BLOGS.LIKES(id),null, {
         headers: {
-          "X-Session-ID": sessionToken,
+          "x-session-id": sessionToken,
         },
       });
     } catch (error) {
