@@ -7,6 +7,7 @@ import {
   UserCircleIcon,
 } from "lucide-react";
 import { toggleBookmark, toggleLike } from "@/utils/api";
+import Link from "next/link";
 
 const BlogCard = ({
   _id,
@@ -30,7 +31,9 @@ const BlogCard = ({
             height={32}
           />
           <div className="flex flex-col">
-            <p className="text-base font-sans">{author}</p>
+            <Link href={`/author/${author}`} className="text-base font-sans">
+              {author}
+            </Link>
             <p className="text-xs font-extralight font-sans">{lastEdited}</p>
           </div>
         </div>

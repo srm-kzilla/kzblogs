@@ -1,4 +1,5 @@
 import { UserCircleIcon, UserPlus } from "lucide-react";
+import Link from "next/link";
 const AuthorCard = ({ _id, lastEdited, author, index }: Blog) => {
   return (
     <div className="p-1 px-3 bg-kz-card-light text-kz-secondary rounded-lg w-full h-fit">
@@ -11,7 +12,12 @@ const AuthorCard = ({ _id, lastEdited, author, index }: Blog) => {
             height={32}
           />
           <div className="flex flex-col justify-center">
-            <p className="text-base font-bold font-sans">{author}</p>
+            <Link
+              href={`/author/${author}`}
+              className="text-base font-bold font-sans"
+            >
+              {author}
+            </Link>
             {/* <p className="text-xs font-extralight font-sans">{lastEdited}</p> */}
           </div>
         </div>
