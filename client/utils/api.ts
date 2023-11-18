@@ -10,7 +10,7 @@ const API = {
     },
     BLOGS: {
       ALL: "/api/blogs/all",
-      GET: (id: string) => `/admin/${id}`,
+      GET: (id: string) => `/api/blogs/${id}`,
       TRENDING: "/api/trending",
       BOOKMARKS: "/api/bookmarks/",
       LIKES: (id: string) => `/api/likes/${id}`,
