@@ -54,8 +54,10 @@ class User:
     async def verify_session(self, session_id: str):
         session = await self.sessions.find_one({"sessionToken": session_id})
         return None if not session else await self.get_user(str(session.get("userId")))
-    
+
     async def follow(self, user_id: str, follow_id: str):
+        if user_id == follow_id:
+            return {"status": False, "message": "You cannot follow yourself"}
         user = await self.get_user(user_id)
         follow = await self.get_user(follow_id)
         if not user or not follow:
@@ -80,4 +82,3 @@ class User:
                 {"$pull": {"followers": user_id}},
             )
             return {"status": True, "message": "Unfollowed successfully"}
-
