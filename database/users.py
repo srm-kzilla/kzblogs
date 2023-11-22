@@ -54,3 +54,30 @@ class User:
     async def verify_session(self, session_id: str):
         session = await self.sessions.find_one({"sessionToken": session_id})
         return None if not session else await self.get_user(str(session.get("userId")))
+    
+    async def follow(self, user_id: str, follow_id: str):
+        user = await self.get_user(user_id)
+        follow = await self.get_user(follow_id)
+        if not user or not follow:
+            return {"status": False, "message": "User does not exist"}
+        if follow_id not in user.get("following", []):
+            await self.users.update_one(
+                {"_id": ObjectId(user_id)},
+                {"$push": {"following": follow_id}},
+            )
+            await self.users.update_one(
+                {"_id": ObjectId(follow_id)},
+                {"$push": {"followers": user_id}},
+            )
+            return {"status": True, "message": "Followed successfully"}
+        else:
+            await self.users.update_one(
+                {"_id": ObjectId(user_id)},
+                {"$pull": {"following": follow_id}},
+            )
+            await self.users.update_one(
+                {"_id": ObjectId(follow_id)},
+                {"$pull": {"followers": user_id}},
+            )
+            return {"status": True, "message": "Unfollowed successfully"}
+

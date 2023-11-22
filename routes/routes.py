@@ -70,6 +70,15 @@ async def get_blogs(request: Request, blog_id: str = "all"):
 
 @router.get("/user")
 @middleware
-async def get_user(request: Request):
+async def current_user(request: Request):
     user = await db.users.verify_session(request.headers["x-session-id"])
     return Response(user, status_code=200 if user else 404)
+
+@router.get("/users/{user_id}")
+async def get_user(request: Request, user_id: str):
+    return Response(await db.users.get_user(user_id))
+
+@router.get("/user/follow/{user_id}")
+async def follow_user(request: Request, user_id: str):
+    user = await db.users.verify_session(request.headers["x-session-id"])
+    return Response(await db.users.follow(str(user["_id"]), user_id))
