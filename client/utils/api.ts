@@ -10,7 +10,7 @@ const API = {
     },
     BLOGS: {
       ALL: "/api/blogs/all",
-      GET: (id: string) => `/admin/${id}`,
+      GET: (id: string) => `/api/blogs/${id}`,
       TRENDING: "/api/trending",
       BOOKMARKS: "/api/bookmarks/",
       LIKES: (id: string) => `/api/likes/${id}`,
@@ -28,22 +28,20 @@ async function getSessionToken() {
 export async function getAllBlogs() {
   const sessionToken = await getSessionToken();
   try {
-    if (sessionToken !== undefined) {
-      const response = await axios.get(API.BASE_URL + API.ENDPOINTS.BLOGS.ALL, {
-        headers: {
-          "X-Session-ID": sessionToken,
-        },
-      });
-      return response.data;
-    }
+    const response = await axios.get(API.BASE_URL + API.ENDPOINTS.BLOGS.ALL, {
+      headers: {
+        "X-Session-ID": sessionToken,
+      },
+    });
+    return response.data;
   } catch (error) {
     console.log(error);
+    return [];
   }
 }
 
 export async function getBlog(_id: string) {
   const sessionToken = await getSessionToken();
-  if (sessionToken !== undefined) {
     try {
       const response = await axios.get(
         API.BASE_URL + API.ENDPOINTS.BLOGS.GET(_id),
@@ -53,34 +51,28 @@ export async function getBlog(_id: string) {
           },
         },
       );
-      console.log(response.headers);
       return response.data;
     } catch (error) {
       console.log(error);
+      return {};
     }
-  } else {
-    console.error("SESSION TOKEN NOT DEFINED");
-  }
 }
 
 export async function getTrending() {
   const sessionToken = await getSessionToken();
-  if (sessionToken !== undefined) {
-    try {
-      const response = await axios.get(
-        API.BASE_URL + API.ENDPOINTS.BLOGS.TRENDING,
-        {
-          headers: {
-            "X-Session-ID": sessionToken,
-          },
+  try {
+    const response = await axios.get(
+      API.BASE_URL + API.ENDPOINTS.BLOGS.TRENDING,
+      {
+        headers: {
+          "X-Session-ID": sessionToken,
         },
-      );
-      return response.data;
-    } catch (error) {
-      console.log(error);
-    }
-  } else {
-    console.error("SESSION TOKEN NOT DEFINED");
+      },
+    );
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    return [];
   }
 }
 
@@ -135,6 +127,7 @@ export async function getBookmarkBlogs() {
     }
   } else {
     console.error("SESSION TOKEN NOT DEFINED");
+    return [];
   }
 }
 
