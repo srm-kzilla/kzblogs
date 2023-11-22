@@ -127,8 +127,8 @@ export async function getBookmarkBlogs() {
     }
   } else {
     console.error("SESSION TOKEN NOT DEFINED");
-    return [];
   }
+  return [];
 }
 
 export async function addBlog(data: any) {
