@@ -1,8 +1,4 @@
-import {
-  DB_NAME,
-  GOOGLE_CLIENT_ID,
-  GOOGLE_CLIENT_SECRET,
-} from "@/utils/env";
+import { DB_NAME, GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET } from "@/utils/env";
 import { dbClientPromise } from "@/utils/mongo";
 import { MongoDBAdapter } from "@auth/mongodb-adapter";
 import type { NextAuthOptions } from "next-auth";
@@ -19,8 +15,8 @@ export const options: NextAuthOptions = {
           image: profile.picture,
           bookmarks: [],
           is_admin: false,
-          followers:[],
-          following:[],
+          followers: [],
+          following: [],
         };
       },
       clientId: GOOGLE_CLIENT_ID,

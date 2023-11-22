@@ -42,20 +42,20 @@ export async function getAllBlogs() {
 
 export async function getBlog(_id: string) {
   const sessionToken = await getSessionToken();
-    try {
-      const response = await axios.get(
-        API.BASE_URL + API.ENDPOINTS.BLOGS.GET(_id),
-        {
-          headers: {
-            "X-Session-ID": sessionToken,
-          },
+  try {
+    const response = await axios.get(
+      API.BASE_URL + API.ENDPOINTS.BLOGS.GET(_id),
+      {
+        headers: {
+          "X-Session-ID": sessionToken,
         },
-      );
-      return response.data;
-    } catch (error) {
-      console.log(error);
-      return {};
-    }
+      },
+    );
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    return {};
+  }
 }
 
 export async function getTrending() {
@@ -81,7 +81,8 @@ export async function toggleBookmark(id: string) {
   if (sessionToken !== undefined) {
     try {
       await axios.post(
-        API.BASE_URL + API.ENDPOINTS.BLOGS.BOOKMARKS + id , null, 
+        API.BASE_URL + API.ENDPOINTS.BLOGS.BOOKMARKS + id,
+        null,
         {
           headers: {
             "x-session-id": sessionToken,
@@ -98,7 +99,7 @@ export async function toggleLike(id: string) {
   const sessionToken = await getSessionToken();
   if (sessionToken !== undefined) {
     try {
-      await axios.post(API.BASE_URL + API.ENDPOINTS.BLOGS.LIKES(id),null, {
+      await axios.post(API.BASE_URL + API.ENDPOINTS.BLOGS.LIKES(id), null, {
         headers: {
           "x-session-id": sessionToken,
         },
@@ -133,16 +134,14 @@ export async function getBookmarkBlogs() {
 
 export async function addBlog(data: any) {
   const sessionToken = await getSessionToken();
-  if(sessionToken !== undefined){
-    try{
-      axios
-      .post(API.BASE_URL + API.ENDPOINTS.ADMIN.ADD, data, {
+  if (sessionToken !== undefined) {
+    try {
+      axios.post(API.BASE_URL + API.ENDPOINTS.ADMIN.ADD, data, {
         headers: {
           "X-Session-ID": sessionToken,
         },
-      })
-    }
-    catch(error){
+      });
+    } catch (error) {
       console.log(error);
     }
   } else {
