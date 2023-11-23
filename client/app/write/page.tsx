@@ -22,22 +22,30 @@ const CreatePage = () => {
     addBlog(dataToPublish);
   };
 
+  const saveAsDraft = () => {
+    const draft = {
+      name: title,
+      content: markdownInput,
+      publish_status: false,
+      author: author,
+    };
+    addBlog(draft);
+  };
+
   return (
     <div className="flex flex-col items-center justify-center min-h-screen overflow-y-scroll w-full overflow-x-hidden">
       <div className="flex h-screen w-full flex-col">
         <Navbar />
         <div className="p-2 justify-center h-full mt-8 px-5 md:px-24 lg:mt-16 lg:px-32 ">
-          <div className="flex flex-col lg:flex-row items-end lg:justify-between gap-5 lg:items-center">
-            <div className="flex flex-row">
-              <Button variant="primary">
-                <Image className="h-4 md:h-6" />
-                <p>Add Cover Image</p>
-              </Button>
-            </div>
+          <div className="flex gap-5 justify-end">
+            <Button onClick={saveAsDraft} variant="secondary">
+              Save as Draft
+            </Button>
             <Button onClick={publishData} variant="secondary">
               Publish
             </Button>
           </div>
+
           <form className="px-5">
             <div className="flex flex-col">
               <textarea

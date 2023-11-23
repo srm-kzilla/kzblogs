@@ -7,10 +7,11 @@ const API = {
   ENDPOINTS: {
     ADMIN: {
       ADD: "/admin",
+      GET:"/admin/all",
     },
     BLOGS: {
       ALL: "/api/blogs/all",
-      GET: (id: string) => `/admin/${id}`,
+      GET: (id: string) => `/api/blogs/${id}`,
       TRENDING: "/api/trending",
       BOOKMARKS: "/api/bookmarks/",
       LIKES: (id: string) => `/api/likes/${id}`,
@@ -18,11 +19,29 @@ const API = {
   },
 };
 
+
+
 async function getSessionToken() {
   const cookieStore = cookies();
   const cookie = cookieStore.get("next-auth.session-token");
   const sessionToken = cookie?.value;
   return sessionToken;
+}
+
+export async function getAllBlogsAdmin() {
+  const sessionToken = await getSessionToken();
+  try {
+    if (sessionToken !== undefined) {
+      const response = await axios.get(API.BASE_URL + API.ENDPOINTS.ADMIN.GET, {
+        headers: {
+          "X-Session-ID": sessionToken,
+        },
+      });
+      return response.data;
+    }
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 export async function getAllBlogs() {
@@ -140,6 +159,7 @@ export async function getBookmarkBlogs() {
 
 export async function addBlog(data: any) {
   const sessionToken = await getSessionToken();
+  console.log(data);
   if(sessionToken !== undefined){
     try{
       axios
