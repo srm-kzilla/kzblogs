@@ -2,34 +2,54 @@
 import React, { useState } from "react";
 import Button from "@/components/Button";
 import Navbar from "@/components/Navbar";
-import { Image } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { addBlog } from "@/utils/api";
+import toast from "@/utils/toast";
+import { useRouter } from "next/navigation";
 
 const CreatePage = () => {
+  const router = useRouter();
   const [markdownInput, setMarkdownInput] = useState("");
   const [author, setAuthor] = useState("");
   const [title, setTitle] = useState("");
 
-  const publishData = () => {
-    const dataToPublish = {
-      name: title,
-      content: markdownInput,
-      publish_status: true,
-      author: author,
-    };
-    addBlog(dataToPublish);
+  const publishData = async () => {
+    try {
+      const dataToPublish = {
+        name: title,
+        content: markdownInput,
+        publish_status: true,
+        author: author,
+      };
+
+      const res = await addBlog(dataToPublish);
+      router.push("/");
+      console.log(res);
+
+      toast.success("Your blog is live !");
+    } catch (error) {
+      console.error(error);
+      toast.error("Failed to publish your blog. Please try again.");
+    }
   };
 
-  const saveAsDraft = () => {
-    const draft = {
-      name: title,
-      content: markdownInput,
-      publish_status: false,
-      author: author,
-    };
-    addBlog(draft);
+  const saveAsDraft = async () => {
+    try {
+      const draft = {
+        name: title,
+        content: markdownInput,
+        publish_status: false,
+        author: author,
+      };
+
+      const res = await addBlog(draft);
+      console.log(res);
+      toast.success("Your blog has been saved as draft.");
+    } catch (error) {
+      console.error(error);
+      toast.error("Failed to save your blog as draft. Please try again.");
+    }
   };
 
   return (

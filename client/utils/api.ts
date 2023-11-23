@@ -158,21 +158,27 @@ export async function getBookmarkBlogs() {
 }
 
 export async function addBlog(data: any) {
-  const sessionToken = await getSessionToken();
-  console.log(data);
-  if(sessionToken !== undefined){
-    try{
-      axios
-      .post(API.BASE_URL + API.ENDPOINTS.ADMIN.ADD, data, {
+  try {
+    const sessionToken = await getSessionToken();
+    console.log(data);
+
+    if (sessionToken !== undefined) {
+      const response = await axios.post(API.BASE_URL + API.ENDPOINTS.ADMIN.ADD, data, {
         headers: {
           "X-Session-ID": sessionToken,
         },
-      })
+      });
+      if (response.status==200) {
+        return response.data;
+      } else {
+        throw new Error("Blog creation failed");
+      }
+    } else {
+      console.log("SESSION TOKEN NOT DEFINED");
+      throw new Error("Session token not defined");
     }
-    catch(error){
-      console.log(error);
-    }
-  } else {
-    console.log("SESSION TOKEN NOT DEFINED");
+  } catch (error) {
+    console.error(error);
+    throw error;
   }
 }
