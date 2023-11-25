@@ -21,12 +21,24 @@ class Blog:
             )
             for i in range(len(blogs)):
                 blogs[i]["_id"] = str(blogs[i]["_id"])
+                user = await self.users.find_one({"_id": ObjectId(blogs[i]["author"])})
+                blogs[i]["author"] = {
+                    "name": user["name"],
+                    "_id": str(user["_id"]),
+                    "image": user["image"]
+                }
             return blogs
         filter = {"_id": ObjectId(blog_id)}
         filter.update({"publish_status": True} if not show_all else {})
         blog = await self.blogs.find_one(filter)
         if blog:
             blog["_id"] = str(blog["_id"])
+            user = await self.users.find_one({"_id": ObjectId(blog["author"])})
+            blog["author"] = {
+                "name": user["name"],
+                "_id": str(user["_id"]),
+                "image": user["image"]
+            }
             return blog
         return {"status": False, "message": "Blog does not exist"}
 
