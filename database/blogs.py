@@ -25,7 +25,7 @@ class Blog:
                 blogs[i]["author"] = {
                     "name": user["name"],
                     "_id": str(user["_id"]),
-                    "image": user["image"]
+                    "image": user["image"],
                 }
             return blogs
         filter = {"_id": ObjectId(blog_id)}
@@ -37,7 +37,7 @@ class Blog:
             blog["author"] = {
                 "name": user["name"],
                 "_id": str(user["_id"]),
-                "image": user["image"]
+                "image": user["image"],
             }
             return blog
         return {"status": False, "message": "Blog does not exist"}
