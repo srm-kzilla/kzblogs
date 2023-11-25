@@ -10,11 +10,12 @@ const API = {
       GET: "/all",
     },
     BLOGS: {
-      ALL: "/api/blogs/all",
-      GET: (id: string) => `/api/blogs/${id}`,
-      TRENDING: "/api/trending",
-      BOOKMARKS: "/api/bookmarks/",
-      LIKES: (id: string) => `/api/likes/${id}`,
+      BASE: "/api",
+      ALL: "/blogs/all",
+      WITH_ID: (id: string) => `/blogs/${id}`,
+      TRENDING: "/trending",
+      BOOKMARKS: "/bookmarks/",
+      LIKES: (id: string) => `/likes/${id}`,
     },
   },
 };
@@ -42,65 +43,63 @@ export async function getAllBlogsAdmin() {
     }
   } catch (error) {
     console.log(error);
+    return [];
   }
 }
 
 export async function getAllBlogs() {
   const sessionToken = await getSessionToken();
   try {
-    if (sessionToken !== undefined) {
-      const response = await axios.get(API.BASE_URL + API.ENDPOINTS.BLOGS.ALL, {
+    const response = await axios.get(
+      API.BASE_URL + API.ENDPOINTS.BLOGS.BASE + API.ENDPOINTS.BLOGS.ALL,
+      {
         headers: {
           "X-Session-ID": sessionToken,
         },
-      });
-      return response.data;
-    }
+      },
+    );
+    return response.data;
   } catch (error) {
     console.log(error);
+    return [];
   }
 }
 
 export async function getBlog(_id: string) {
   const sessionToken = await getSessionToken();
-  if (sessionToken !== undefined) {
-    try {
-      const response = await axios.get(
-        API.BASE_URL + API.ENDPOINTS.BLOGS.GET(_id),
-        {
-          headers: {
-            "X-Session-ID": sessionToken,
-          },
+  try {
+    const response = await axios.get(
+      API.BASE_URL +
+        API.ENDPOINTS.BLOGS.BASE +
+        API.ENDPOINTS.BLOGS.WITH_ID(_id),
+      {
+        headers: {
+          "X-Session-ID": sessionToken,
         },
-      );
-      console.log(response.headers);
-      return response.data;
-    } catch (error) {
-      console.log(error);
-    }
-  } else {
-    console.error("SESSION TOKEN NOT DEFINED");
+      },
+    );
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    return {};
   }
 }
 
 export async function getTrending() {
   const sessionToken = await getSessionToken();
-  if (sessionToken !== undefined) {
-    try {
-      const response = await axios.get(
-        API.BASE_URL + API.ENDPOINTS.BLOGS.TRENDING,
-        {
-          headers: {
-            "X-Session-ID": sessionToken,
-          },
+  try {
+    const response = await axios.get(
+      API.BASE_URL + API.ENDPOINTS.BLOGS.BASE + API.ENDPOINTS.BLOGS.TRENDING,
+      {
+        headers: {
+          "X-Session-ID": sessionToken,
         },
-      );
-      return response.data;
-    } catch (error) {
-      console.log(error);
-    }
-  } else {
-    console.error("SESSION TOKEN NOT DEFINED");
+      },
+    );
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    return [];
   }
 }
 
@@ -109,7 +108,10 @@ export async function toggleBookmark(id: string) {
   if (sessionToken !== undefined) {
     try {
       await axios.post(
-        API.BASE_URL + API.ENDPOINTS.BLOGS.BOOKMARKS + id,
+        API.BASE_URL +
+          API.ENDPOINTS.BLOGS.BASE +
+          API.ENDPOINTS.BLOGS.BOOKMARKS +
+          id,
         null,
         {
           headers: {
@@ -127,11 +129,15 @@ export async function toggleLike(id: string) {
   const sessionToken = await getSessionToken();
   if (sessionToken !== undefined) {
     try {
-      await axios.post(API.BASE_URL + API.ENDPOINTS.BLOGS.LIKES(id), null, {
-        headers: {
-          "x-session-id": sessionToken,
+      await axios.post(
+        API.BASE_URL + API.ENDPOINTS.BLOGS.BASE + API.ENDPOINTS.BLOGS.LIKES(id),
+        null,
+        {
+          headers: {
+            "x-session-id": sessionToken,
+          },
         },
-      });
+      );
     } catch (error) {
       console.log(error);
     }
@@ -143,7 +149,7 @@ export async function getBookmarkBlogs() {
   if (sessionToken !== undefined) {
     try {
       const response = await axios.get(
-        API.BASE_URL + API.ENDPOINTS.BLOGS.BOOKMARKS,
+        API.BASE_URL + API.ENDPOINTS.BLOGS.BASE + API.ENDPOINTS.BLOGS.BOOKMARKS,
         {
           headers: {
             "X-Session-ID": sessionToken,
@@ -157,6 +163,7 @@ export async function getBookmarkBlogs() {
   } else {
     console.error("SESSION TOKEN NOT DEFINED");
   }
+  return [];
 }
 
 export async function addBlog(data: any) {

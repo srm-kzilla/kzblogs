@@ -15,6 +15,8 @@ export const options: NextAuthOptions = {
           image: profile.picture,
           bookmarks: [],
           is_admin: false,
+          followers: [],
+          following: [],
         };
       },
       clientId: GOOGLE_CLIENT_ID,
