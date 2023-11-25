@@ -6,8 +6,8 @@ const API = {
   BASE_URL: process.env.API_BASE_URL,
   ENDPOINTS: {
     ADMIN: {
-      ADD: "/admin",
-      GET:"/admin/all",
+      BASE: "/admin",
+      GET: "/all",
     },
     BLOGS: {
       ALL: "/api/blogs/all",
@@ -18,8 +18,6 @@ const API = {
     },
   },
 };
-
-
 
 async function getSessionToken() {
   const cookieStore = cookies();
@@ -32,11 +30,14 @@ export async function getAllBlogsAdmin() {
   const sessionToken = await getSessionToken();
   try {
     if (sessionToken !== undefined) {
-      const response = await axios.get(API.BASE_URL + API.ENDPOINTS.ADMIN.GET, {
-        headers: {
-          "X-Session-ID": sessionToken,
+      const response = await axios.get(
+        API.BASE_URL + API.ENDPOINTS.ADMIN.BASE + API.ENDPOINTS.ADMIN.GET,
+        {
+          headers: {
+            "X-Session-ID": sessionToken,
+          },
         },
-      });
+      );
       return response.data;
     }
   } catch (error) {
@@ -108,7 +109,8 @@ export async function toggleBookmark(id: string) {
   if (sessionToken !== undefined) {
     try {
       await axios.post(
-        API.BASE_URL + API.ENDPOINTS.BLOGS.BOOKMARKS + id , null, 
+        API.BASE_URL + API.ENDPOINTS.BLOGS.BOOKMARKS + id,
+        null,
         {
           headers: {
             "x-session-id": sessionToken,
@@ -125,7 +127,7 @@ export async function toggleLike(id: string) {
   const sessionToken = await getSessionToken();
   if (sessionToken !== undefined) {
     try {
-      await axios.post(API.BASE_URL + API.ENDPOINTS.BLOGS.LIKES(id),null, {
+      await axios.post(API.BASE_URL + API.ENDPOINTS.BLOGS.LIKES(id), null, {
         headers: {
           "x-session-id": sessionToken,
         },
@@ -163,12 +165,16 @@ export async function addBlog(data: any) {
     console.log(data);
 
     if (sessionToken !== undefined) {
-      const response = await axios.post(API.BASE_URL + API.ENDPOINTS.ADMIN.ADD, data, {
-        headers: {
-          "X-Session-ID": sessionToken,
+      const response = await axios.post(
+        API.BASE_URL + API.ENDPOINTS.ADMIN.BASE,
+        data,
+        {
+          headers: {
+            "X-Session-ID": sessionToken,
+          },
         },
-      });
-      if (response.status==200) {
+      );
+      if (response.status == 200) {
         return response.data;
       } else {
         throw new Error("Blog creation failed");
