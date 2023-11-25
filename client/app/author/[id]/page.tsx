@@ -1,15 +1,16 @@
+"use client";
 import BlogCard from "@/components/BlogCard";
 import Button from "@/components/Button";
 import Navbar from "@/components/Navbar";
-import { getAllBlogs } from "@/utils/api";
-import { UserPlus } from "lucide-react";
-import Image from "next/image";
+import { getAllBlogs, getUser, toggleFollow } from "@/utils/api";
 
 export default async function Page({ params }: { params: { id: string } }) {
   const blogs = await getAllBlogs();
-  const authorName = params.id.replace(/\%20/g, " ");
-  const authorBlogs = blogs.filter((blog: Blog) => blog.author === authorName);
-
+  const { name, _id, followers, following, images } = await getUser(params.id);
+  const authorBlogs = blogs.filter((blog: Blog) => blog.author === name);
+  const follow = async () => {
+    toggleFollow(_id);
+  };
   return (
     <div>
       <Navbar />
@@ -18,24 +19,26 @@ export default async function Page({ params }: { params: { id: string } }) {
           <img
             width={100}
             height={100}
-            src="https://images.unsplash.com/photo-1682687982141-0143020ed57a?q=80&w=987&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+            src={images}
             alt="profile pic"
             className="rounded-full"
           />
           <div className="flex flex-col gap-3">
-            <h1 className="text-kz-secondary text-3xl">{authorName}</h1>
+            <h1 className="text-kz-secondary text-3xl">{name}</h1>
             <p className="text-kz-secondary text-xs">An amazin Bio</p>
             <p className="text-kz-secondary text-xs">
-              4.2k followers 2 following
+              {followers} followers {following} following
             </p>
           </div>
           <div>
-            <Button variant="secondary">Follow</Button>
+            <Button onClick={follow} variant="secondary">
+              Follow
+            </Button>
           </div>
         </div>
         <div className="">
           {authorBlogs.map((blogs: Blog) => (
-            <div key={blogs._id} className=" my-6 m-3">
+            <div key={blogs._id} className=" my-6 m-3 w-[60vw]">
               <BlogCard {...blogs} />
             </div>
           ))}

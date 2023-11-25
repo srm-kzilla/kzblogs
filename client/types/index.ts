@@ -20,10 +20,10 @@ type Blog = {
 type User = {
   id: number;
   name: string;
-  username: string;
-  avatar: string;
-  bookmarks: Blog[];
-  googleId: string;
+  email: string;
+  image: string;
+  bookmarks: string[];
+  followers: string[];
   isAdmin: boolean;
 };
 

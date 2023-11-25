@@ -6,8 +6,9 @@ import {
   MessageSquare,
   UserCircleIcon,
 } from "lucide-react";
-import { toggleBookmark, toggleLike } from "@/utils/api";
+import { getUser, toggleBookmark, toggleLike } from "@/utils/api";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 const BlogCard = ({
   _id,
@@ -19,8 +20,21 @@ const BlogCard = ({
   comments,
   bookmarked,
 }: Blog) => {
-  const isLiked = false,
-    isBookmarked = bookmarked;
+  const isBookmarked = false;
+  const [authName, setAuthName] = useState("");
+
+  useEffect(() => {
+    const fetchAuthorName = async () => {
+      try {
+        const { name } = await getUser(author);
+        setAuthName(name);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchAuthorName();
+  }, [author]);
   return (
     <div className="p-3 bg-kz-card-light text-kz-secondary rounded-2xl w-full h-fit">
       <div className="flex flex-col md:flex-row justify-between gap-3">
@@ -32,7 +46,7 @@ const BlogCard = ({
           />
           <div className="flex flex-col">
             <Link href={`/author/${author}`} className="text-base font-sans">
-              {author}
+              {authName}
             </Link>
             <p className="text-xs font-extralight font-sans">{lastEdited}</p>
           </div>
