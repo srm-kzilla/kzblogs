@@ -70,6 +70,27 @@ async def get_blogs(request: Request, blog_id: str = "all"):
 
 @router.get("/user")
 @middleware
-async def get_user(request: Request):
+async def current_user(request: Request):
     user = await db.users.verify_session(request.headers["x-session-id"])
+    user["_id"] = str(user["_id"])
     return Response(user, status_code=200 if user else 404)
+
+
+@router.get("/user/{user_id}")
+async def get_user(request: Request, user_id: str):
+    user = await db.users.get_user(user_id)
+    if isinstance(user, dict):
+        user["_id"] = str(user["_id"])
+        user.pop("bookmarks", None)
+    return Response(
+        user if user else {"status": False, "message": "User Not Found"},
+        status_code=200 if user else 404,
+    )
+
+
+@router.put("/user/follow/{user_id}")
+@middleware
+async def follow_user(request: Request, user_id: str):
+    user = await db.users.verify_session(request.headers["x-session-id"])
+    response = await db.users.follow(str(user["_id"]), user_id)
+    return Response(response, status_code=200 if response["status"] else 400)

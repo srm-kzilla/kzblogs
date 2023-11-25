@@ -7,7 +7,7 @@ type Blog = {
   index: number;
   _id: string;
   name: string;
-  publishStatus: boolean;
+  publish_status: boolean;
   lastEdited: string;
   author: string;
   likes: string[];
