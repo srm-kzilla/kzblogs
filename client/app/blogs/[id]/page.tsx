@@ -1,8 +1,8 @@
 import Navbar from "@/components/Navbar";
 import { getBlog, toggleLike } from "@/utils/api";
-import { Heart, UserIcon } from "lucide-react";
+import { UserIcon } from "lucide-react";
 import Markdown from "react-markdown";
-import { useSession } from "next-auth/react";
+import LikeButton from "@/components/LikeButton";
 
 export default async function Page({ params }: { params: { id: string } }) {
   const blog: Blog = await getBlog(params.id);
@@ -19,10 +19,7 @@ export default async function Page({ params }: { params: { id: string } }) {
                 <UserIcon className="pr-1 w-5 sm:w-6" />
                 {blog.author}
               </div>
-              <div className="flex px-2 justify-center items-center text-sm sm:text-base">
-                <Heart className="pr-1 w-5 sm:w-6" />
-                {Object.keys(blog.likes).length}
-              </div>
+              <LikeButton {...blog} />
             </div>
             <div className="flex justify-center">
               <Markdown>{blog.content}</Markdown>
