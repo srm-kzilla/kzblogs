@@ -23,7 +23,7 @@ class Blog:
                 blogs[i]["_id"] = str(blogs[i]["_id"])
                 user = await self.users.find_one({"_id": ObjectId(blogs[i].get("author"))})
                 blogs[i]["author"] = {
-                    "name": user.get(),
+                    "name": user.get("name"),
                     "_id": str(user["_id"]),
                     "image": user["image"],
                 }
@@ -33,9 +33,9 @@ class Blog:
         blog = await self.blogs.find_one(filter)
         if blog:
             blog["_id"] = str(blog["_id"])
-            user = await self.users.find_one({"_id": ObjectId(blog["author"])})
+            user = await self.users.find_one({"_id": ObjectId(blog.get("author"))})
             blog["author"] = {
-                "name": user["name"],
+                "name": user.get("name"),
                 "_id": str(user["_id"]),
                 "image": user["image"],
             }
