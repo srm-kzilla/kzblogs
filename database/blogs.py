@@ -12,7 +12,7 @@ class Blog:
         self.users = self.db[DB_SETTINGS.USERS]
         self.comments = self.db[DB_SETTINGS.COMMENTS]
 
-    async def get_blog(self, blog_id: Union[str, None] = None, show_all: bool = True):
+    async def get_blog(self, blog_id: Union[str, None] = None, show_all: bool = True, user_id: str = None):
         if not blog_id:
             blogs = list(
                 await self.blogs.find(
@@ -21,12 +21,14 @@ class Blog:
             )
             for i in range(len(blogs)):
                 blogs[i]["_id"] = str(blogs[i]["_id"])
+                blogs[i]["is_liked"] = user_id in blogs[i].get("likes", [])
             return blogs
         filter = {"_id": ObjectId(blog_id)}
         filter.update({"publish_status": True} if not show_all else {})
         blog = await self.blogs.find_one(filter)
         if blog:
             blog["_id"] = str(blog["_id"])
+            blog["is_liked"] = user_id in blog.get("likes", [])
             return blog
         return {"status": False, "message": "Blog does not exist"}
 
@@ -85,6 +87,6 @@ class Blog:
             comments[i]["_id"] = str(comments[i]["_id"])
         return comments
 
-    async def get_trending(self, count: int = 5):
-        output = await self.get_blog()
-        return list(sorted(output, key=lambda x: len(x["likes"]), reverse=True))[:count]
+    async def get_trending(self, count: int = 5, user_id: str = None):
+        output = await self.get_blog(user_id=user_id, show_all=False)
+        return list(sorted(output, key=lambda x: len(x.get("likes", 0)), reverse=True))[:count]
