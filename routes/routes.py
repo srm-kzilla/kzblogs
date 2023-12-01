@@ -68,7 +68,7 @@ async def get_blogs(request: Request, blog_id: str = "all"):
     if request.headers.get("x-session-id"):
         user = await db.users.verify_session(request.headers["x-session-id"])
     blogs = await db.blogs.get_blog(
-        blog_id, show_all=False, user_id=user["_id"] if user else None
+        blog_id, show_all=False, user_id=str(user["_id"]) if user else None
     )
     return Response(blogs)
 
