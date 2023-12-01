@@ -12,7 +12,12 @@ class Blog:
         self.users = self.db[DB_SETTINGS.USERS]
         self.comments = self.db[DB_SETTINGS.COMMENTS]
 
-    async def get_blog(self, blog_id: Union[str, None] = None, show_all: bool = True, user_id: str = None):
+    async def get_blog(
+        self,
+        blog_id: Union[str, None] = None,
+        show_all: bool = True,
+        user_id: str = None,
+    ):
         if not blog_id:
             blogs = list(
                 await self.blogs.find(
@@ -89,4 +94,6 @@ class Blog:
 
     async def get_trending(self, count: int = 5, user_id: str = None):
         output = await self.get_blog(user_id=user_id, show_all=False)
-        return list(sorted(output, key=lambda x: len(x.get("likes", 0)), reverse=True))[:count]
+        return list(sorted(output, key=lambda x: len(x.get("likes", 0)), reverse=True))[
+            :count
+        ]

@@ -66,10 +66,10 @@ async def get_trending(request: Request, count: int = 5):
 async def get_blogs(request: Request, blog_id: str = "all"):
     blog_id = None if blog_id == "all" else blog_id
     if request.headers.get("x-session-id"):
-        user = (
-            (await db.users.verify_session(request.headers["x-session-id"]))
-        )
-    blogs = await db.blogs.get_blog(blog_id, show_all=False, user_id=user["_id"] if user else None)
+        user = await db.users.verify_session(request.headers["x-session-id"])
+    blogs = await db.blogs.get_blog(
+        blog_id, show_all=False, user_id=user["_id"] if user else None
+    )
     return Response(blogs)
 
 
