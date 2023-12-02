@@ -26,6 +26,12 @@ class Blog:
             )
             for i in range(len(blogs)):
                 blogs[i]["_id"] = str(blogs[i]["_id"])
+                user = await self.users.find_one({"_id": ObjectId(blogs[i].get("author"))})
+                blogs[i]["author"] = {
+                    "name": user.get("name"),
+                    "_id": str(user["_id"]),
+                    "image": user["image"],
+                }
                 blogs[i]["is_liked"] = user_id in blogs[i].get("likes", [])
             return blogs
         filter = {"_id": ObjectId(blog_id)}
@@ -33,6 +39,12 @@ class Blog:
         blog = await self.blogs.find_one(filter)
         if blog:
             blog["_id"] = str(blog["_id"])
+            user = await self.users.find_one({"_id": ObjectId(blog.get("author"))})
+            blog["author"] = {
+                "name": user.get("name"),
+                "_id": str(user["_id"]),
+                "image": user["image"],
+            }
             blog["is_liked"] = user_id in blog.get("likes", [])
             return blog
         return {"status": False, "message": "Blog does not exist"}
