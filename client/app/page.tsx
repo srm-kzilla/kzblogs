@@ -3,13 +3,19 @@ import Navbar from "@/components/Navbar";
 import DraftCard from "@/components/DraftCard";
 import TrendingCard from "@/components/TrendingCard";
 import BookmarkCard from "@/components/BookmarkCard";
-import { getAllBlogs } from "@/utils/api";
+import { getAllBlogs, getCurrentUser, getSessionToken } from "@/utils/api";
 
 export default async function Home() {
   const blogs = await getAllBlogs();
+  const sessionToken = getSessionToken();
+  var is_admin = false;
+  if (sessionToken !== undefined) {
+    var user = await getCurrentUser();
+    is_admin = user.is_admin;
+  }
   return (
     <div>
-      <Navbar />
+      <Navbar isAdmin={is_admin} />
       <div className="flex w-full md:px-10 lg:px-32 mt-12 lg:mt-24 justify-between">
         <div className="w-full md:w-9/12 flex justify-center md:justify-start">
           <div>
@@ -28,9 +34,12 @@ export default async function Home() {
             <div className="md:w-[25vw] lg:w-[18vw] m-6">
               <BookmarkCard />
             </div>
-            <div className="md:w-[25vw] lg:w-[18vw] m-6">
-              <DraftCard />
-            </div>
+            {sessionToken !== undefined && is_admin && (
+              <div className="md:w-[25vw] lg:w-[18vw] m-6">
+                <DraftCard />
+              </div>
+            )}
+
             <div className="md:w-[25vw] lg:w-[18vw] m-6">
               <TrendingCard />
             </div>

@@ -3,14 +3,39 @@ import BlogCard from "@/components/BlogCard";
 import Button from "@/components/Button";
 import Navbar from "@/components/Navbar";
 import { getAllBlogs, getUser, toggleFollow } from "@/utils/api";
+import { useEffect, useState } from "react";
 
-export default async function Page({ params }: { params: { id: string } }) {
-  const blogs = await getAllBlogs();
-  const { name, _id, followers, following, images } = await getUser(params.id);
-  const authorBlogs = blogs.filter((blog: Blog) => blog.author === name);
+export default function Page({ params }: { params: { id: string } }) {
+  const [blogs, setBlogs] = useState([]);
+  const [userData, setUserData] = useState({
+    name: "",
+    _id: "",
+    followers: [],
+    following: [],
+    image: "",
+  });
+
+  useEffect(() => {
+    // Fetch data on the client side
+    const fetchData = async () => {
+      const fetchedBlogs = await getAllBlogs();
+      const fetchedUserData = await getUser(params.id);
+
+      setBlogs(fetchedBlogs);
+      setUserData(fetchedUserData);
+    };
+
+    fetchData();
+  }, [params.id]);
+
+  const authorBlogs = blogs.filter(
+    (blog: Blog) => blog.author._id === userData._id,
+  );
+
   const follow = async () => {
-    toggleFollow(_id);
+    toggleFollow(userData._id);
   };
+
   return (
     <div>
       <Navbar />
@@ -19,15 +44,15 @@ export default async function Page({ params }: { params: { id: string } }) {
           <img
             width={100}
             height={100}
-            src={images}
+            src={userData.image}
             alt="profile pic"
             className="rounded-full"
           />
           <div className="flex flex-col gap-3">
-            <h1 className="text-kz-secondary text-3xl">{name}</h1>
-            <p className="text-kz-secondary text-xs">An amazin Bio</p>
+            <h1 className="text-kz-secondary text-3xl">{userData.name}</h1>
             <p className="text-kz-secondary text-xs">
-              {followers} followers {following} following
+              {userData.followers.length} followers {userData.following.length}{" "}
+              following
             </p>
           </div>
           <div>

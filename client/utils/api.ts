@@ -23,7 +23,7 @@ const API = {
   },
 };
 
-async function getSessionToken() {
+export async function getSessionToken() {
   const cookieStore = cookies();
   const cookie = cookieStore.get("next-auth.session-token");
   const sessionToken = cookie?.value;

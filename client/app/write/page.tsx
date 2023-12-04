@@ -21,6 +21,7 @@ const CreatePage = () => {
         content: markdownInput,
         publish_status: true,
         author: _id,
+        author_name: author,
       };
 
       const res = await addBlog(dataToPublish);

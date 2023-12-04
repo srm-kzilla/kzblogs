@@ -12,12 +12,11 @@ const menuItems = [
   { path: "/bookmarks", name: "Bookmarks" },
 ];
 
-const Navbar = () => {
+const Navbar = (isAdmin: any) => {
   const pathname = usePathname();
   const { data, status } = useSession();
   const loggedIn = status === "authenticated";
   const [navbarOpen, setNavbarOpen] = useState(false);
-
   return (
     <nav className="shadow-box p-2 font-body flex lg:flex-row flex-col lg:items-center">
       <div className="flex flex-row items-center gap-5">
@@ -57,13 +56,16 @@ const Navbar = () => {
           navbarOpen ? "flex flex-col" : "hidden"
         }`}
       >
-        <Link
-          href="/write"
-          className="flex flex-row gap-3 items-center lg:px-3 lg:py-1 rounded-lg lg:bg-kz-button text-kz-secondary hover:text-kz-button lg:hover:bg-kz-secondary"
-        >
-          <PenSquare className="hidden lg:visible" />
-          Write
-        </Link>
+        {loggedIn && isAdmin == true && (
+          <Link
+            href="/write"
+            className="flex flex-row gap-3 items-center lg:px-3 lg:py-1 rounded-lg lg:bg-kz-button text-kz-secondary hover:text-kz-button lg:hover:bg-kz-secondary"
+          >
+            <PenSquare className="hidden lg:visible" />
+            Write
+          </Link>
+        )}
+
         {loggedIn ? (
           <div className="flex items-center invisible lg:visible">
             {data?.user?.image && (

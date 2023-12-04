@@ -6,9 +6,8 @@ import {
   MessageSquare,
   UserCircleIcon,
 } from "lucide-react";
-import { getUser, toggleBookmark, toggleLike } from "@/utils/api";
+import { toggleBookmark, toggleLike } from "@/utils/api";
 import Link from "next/link";
-import { useEffect, useState } from "react";
 
 const BlogCard = ({
   _id,
@@ -16,39 +15,24 @@ const BlogCard = ({
   author,
   content,
   likes,
-  lastEdited,
   comments,
   bookmarked,
 }: Blog) => {
   const isBookmarked = false;
-  const [authName, setAuthName] = useState("");
-
-  useEffect(() => {
-    const fetchAuthorName = async () => {
-      try {
-        const { name } = await getUser(author);
-        setAuthName(name);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    fetchAuthorName();
-  }, [author]);
   return (
     <div className="p-3 bg-kz-card-light text-kz-secondary rounded-2xl w-full h-fit">
       <div className="flex flex-col md:flex-row justify-between gap-3">
         <div className="flex flex-row align-middle gap-3">
-          <UserCircleIcon
-            className="text-kz-highlight-light mt-1"
-            width={32}
+          <img
+            src={author.image}
+            className="rounded-full"
+            width={40}
             height={32}
           />
           <div className="flex flex-col">
-            <Link href={`/author/${author}`} className="text-base font-sans">
-              {authName}
-            </Link>
-            <p className="text-xs font-extralight font-sans">{lastEdited}</p>
+            <a href={`/author/${author._id}`} className="text-base font-sans">
+              {author.name}
+            </a>
           </div>
         </div>
         <div className="md:w-[60%]">

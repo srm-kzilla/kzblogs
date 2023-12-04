@@ -8,8 +8,12 @@ type Blog = {
   _id: string;
   name: string;
   publish_status: boolean;
-  lastEdited: string;
-  author: string;
+  author: {
+    name:string;
+    _id:string;
+    image:string;
+  };
+  authName:string;
   likes: string[];
   comments?: Comments[];
   content: string;

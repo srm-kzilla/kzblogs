@@ -18,7 +18,9 @@ const TrendingCard = async () => {
             <div key={_id} className="flex justify-between items-end my-3">
               <div>
                 <h1>{name}</h1>
-                <p className="text-xs font-extralight font-sans">{author}</p>
+                <p className="text-xs font-extralight font-sans">
+                  {author.name}
+                </p>
               </div>
             </div>
           ))}
