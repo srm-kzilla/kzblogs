@@ -3,7 +3,7 @@ import Link from "next/link";
 import { useState } from "react";
 import Image from "next/image";
 import { PenSquare } from "lucide-react";
-import { signIn, useSession } from "next-auth/react";
+import { signIn, signOut, useSession } from "next-auth/react";
 import { usePathname } from "next/navigation";
 
 const menuItems = [
@@ -12,7 +12,7 @@ const menuItems = [
   { path: "/bookmarks", name: "Bookmarks" },
 ];
 
-const Navbar = (isAdmin: any) => {
+const Navbar = () => {
   const pathname = usePathname();
   const { data, status } = useSession();
   const loggedIn = status === "authenticated";
@@ -56,26 +56,26 @@ const Navbar = (isAdmin: any) => {
           navbarOpen ? "flex flex-col" : "hidden"
         }`}
       >
-        {loggedIn && isAdmin == true && (
-          <Link
-            href="/write"
-            className="flex flex-row gap-3 items-center lg:px-3 lg:py-1 rounded-lg lg:bg-kz-button text-kz-secondary hover:text-kz-button lg:hover:bg-kz-secondary"
-          >
-            <PenSquare className="hidden lg:visible" />
-            Write
-          </Link>
-        )}
+        <Link
+          href="/write"
+          className="flex flex-row gap-3 items-center lg:px-3 lg:py-1 rounded-lg lg:bg-kz-button text-kz-secondary hover:text-kz-button lg:hover:bg-kz-secondary"
+        >
+          <PenSquare className="hidden lg:visible" />
+          Write
+        </Link>
 
         {loggedIn ? (
           <div className="flex items-center invisible lg:visible">
             {data?.user?.image && (
-              <Image
-                src={data?.user.image}
-                alt="profile"
-                width={32}
-                height={32}
-                className="rounded-full"
-              />
+              <button onClick={() => signOut()}>
+                <Image
+                  src={data?.user.image}
+                  alt="profile"
+                  width={32}
+                  height={32}
+                  className="rounded-full"
+                />
+              </button>
             )}
           </div>
         ) : (

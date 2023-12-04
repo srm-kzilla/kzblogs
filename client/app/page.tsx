@@ -7,15 +7,16 @@ import { getAllBlogs, getCurrentUser, getSessionToken } from "@/utils/api";
 
 export default async function Home() {
   const blogs = await getAllBlogs();
+  console.log(blogs);
   const sessionToken = getSessionToken();
   var is_admin = false;
   if (sessionToken !== undefined) {
     var user = await getCurrentUser();
-    is_admin = user.is_admin;
+    is_admin = user?.is_admin;
   }
   return (
     <div>
-      <Navbar isAdmin={is_admin} />
+      <Navbar />
       <div className="flex w-full md:px-10 lg:px-32 mt-12 lg:mt-24 justify-between">
         <div className="w-full md:w-9/12 flex justify-center md:justify-start">
           <div>

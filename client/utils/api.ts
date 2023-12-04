@@ -51,15 +51,9 @@ export async function getAllBlogsAdmin() {
 }
 
 export async function getAllBlogs() {
-  const sessionToken = await getSessionToken();
   try {
     const response = await axios.get(
-      API.BASE_URL + API.ENDPOINTS.BLOGS.BASE + API.ENDPOINTS.BLOGS.ALL,
-      {
-        headers: {
-          "X-Session-ID": sessionToken,
-        },
-      },
+      API.BASE_URL + API.ENDPOINTS.BLOGS.BASE + API.ENDPOINTS.BLOGS.ALL
     );
     return response.data;
   } catch (error) {
@@ -151,8 +145,8 @@ export async function toggleFollow(id: string) {
   const sessionToken = await getSessionToken();
   if (sessionToken !== undefined) {
     try {
-      await axios.post(
-        API.BASE_URL + API.ENDPOINTS.BLOGS.BASE + API.ENDPOINTS.BLOGS.USER + API.ENDPOINTS.BLOGS.FOLLOW(id),
+      await axios.put(
+        API.BASE_URL + API.ENDPOINTS.BLOGS.BASE + API.ENDPOINTS.BLOGS.CURRENT_USER + API.ENDPOINTS.BLOGS.FOLLOW(id),
         null,
         {
           headers: {
@@ -217,22 +211,11 @@ export async function addBlog(data: any) {
 
 export async function getCurrentUser(){
   try{
-    const sessionToken = await getSessionToken();
-    if ( sessionToken !== undefined){
       const response = await axios.get(
         API.BASE_URL + API.ENDPOINTS.BLOGS.BASE + API.ENDPOINTS.BLOGS.CURRENT_USER,
-        {
-          headers: {
-            "X-Session-ID": sessionToken,
-          },
-        },
       );
       return response.data;
     }
-    else{
-      throw new Error("Session Id not found");
-    }
-  }
   catch(error){
     console.error(error);
     return {};
