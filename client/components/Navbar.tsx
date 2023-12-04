@@ -67,15 +67,13 @@ const Navbar = () => {
         {loggedIn ? (
           <div className="flex items-center invisible lg:visible">
             {data?.user?.image && (
-              <button onClick={() => signOut()}>
-                <Image
-                  src={data?.user.image}
-                  alt="profile"
-                  width={32}
-                  height={32}
-                  className="rounded-full"
-                />
-              </button>
+              <Image
+                src={data?.user.image}
+                alt="profile"
+                width={32}
+                height={32}
+                className="rounded-full"
+              />
             )}
           </div>
         ) : (
