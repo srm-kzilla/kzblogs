@@ -16,7 +16,6 @@ export default function Page({ params }: { params: { id: string } }) {
   });
 
   useEffect(() => {
-    // Fetch data on the client side
     const fetchData = async () => {
       const fetchedBlogs = await getAllBlogs();
       const fetchedUserData = await getUser(params.id);

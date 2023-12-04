@@ -7,7 +7,6 @@ import remarkGfm from "remark-gfm";
 import { addBlog, getCurrentUser } from "@/utils/api";
 import toast from "@/utils/toast";
 import { useRouter } from "next/navigation";
-import { useSession } from "next-auth/react";
 
 const CreatePage = () => {
   const router = useRouter();
