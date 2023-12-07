@@ -26,10 +26,12 @@ export default async function Page({ params }: { params: { id: string } }) {
             height={100}
             src={userData.image}
             alt="profile pic"
-            className="rounded-full"
+            className="rounded-full w-12 h-12 ml-3"
           />
-          <div className="flex flex-col gap-3">
-            <h1 className="text-kz-secondary text-3xl">{userData.name}</h1>
+          <div className="flex flex-col gap-1 lg:gap-3">
+            <h1 className="text-kz-secondary text-xl lg:text-3xl">
+              {userData.name}
+            </h1>
             <p className="text-kz-secondary text-xs">
               {userData.followers.length} followers {userData.following.length}{" "}
               following
@@ -41,9 +43,9 @@ export default async function Page({ params }: { params: { id: string } }) {
             </form>
           </div>
         </div>
-        <div className="">
+        <div>
           {authorBlogs.map((blogs: Blog) => (
-            <div key={blogs._id} className=" my-6 m-3 w-[60vw]">
+            <div key={blogs._id} className="my-6 m-3 w-[80vw] lg:w-[60vw]">
               <BlogCard {...blogs} />
             </div>
           ))}

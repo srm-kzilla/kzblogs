@@ -211,11 +211,22 @@ export async function addBlog(data: any) {
 
 export async function getCurrentUser(){
   try{
+    const sessionToken = await getSessionToken();
+    if ( sessionToken !== undefined){
       const response = await axios.get(
         API.BASE_URL + API.ENDPOINTS.BLOGS.BASE + API.ENDPOINTS.BLOGS.CURRENT_USER,
+        {
+          headers: {
+            "X-Session-ID": sessionToken,
+          },
+        },
       );
       return response.data;
     }
+    else{
+      throw new Error("Session Id not found");
+    }
+  }
   catch(error){
     console.error(error);
     return {};
@@ -245,6 +256,3 @@ export async function getUser(_id:string){
     return {};
   }
 }
-
-
-

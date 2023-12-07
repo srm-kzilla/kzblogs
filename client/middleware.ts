@@ -13,7 +13,7 @@ export default async function middleware(req: NextRequest) {
   if (path === "/write") {
     const user = await getCurrentUser();
 
-    if (!user.isAdmin) {
+    if (!user.is_admin) {
       return NextResponse.redirect(new URL(`/unauthorized`, req.url));
     }
   }
