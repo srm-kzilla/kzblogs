@@ -26,7 +26,9 @@ class Blog:
             )
             for i in range(len(blogs)):
                 blogs[i]["_id"] = str(blogs[i]["_id"])
-                user = await self.users.find_one({"_id": ObjectId(blogs[i].get("author"))})
+                user = await self.users.find_one(
+                    {"_id": ObjectId(blogs[i].get("author"))}
+                )
                 blogs[i]["author"] = {
                     "name": user.get("name"),
                     "_id": str(user["_id"]),
