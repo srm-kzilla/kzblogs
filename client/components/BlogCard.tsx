@@ -42,7 +42,7 @@ const BlogCard = ({
             </h1>
           </div>
         </div>
-        <p className="font-sans text-xs font-light mt-3 md:text-lg">
+        <p className="font-sans text-xs font-light mt-3 md:text-lg line-clamp-2">
           {content}
         </p>
       </Link>

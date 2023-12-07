@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import "cal-sans";
 import Footer from "@/components/Footer";
 import AuthProvider from "@/components/AuthProvider";
+import { Toaster } from "react-hot-toast";
 
 export const metadata: Metadata = {
   title: "KZBlogs",
@@ -18,6 +19,7 @@ export default function RootLayout({
     <html lang="en">
       <body className="font-body bg-kz-primary">
         <main>
+          <Toaster position="top-right" />
           <AuthProvider>{children}</AuthProvider>
         </main>
         <Footer />

@@ -38,6 +38,7 @@ def middleware(func: Callable):
                 response.headers["is_admin"] = "yes" if user.get("is_admin") else "no"
                 response.headers["image"] = user.get("image")
                 response.headers["name"] = user.get("name")
+                response.headers["id"] = str(user.get("_id"))
             return response
         except Exception as e:
             print(e)
