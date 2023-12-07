@@ -7,11 +7,10 @@ import { getAllBlogs, getCurrentUser, getSessionToken } from "@/utils/api";
 
 export default async function Home() {
   const blogs = await getAllBlogs();
-  console.log(blogs);
   const sessionToken = getSessionToken();
-  var is_admin = false;
+  let is_admin = false;
   if (sessionToken !== undefined) {
-    var user = await getCurrentUser();
+    const user = await getCurrentUser();
     is_admin = user?.is_admin;
   }
   return (

@@ -1,37 +1,18 @@
-"use client";
 import BlogCard from "@/components/BlogCard";
 import Button from "@/components/Button";
 import Navbar from "@/components/Navbar";
 import { getAllBlogs, getUser, toggleFollow } from "@/utils/api";
-import { useEffect, useState } from "react";
 
-export default function Page({ params }: { params: { id: string } }) {
-  const [blogs, setBlogs] = useState([]);
-  const [userData, setUserData] = useState({
-    name: "",
-    _id: "",
-    followers: [],
-    following: [],
-    image: "",
-  });
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const fetchedBlogs = await getAllBlogs();
-      const fetchedUserData = await getUser(params.id);
-
-      setBlogs(fetchedBlogs);
-      setUserData(fetchedUserData);
-    };
-
-    fetchData();
-  }, [params.id]);
+export default async function Page({ params }: { params: { id: string } }) {
+  const blogs = await getAllBlogs();
+  const userData = await getUser(params.id);
 
   const authorBlogs = blogs.filter(
     (blog: Blog) => blog.author._id === userData._id,
   );
 
   const follow = async () => {
+    "use server";
     toggleFollow(userData._id);
   };
 
@@ -55,9 +36,9 @@ export default function Page({ params }: { params: { id: string } }) {
             </p>
           </div>
           <div>
-            <Button onClick={follow} variant="secondary">
-              Follow
-            </Button>
+            <form action={follow}>
+              <Button variant="secondary">Follow</Button>
+            </form>
           </div>
         </div>
         <div className="">

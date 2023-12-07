@@ -14,7 +14,7 @@ export default async function middleware(req: NextRequest) {
     const user = await getCurrentUser();
 
     if (!user.isAdmin) {
-      return NextResponse.redirect(new URL(`/unauthorized`, req.url)); // Customize this URL for unauthorized access
+      return NextResponse.redirect(new URL(`/unauthorized`, req.url));
     }
   }
   return NextResponse.next();
