@@ -3,10 +3,16 @@ import Navbar from "@/components/Navbar";
 import DraftCard from "@/components/DraftCard";
 import TrendingCard from "@/components/TrendingCard";
 import BookmarkCard from "@/components/BookmarkCard";
-import { getAllBlogs } from "@/utils/api";
+import { getAllBlogs, getCurrentUser, getSessionToken } from "@/utils/api";
 
 export default async function Home() {
   const blogs = await getAllBlogs();
+  const sessionToken = getSessionToken();
+  let is_admin = false;
+  if (sessionToken !== undefined) {
+    const user = await getCurrentUser();
+    is_admin = user?.is_admin;
+  }
   return (
     <div>
       <Navbar />
@@ -28,9 +34,12 @@ export default async function Home() {
             <div className="md:w-[25vw] lg:w-[18vw] m-6">
               <BookmarkCard />
             </div>
-            <div className="md:w-[25vw] lg:w-[18vw] m-6">
-              <DraftCard />
-            </div>
+            {sessionToken !== undefined && is_admin && (
+              <div className="md:w-[25vw] lg:w-[18vw] m-6">
+                <DraftCard />
+              </div>
+            )}
+
             <div className="md:w-[25vw] lg:w-[18vw] m-6">
               <TrendingCard />
             </div>

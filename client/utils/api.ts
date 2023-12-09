@@ -16,11 +16,14 @@ const API = {
       TRENDING: "/trending",
       BOOKMARKS: "/bookmarks/",
       LIKES: (id: string) => `/likes/${id}`,
+      CURRENT_USER:"/user",
+      USER: (id: string) => `/user/${id}`,
+      FOLLOW: (id: string) => `/follow/${id}`,
     },
   },
 };
 
-async function getSessionToken() {
+export async function getSessionToken() {
   const cookieStore = cookies();
   const cookie = cookieStore.get("next-auth.session-token");
   const sessionToken = cookie?.value;
@@ -48,15 +51,9 @@ export async function getAllBlogsAdmin() {
 }
 
 export async function getAllBlogs() {
-  const sessionToken = await getSessionToken();
   try {
     const response = await axios.get(
-      API.BASE_URL + API.ENDPOINTS.BLOGS.BASE + API.ENDPOINTS.BLOGS.ALL,
-      {
-        headers: {
-          "X-Session-ID": sessionToken,
-        },
-      },
+      API.BASE_URL + API.ENDPOINTS.BLOGS.BASE + API.ENDPOINTS.BLOGS.ALL
     );
     return response.data;
   } catch (error) {
@@ -144,6 +141,25 @@ export async function toggleLike(id: string) {
   }
 }
 
+export async function toggleFollow(id: string) {
+  const sessionToken = await getSessionToken();
+  if (sessionToken !== undefined) {
+    try {
+      await axios.put(
+        API.BASE_URL + API.ENDPOINTS.BLOGS.BASE + API.ENDPOINTS.BLOGS.CURRENT_USER + API.ENDPOINTS.BLOGS.FOLLOW(id),
+        null,
+        {
+          headers: {
+            "x-session-id": sessionToken,
+          },
+        },
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  }
+}
+
 export async function getBookmarkBlogs() {
   const sessionToken = await getSessionToken();
   if (sessionToken !== undefined) {
@@ -169,8 +185,6 @@ export async function getBookmarkBlogs() {
 export async function addBlog(data: any) {
   try {
     const sessionToken = await getSessionToken();
-    console.log(data);
-
     if (sessionToken !== undefined) {
       const response = await axios.post(
         API.BASE_URL + API.ENDPOINTS.ADMIN.BASE,
@@ -187,11 +201,58 @@ export async function addBlog(data: any) {
         throw new Error("Blog creation failed");
       }
     } else {
-      console.log("SESSION TOKEN NOT DEFINED");
       throw new Error("Session token not defined");
     }
   } catch (error) {
     console.error(error);
     throw error;
+  }
+}
+
+export async function getCurrentUser(){
+  try{
+    const sessionToken = await getSessionToken();
+    if ( sessionToken !== undefined){
+      const response = await axios.get(
+        API.BASE_URL + API.ENDPOINTS.BLOGS.BASE + API.ENDPOINTS.BLOGS.CURRENT_USER,
+        {
+          headers: {
+            "X-Session-ID": sessionToken,
+          },
+        },
+      );
+      return response.data;
+    }
+    else{
+      throw new Error("Session Id not found");
+    }
+  }
+  catch(error){
+    console.error(error);
+    return {};
+  }
+}
+
+export async function getUser(_id:string){
+  try{
+    const sessionToken = await getSessionToken();
+    if ( sessionToken !== undefined){
+      const response = await axios.get(
+        API.BASE_URL + API.ENDPOINTS.BLOGS.BASE + API.ENDPOINTS.BLOGS.USER(_id),
+        {
+          headers: {
+            "X-Session-ID": sessionToken,
+          },
+        },
+      );
+      return response.data;
+    }
+    else{
+      throw new Error("Session Id not found");
+    }
+  }
+  catch(error){
+    console.error(error);
+    return {};
   }
 }

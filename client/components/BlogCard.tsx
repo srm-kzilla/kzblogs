@@ -7,6 +7,7 @@ import {
   UserCircleIcon,
 } from "lucide-react";
 import { toggleBookmark, toggleLike } from "@/utils/api";
+import Link from "next/link";
 
 const BlogCard = ({
   _id,
@@ -14,24 +15,24 @@ const BlogCard = ({
   author,
   content,
   likes,
-  lastEdited,
   comments,
   bookmarked,
 }: Blog) => {
-  const isLiked = false,
-    isBookmarked = bookmarked;
+  const isBookmarked = false;
   return (
     <div className="p-3 bg-kz-card-light text-kz-secondary rounded-2xl w-full h-fit">
       <div className="flex flex-col md:flex-row justify-between gap-3">
         <div className="flex flex-row align-middle gap-3">
-          <UserCircleIcon
-            className="text-kz-highlight-light mt-1"
-            width={32}
+          <img
+            src={author.image}
+            className="rounded-full"
+            width={40}
             height={32}
           />
           <div className="flex flex-col">
-            <p className="text-base font-sans">{author}</p>
-            <p className="text-xs font-extralight font-sans">{lastEdited}</p>
+            <a href={`/author/${author._id}`} className="text-base font-sans">
+              {author.name}
+            </a>
           </div>
         </div>
         <div className="md:w-[60%]">

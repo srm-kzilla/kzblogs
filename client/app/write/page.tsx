@@ -4,7 +4,7 @@ import Button from "@/components/Button";
 import Navbar from "@/components/Navbar";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import { addBlog } from "@/utils/api";
+import { addBlog, getCurrentUser } from "@/utils/api";
 import toast from "@/utils/toast";
 import { useRouter } from "next/navigation";
 
@@ -13,14 +13,15 @@ const CreatePage = () => {
   const [markdownInput, setMarkdownInput] = useState("");
   const [author, setAuthor] = useState("");
   const [title, setTitle] = useState("");
-
   const publishData = async () => {
+    const { _id } = await getCurrentUser();
     try {
       const dataToPublish = {
         name: title,
         content: markdownInput,
         publish_status: true,
-        author: author,
+        author: _id,
+        author_name: author,
       };
 
       const res = await addBlog(dataToPublish);
@@ -35,12 +36,13 @@ const CreatePage = () => {
   };
 
   const saveAsDraft = async () => {
+    const { _id } = await getCurrentUser();
     try {
       const draft = {
         name: title,
         content: markdownInput,
         publish_status: false,
-        author: author,
+        author: _id,
       };
 
       const res = await addBlog(draft);
@@ -106,6 +108,10 @@ const CreatePage = () => {
       </div>
     </div>
   );
+};
+CreatePage.auth = {
+  role: "admin",
+  unauthorized: "/", // redirect to this url
 };
 
 export default CreatePage;
