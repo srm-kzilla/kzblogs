@@ -209,29 +209,39 @@ export async function addBlog(data: any) {
   }
 }
 
-export async function getCurrentUser(){
-  try{
-    const sessionToken = await getSessionToken();
-    if ( sessionToken !== undefined){
-      const response = await axios.get(
-        API.BASE_URL + API.ENDPOINTS.BLOGS.BASE + API.ENDPOINTS.BLOGS.CURRENT_USER,
-        {
-          headers: {
-            "X-Session-ID": sessionToken,
-          },
+export async function getCurrentUser(sessionTokenMiddleware?: string) {
+  try {
+    const sessionToken =
+      sessionTokenMiddleware !== undefined
+        ? sessionTokenMiddleware
+        : await getSessionToken();
+
+    if (!sessionToken) {
+      throw new Error('Session ID not found');
+    }
+
+    const response = await fetch(
+      `${API.BASE_URL}${API.ENDPOINTS.BLOGS.BASE}${API.ENDPOINTS.BLOGS.CURRENT_USER}`,
+      {
+        method: 'GET',
+        headers: {
+          'X-Session-ID': sessionToken,
         },
-      );
-      return response.data;
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
     }
-    else{
-      throw new Error("Session Id not found");
-    }
-  }
-  catch(error){
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
     console.error(error);
     return {};
   }
 }
+
 
 export async function getUser(_id:string){
   try{
