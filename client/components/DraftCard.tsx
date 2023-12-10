@@ -33,7 +33,7 @@ const DraftCard = async () => {
               <div key={_id} className="flex justify-between items-end my-3">
                 <div>
                   <h1>{name}</h1>
-                  <p className="text-xs">{author}</p>
+                  <p className="text-xs">{author.name}</p>
                 </div>
                 <button>
                   <PenLine width={18} height={18} />

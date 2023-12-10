@@ -3,7 +3,7 @@ import Link from "next/link";
 import { useState } from "react";
 import Image from "next/image";
 import { PenSquare } from "lucide-react";
-import { signIn, useSession } from "next-auth/react";
+import { signIn, signOut, useSession } from "next-auth/react";
 import { usePathname } from "next/navigation";
 
 const menuItems = [
@@ -17,7 +17,6 @@ const Navbar = () => {
   const { data, status } = useSession();
   const loggedIn = status === "authenticated";
   const [navbarOpen, setNavbarOpen] = useState(false);
-
   return (
     <nav className="shadow-box p-2 font-body flex lg:flex-row flex-col lg:items-center">
       <div className="flex flex-row items-center gap-5">
@@ -64,6 +63,7 @@ const Navbar = () => {
           <PenSquare className="hidden lg:visible" />
           Write
         </Link>
+
         {loggedIn ? (
           <div className="flex items-center invisible lg:visible">
             {data?.user?.image && (
