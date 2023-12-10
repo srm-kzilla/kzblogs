@@ -3,13 +3,13 @@ import { getCurrentUser } from "./utils/api";
 
 export default async function middleware(req: NextRequest) {
   const path = req.nextUrl.pathname;
-  const sessionToken=req.cookies.get("next-auth.session-token");
+  const sessionToken = req.cookies.get("next-auth.session-token");
   if (!sessionToken) {
     return NextResponse.redirect(
       new URL(`/api/auth/signin?callbackUrl=${path}`, req.url),
     );
   }
-  
+
   if (path === "/write") {
     const user = await getCurrentUser(sessionToken?.value);
     if (!user.is_admin) {
