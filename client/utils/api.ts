@@ -16,7 +16,7 @@ const API = {
       TRENDING: "/trending",
       BOOKMARKS: "/bookmarks/",
       LIKES: (id: string) => `/likes/${id}`,
-      CURRENT_USER:"/user",
+      CURRENT_USER: "/user",
       USER: (id: string) => `/user/${id}`,
       FOLLOW: (id: string) => `/follow/${id}`,
     },
@@ -53,7 +53,7 @@ export async function getAllBlogsAdmin() {
 export async function getAllBlogs() {
   try {
     const response = await axios.get(
-      API.BASE_URL + API.ENDPOINTS.BLOGS.BASE + API.ENDPOINTS.BLOGS.ALL
+      API.BASE_URL + API.ENDPOINTS.BLOGS.BASE + API.ENDPOINTS.BLOGS.ALL,
     );
     return response.data;
   } catch (error) {
@@ -146,7 +146,10 @@ export async function toggleFollow(id: string) {
   if (sessionToken !== undefined) {
     try {
       await axios.put(
-        API.BASE_URL + API.ENDPOINTS.BLOGS.BASE + API.ENDPOINTS.BLOGS.CURRENT_USER + API.ENDPOINTS.BLOGS.FOLLOW(id),
+        API.BASE_URL +
+          API.ENDPOINTS.BLOGS.BASE +
+          API.ENDPOINTS.BLOGS.CURRENT_USER +
+          API.ENDPOINTS.BLOGS.FOLLOW(id),
         null,
         {
           headers: {
@@ -209,34 +212,43 @@ export async function addBlog(data: any) {
   }
 }
 
-export async function getCurrentUser(){
-  try{
-    const sessionToken = await getSessionToken();
-    if ( sessionToken !== undefined){
-      const response = await axios.get(
-        API.BASE_URL + API.ENDPOINTS.BLOGS.BASE + API.ENDPOINTS.BLOGS.CURRENT_USER,
-        {
-          headers: {
-            "X-Session-ID": sessionToken,
-          },
+export async function getCurrentUser(sessionTokenMiddleware?: string) {
+  try {
+    const sessionToken =
+      sessionTokenMiddleware !== undefined
+        ? sessionTokenMiddleware
+        : await getSessionToken();
+
+    if (!sessionToken) {
+      throw new Error("Session ID not found");
+    }
+
+    const response = await fetch(
+      `${API.BASE_URL}${API.ENDPOINTS.BLOGS.BASE}${API.ENDPOINTS.BLOGS.CURRENT_USER}`,
+      {
+        method: "GET",
+        headers: {
+          "X-Session-ID": sessionToken,
         },
-      );
-      return response.data;
+      },
+    );
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
     }
-    else{
-      throw new Error("Session Id not found");
-    }
-  }
-  catch(error){
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
     console.error(error);
     return {};
   }
 }
 
-export async function getUser(_id:string){
-  try{
+export async function getUser(_id: string) {
+  try {
     const sessionToken = await getSessionToken();
-    if ( sessionToken !== undefined){
+    if (sessionToken !== undefined) {
       const response = await axios.get(
         API.BASE_URL + API.ENDPOINTS.BLOGS.BASE + API.ENDPOINTS.BLOGS.USER(_id),
         {
@@ -246,12 +258,10 @@ export async function getUser(_id:string){
         },
       );
       return response.data;
-    }
-    else{
+    } else {
       throw new Error("Session Id not found");
     }
-  }
-  catch(error){
+  } catch (error) {
     console.error(error);
     return {};
   }

@@ -9,11 +9,11 @@ type Blog = {
   name: string;
   publish_status: boolean;
   author: {
-    name:string;
-    _id:string;
-    image:string;
+    name: string;
+    _id: string;
+    image: string;
   };
-  authName:string;
+  authName: string;
   likes: string[];
   comments?: Comments[];
   content: string;
