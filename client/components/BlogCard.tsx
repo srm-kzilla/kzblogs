@@ -39,9 +39,11 @@ const BlogCard = ({
           <h1 className="text-lg md:text-right md:text-2xl md:ml-9">{name}</h1>
         </div>
       </div>
-      <p className="font-sans text-xs font-light mt-3 md:text-lg line-clamp-2">
-        {content}
-      </p>
+      <Link href={"/blogs/" + _id}>
+        <p className="font-sans text-xs font-light mt-3 md:text-lg line-clamp-2">
+          {content}
+        </p>
+      </Link>
       <div className="font-sans relative flex flex-row justify-between mt-2 text-xs font-extralight items-baseline">
         <div className="flex flex-row gap-2 items-center">
           <button
