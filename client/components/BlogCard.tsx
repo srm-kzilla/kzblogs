@@ -4,11 +4,11 @@ import {
   BookmarkCheck,
   HeartIcon,
   MessageSquare,
-  UserCircleIcon,
 } from "lucide-react";
 import { toggleBookmark, toggleLike } from "@/utils/api";
 import Link from "next/link";
-
+import { useState } from "react";
+import Image from "next/image";
 const BlogCard = ({
   _id,
   name,
@@ -16,42 +16,61 @@ const BlogCard = ({
   content,
   likes,
   comments,
-  bookmarked,
-}: Blog) => {
-  const isBookmarked = false;
+  userId,
+}: Blog & { userId: User }) => {
+  const [isLiked, setIsLiked] = useState(likes.includes(userId._id));
+  const [totalLikes, setTotalLikes] = useState(Object.keys(likes).length);
+  const [isBookmarked, setIsBookmarked] = useState(
+    userId.bookmarks.includes(_id),
+  );
+  const markdownToPlainText = (markdown:string) => {
+    return markdown.replace(/[#*_]+/g, "");
+  };
   return (
     <div className="p-3 bg-kz-card-light text-kz-secondary rounded-2xl w-full h-fit">
       <div className="flex flex-col md:flex-row justify-between gap-3">
-        <div className="flex flex-row align-middle gap-3">
-          <img
+        <div className="md:w-[60%]">
+          <h1 className="text-lg md:text-xl">{name}</h1>
+        </div>
+        <div className="flex flex-row align-middle gap-2">
+          <Image
             src={author.image}
-            className="rounded-full"
-            width={40}
-            height={32}
+            alt=""
+            className="rounded-full w-5 h-5 md:h-7 md:w-7"
+            width={400}
+            height={400}
           />
           <div className="flex flex-col">
-            <a href={`/author/${author._id}`} className="text-base font-sans">
+            <a href={`/author/${author._id}`} className="text-sm md:text-base font-sans">
               {author.name}
             </a>
           </div>
         </div>
-        <div className="md:w-[60%]">
-          <h1 className="text-lg md:text-right md:text-2xl md:ml-9">{name}</h1>
-        </div>
       </div>
       <Link href={"/blogs/" + _id}>
-        <p className="font-sans text-xs font-light mt-3 md:text-lg line-clamp-2">
-          {content}
+        <p className="font-sans text-xs font-light mt-3 md:text-base line-clamp-2">
+          {markdownToPlainText(content)}
         </p>
       </Link>
       <div className="font-sans relative flex flex-row justify-between mt-2 text-xs font-extralight items-baseline">
         <div className="flex flex-row gap-2 items-center">
           <button
-            onClick={() => toggleLike(_id)}
+            onClick={() =>
+              userId
+                ? (toggleLike(_id),
+                  setIsLiked((prevState) => !prevState),
+                  setTotalLikes((prevLikes) =>
+                    isLiked ? prevLikes - 1 : prevLikes + 1,
+                  ))
+                : undefined
+            }
             className="flex flex-row gap-1 items-center"
           >
-            <HeartIcon width={14} />
-            <p>{likes.length}</p>
+            <HeartIcon
+              width={14}
+              className={`${isLiked ? "text-red-500" : ""}`}
+            />
+            <p>{totalLikes}</p>
           </button>
           <button className="flex flex-row gap-1 items-center">
             <MessageSquare width={14} />
@@ -59,9 +78,19 @@ const BlogCard = ({
           </button>
         </div>
         <div>
-          <button onClick={() => toggleBookmark(_id)}>
+          <button
+            onClick={() =>
+              userId
+                ? (toggleBookmark(_id),
+                  setIsBookmarked((prevState) => !prevState))
+                : undefined
+            }
+          >
             {isBookmarked ? (
-              <BookmarkCheck width={14} />
+              <BookmarkCheck
+                width={14}
+                className={`${isBookmarked ? "text-kz-highlight-light" : ""}`}
+              />
             ) : (
               <Bookmark width={14} />
             )}
