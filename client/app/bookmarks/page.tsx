@@ -4,7 +4,7 @@ import { getBookmarkBlogs, getCurrentUser } from "@/utils/api";
 
 export default async function Home() {
   const bookmarkBlogs = await getBookmarkBlogs();
-   const user = await getCurrentUser();
+  const user = await getCurrentUser();
   return (
     <div>
       <Navbar />
@@ -16,7 +16,7 @@ export default async function Home() {
           </div>
           {bookmarkBlogs.map((blogs: Blog) => (
             <div key={blogs._id} className="my-6 m-3">
-              <BlogCard {...blogs} userId={user} />
+              <BlogCard {...blogs} User={user} />
             </div>
           ))}
         </div>

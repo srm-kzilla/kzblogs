@@ -1,7 +1,12 @@
 import BlogCard from "@/components/BlogCard";
 import Button from "@/components/Button";
 import Navbar from "@/components/Navbar";
-import { getAllBlogs, getCurrentUser, getUser, toggleFollow } from "@/utils/api";
+import {
+  getAllBlogs,
+  getCurrentUser,
+  getUser,
+  toggleFollow,
+} from "@/utils/api";
 
 export default async function Page({ params }: { params: { id: string } }) {
   const blogs = await getAllBlogs();
@@ -46,7 +51,7 @@ export default async function Page({ params }: { params: { id: string } }) {
         <div>
           {authorBlogs.map((blogs: Blog) => (
             <div key={blogs._id} className="my-6 m-3 w-[80vw] lg:w-[60vw]">
-              <BlogCard {...blogs} userId={currentUser} />
+              <BlogCard {...blogs} User={currentUser} />
             </div>
           ))}
         </div>

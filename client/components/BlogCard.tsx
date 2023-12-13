@@ -9,6 +9,8 @@ import { toggleBookmark, toggleLike } from "@/utils/api";
 import Link from "next/link";
 import { useState } from "react";
 import Image from "next/image";
+import toast from "@/utils/toast";
+
 const BlogCard = ({
   _id,
   name,
@@ -16,14 +18,16 @@ const BlogCard = ({
   content,
   likes,
   comments,
-  userId,
-}: Blog & { userId: User }) => {
-  const [isLiked, setIsLiked] = useState(likes.includes(userId._id));
+  User,
+}: Blog & { User: User }) => {
+  const [isLiked, setIsLiked] = useState(
+    User ? likes.includes(User._id) : false,
+  );
   const [totalLikes, setTotalLikes] = useState(Object.keys(likes).length);
   const [isBookmarked, setIsBookmarked] = useState(
-    userId.bookmarks.includes(_id),
+    Object.keys(User).length != 0 ? User.bookmarks.includes(_id) : false,
   );
-  const markdownToPlainText = (markdown:string) => {
+  const markdownToPlainText = (markdown: string) => {
     return markdown.replace(/[#*_]+/g, "");
   };
   return (
@@ -56,18 +60,18 @@ const BlogCard = ({
         <div className="flex flex-row gap-2 items-center">
           <button
             onClick={() =>
-              userId
+              Object.keys(User).length != 0
                 ? (toggleLike(_id),
                   setIsLiked((prevState) => !prevState),
                   setTotalLikes((prevLikes) =>
                     isLiked ? prevLikes - 1 : prevLikes + 1,
                   ))
-                : undefined
+                : toast.error("Please Signin to like this blog.")
             }
             className="flex flex-row gap-1 items-center"
           >
             <HeartIcon
-              width={14}
+              width={`${isLiked ? 16 : 14}`}
               className={`${isLiked ? "text-red-500" : ""}`}
             />
             <p>{totalLikes}</p>
@@ -80,15 +84,15 @@ const BlogCard = ({
         <div>
           <button
             onClick={() =>
-              userId
+              Object.keys(User).length != 0
                 ? (toggleBookmark(_id),
                   setIsBookmarked((prevState) => !prevState))
-                : undefined
+                : toast.error("Please Signin to bookmark this blog.")
             }
           >
             {isBookmarked ? (
               <BookmarkCheck
-                width={14}
+                width={16}
                 className={`${isBookmarked ? "text-kz-highlight-light" : ""}`}
               />
             ) : (

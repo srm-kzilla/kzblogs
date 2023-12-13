@@ -8,7 +8,6 @@ import remarkGfm from "remark-gfm";
 export default async function Page({ params }: { params: { id: string } }) {
   const blog: Blog = await getBlog(params.id);
   const { _id } = await getCurrentUser();
-  // console.log(_id);
   return (
     <div className="w-full">
       <Navbar />
