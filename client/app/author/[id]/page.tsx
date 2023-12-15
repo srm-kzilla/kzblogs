@@ -51,7 +51,7 @@ export default async function Page({ params }: { params: { id: string } }) {
         <div>
           {authorBlogs.map((blogs: Blog) => (
             <div key={blogs._id} className="my-6 m-3 w-[80vw] lg:w-[60vw]">
-              <BlogCard {...blogs} User={currentUser} />
+              <BlogCard {...blogs} user={currentUser} />
             </div>
           ))}
         </div>

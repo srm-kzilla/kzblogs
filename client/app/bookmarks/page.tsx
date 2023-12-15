@@ -16,7 +16,7 @@ export default async function Home() {
           </div>
           {bookmarkBlogs.map((blogs: Blog) => (
             <div key={blogs._id} className="my-6 m-3">
-              <BlogCard {...blogs} User={user} />
+              <BlogCard {...blogs} user={user} />
             </div>
           ))}
         </div>

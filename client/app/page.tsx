@@ -24,7 +24,7 @@ export default async function Home() {
             </div>
             {blogs.map((blogs: Blog) => (
               <div key={blogs._id} className="w-[80vw] mb-10 md:w-[50vw] m-3">
-                <BlogCard {...blogs} User={user} />
+                <BlogCard {...blogs} user={user} />
               </div>
             ))}
           </div>

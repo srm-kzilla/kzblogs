@@ -18,14 +18,14 @@ const BlogCard = ({
   content,
   likes,
   comments,
-  User,
-}: Blog & { User: User }) => {
+  user,
+}: Blog & { user: User }) => {
   const [isLiked, setIsLiked] = useState(
-    User ? likes.includes(User._id) : false,
+    user ? likes.includes(user._id) : false,
   );
   const [totalLikes, setTotalLikes] = useState(Object.keys(likes).length);
   const [isBookmarked, setIsBookmarked] = useState(
-    Object.keys(User).length != 0 ? User.bookmarks.includes(_id) : false,
+    Object.keys(user).length != 0 ? user.bookmarks.includes(_id) : false,
   );
   const markdownToPlainText = (markdown: string) => {
     return markdown.replace(/[#*_]+/g, "");
@@ -45,7 +45,10 @@ const BlogCard = ({
             height={400}
           />
           <div className="flex flex-col">
-            <a href={`/author/${author._id}`} className="text-sm md:text-base font-sans">
+            <a
+              href={`/author/${author._id}`}
+              className="text-sm md:text-base font-sans"
+            >
               {author.name}
             </a>
           </div>
@@ -60,7 +63,7 @@ const BlogCard = ({
         <div className="flex flex-row gap-2 items-center">
           <button
             onClick={() =>
-              Object.keys(User).length != 0
+              Object.keys(user).length != 0
                 ? (toggleLike(_id),
                   setIsLiked((prevState) => !prevState),
                   setTotalLikes((prevLikes) =>
@@ -84,7 +87,7 @@ const BlogCard = ({
         <div>
           <button
             onClick={() =>
-              Object.keys(User).length != 0
+              Object.keys(user).length != 0
                 ? (toggleBookmark(_id),
                   setIsBookmarked((prevState) => !prevState))
                 : toast.error("Please Signin to bookmark this blog.")
