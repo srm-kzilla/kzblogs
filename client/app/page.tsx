@@ -9,8 +9,8 @@ export default async function Home() {
   const blogs = await getAllBlogs();
   const sessionToken = getSessionToken();
   let is_admin = false;
+  const user = await getCurrentUser();
   if (sessionToken !== undefined) {
-    const user = await getCurrentUser();
     is_admin = user?.is_admin;
   }
   return (
@@ -24,7 +24,7 @@ export default async function Home() {
             </div>
             {blogs.map((blogs: Blog) => (
               <div key={blogs._id} className="w-[80vw] mb-10 md:w-[50vw] m-3">
-                <BlogCard {...blogs} />
+                <BlogCard {...blogs} user={user} />
               </div>
             ))}
           </div>

@@ -6,6 +6,8 @@ import { getBookmarkBlogs } from "@/utils/api";
 const BookmarkCard = async () => {
   const bookmarkBlogs = await getBookmarkBlogs();
   const bookmarkNumber = bookmarkBlogs.length;
+  const markdownToPlainText = (markdown: string) => {
+    return markdown.replace(/[#*_]+/g, "");};
   return (
     <div>
       {bookmarkNumber === 0 ? (
@@ -25,12 +27,14 @@ const BookmarkCard = async () => {
             {" "}
             Bookmarked ( {bookmarkNumber} )
           </h1>
-          <div className="flex max-h-40 no-scrollbar overflow-y-scroll flex-col mt-3">
+          <div className="flex max-h-40 no-scrollbar w-full flex-col mt-3">
             {bookmarkBlogs.map(({ _id, name, content }: Blog) => (
               <div key={_id} className="flex items-center justify-left my-3">
-                <div className="mx-1 text-ellipsis">
+                <div className="mx-1 text-ellipsis w-full">
                   <p className="text-sm">{name}</p>
-                  <p className="text-xs font-extralight font-sans">{content}</p>
+                  <p className="text-xs font-extralight font-sans line-clamp-2">
+                    {markdownToPlainText(content)}
+                  </p>
                 </div>
               </div>
             ))}
