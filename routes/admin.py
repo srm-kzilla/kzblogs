@@ -11,9 +11,9 @@ db = Database()
 
 @router.get("/{id}")
 @middleware
-async def get_admin(request: Request, id: str = "all"):
+async def get_admin(request: Request, id: str = "all", page: int = 1, limit: int = 0):
     id = None if id == "all" else id
-    result = await db.blogs.get_blog(blog_id=id)
+    result = await db.blogs.get_blog(blog_id=id, page=page, limit=limit)
     if isinstance(result, dict) and "status" not in result:
         result.update({"_id": str(result["_id"])})
     elif isinstance(result, list):
@@ -21,6 +21,7 @@ async def get_admin(request: Request, id: str = "all"):
     return Response(
         result, status_code=404 if "status" in result and not result["status"] else 200
     )
+
 
 
 @router.post("/")

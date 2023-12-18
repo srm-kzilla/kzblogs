@@ -63,7 +63,9 @@ async def get_trending(request: Request, count: int = 5):
 
 
 @router.get("/blogs/{blog_id}")
-async def get_blogs(request: Request, blog_id: str = "all"):
+async def get_blogs(
+    request: Request, blog_id: str = "all", page: int = 1, limit: int = 0
+):
     blog_id = None if blog_id == "all" else blog_id
     user = (
         await db.users.verify_session(request.headers["x-session-id"])
@@ -73,7 +75,10 @@ async def get_blogs(request: Request, blog_id: str = "all"):
     blogs = await db.blogs.get_blog(
         blog_id, show_all=False, user_id=str(user["_id"]) if user else None
     )
-    return Response(blogs)
+    if isinstance(blogs, dict):
+        return Response(blogs, status_code=400 if not blogs["status"] else 200)
+    else:
+        return Response(blogs)
 
 
 @router.get("/user")
