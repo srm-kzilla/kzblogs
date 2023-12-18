@@ -36,11 +36,14 @@ class Blog:
             }
             for i in range(len(blogs)):
                 blogs[i]["_id"] = str(blogs[i]["_id"])
-                user = authors.get(blogs[i].get("author"), {
-                    "name": "Anonymous",
-                    "_id": "",
-                    "image": "https://www.pngitem.com/pimgs/m/150-1503945_transparent-user-png-default-user-image-png-png.png",
-                })
+                user = authors.get(
+                    blogs[i].get("author"),
+                    {
+                        "name": "Anonymous",
+                        "_id": "",
+                        "image": "https://www.pngitem.com/pimgs/m/150-1503945_transparent-user-png-default-user-image-png-png.png",
+                    },
+                )
                 blogs[i]["author"] = {
                     "name": user.get("name", "Anonymous"),
                     "_id": str(user["_id"]),

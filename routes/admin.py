@@ -23,7 +23,6 @@ async def get_admin(request: Request, id: str = "all", page: int = 1, limit: int
     )
 
 
-
 @router.post("/")
 @middleware
 async def add_blog(request: Request, blog: AddBlog):
