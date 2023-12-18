@@ -46,7 +46,7 @@ class Blog:
                     "_id": str(user["_id"]),
                     "image": user["image"],
                 }
-                blogs[i]["is_liked"] = str(user_id) in blogs[i].get("like   s", [])
+                blogs[i]["is_liked"] = str(user_id) in blogs[i].get("likes", [])
             return blogs
         filter = {"_id": ObjectId(blog_id)}
         filter.update({"publish_status": True} if not show_all else {})
