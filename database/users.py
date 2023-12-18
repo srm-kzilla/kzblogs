@@ -14,6 +14,8 @@ class User:
         self.sessions = self.db[DB_SETTINGS.SESSIONS]
 
     async def get_user(self, user_id: str, show_blogs: bool = False):
+        if not ObjectId.is_valid(user_id):
+            return None
         user = await self.users.find_one({"_id": ObjectId(user_id)})
         if isinstance(user, dict) and show_blogs:
             user["blogs"] = await self.blogs.find({"author": user_id}).to_list(
@@ -24,6 +26,8 @@ class User:
         return user
 
     async def delete_user(self, user_id: str):
+        if not ObjectId.is_valid(user_id):
+            return {"status": False, "message": "Invalid user id"}
         output = await self.users.delete_one({"_id": ObjectId(user_id)})
         if output.deleted_count == 0:
             return {"status": False, "message": "User does not exist"}
@@ -31,6 +35,8 @@ class User:
 
     async def bookmark(self, user_id: str, blog_id: str):
         user = await self.get_user(user_id)
+        if not user:
+            return {"status": False, "message": "User does not exist"}
         if blog_id in user.get("bookmarks", []):
             await self.users.update_one(
                 {"_id": ObjectId(user_id)},
