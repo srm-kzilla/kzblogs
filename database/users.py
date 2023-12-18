@@ -13,8 +13,15 @@ class User:
         self.comments = self.db[DB_SETTINGS.COMMENTS]
         self.sessions = self.db[DB_SETTINGS.SESSIONS]
 
-    async def get_user(self, user_id: str):
-        return await self.users.find_one({"_id": ObjectId(user_id)})
+    async def get_user(self, user_id: str, show_blogs: bool = False):
+        user = await self.users.find_one({"_id": ObjectId(user_id)})
+        if isinstance(user, dict) and show_blogs:
+            user["blogs"] = await self.blogs.find({"author": user_id}).to_list(
+                length=None
+            )
+            for i in range(len(user["blogs"])):
+                user["blogs"][i]["_id"] = str(user["blogs"][i]["_id"])
+        return user
 
     async def delete_user(self, user_id: str):
         output = await self.users.delete_one({"_id": ObjectId(user_id)})
@@ -82,3 +89,14 @@ class User:
                 {"$pull": {"followers": user_id}},
             )
             return {"status": True, "message": "Unfollowed successfully"}
+
+    async def get_trending_users(self, count: int = 5):
+        sorted_users = (
+            await self.users.find({"is_admin": True})
+            .sort("followers", -1)
+            .limit(count)
+            .to_list(length=None)
+        )
+        for i in range(len(sorted_users)):
+            sorted_users[i]["_id"] = str(sorted_users[i]["_id"])
+        return sorted_users
