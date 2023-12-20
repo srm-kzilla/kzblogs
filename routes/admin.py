@@ -13,6 +13,15 @@ db = Database()
 @middleware
 async def get_admin(request: Request, id: str = "all", page: int = 1, limit: int = 0):
     id = None if id == "all" else id
+    if page < 0:
+        return Response(
+            {"status": False, "message": "Page number cannot be negative"},
+            status_code=400,
+        )
+    if limit < 0:
+        return Response(
+            {"status": False, "message": "Limit cannot be negative"}, status_code=400
+        )
     result = await db.blogs.get_blog(blog_id=id, page=page, limit=limit)
     if isinstance(result, dict) and "status" not in result:
         result.update({"_id": str(result["_id"])})

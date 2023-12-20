@@ -67,6 +67,15 @@ async def get_blogs(
     request: Request, blog_id: str = "all", page: int = 1, limit: int = 0
 ):
     blog_id = None if blog_id == "all" else blog_id
+    if page < 0:
+        return Response(
+            {"status": False, "message": "Page number cannot be negative"},
+            status_code=400,
+        )
+    if limit < 0:
+        return Response(
+            {"status": False, "message": "Limit cannot be negative"}, status_code=400
+        )
     user = (
         await db.users.verify_session(request.headers["x-session-id"])
         if request.headers.get("x-session-id")

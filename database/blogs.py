@@ -20,6 +20,10 @@ class Blog:
         page: int = 1,
         limit: int = 0,
     ):
+        if page < 0:
+            page = 1
+        if limit < 0:
+            limit = 0
         if not blog_id:
             blogs = list(
                 await self.blogs.find({"publish_status": True} if not show_all else {})
