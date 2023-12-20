@@ -38,21 +38,18 @@ class Blog:
                     length=None
                 )
             }
+            DEFAULT_USER = {
+                "name": "Anonymous",
+                "_id": "",
+                "image": "https://www.pngitem.com/pimgs/m/150-1503945_transparent-user-png-default-user-image-png-png.png",
+            }
             for i in range(len(blogs)):
                 blogs[i]["_id"] = str(blogs[i]["_id"])
-                user = authors.get(
+                blogs[i]["author"] = authors.get(
                     blogs[i].get("author"),
-                    {
-                        "name": "Anonymous",
-                        "_id": "",
-                        "image": "https://www.pngitem.com/pimgs/m/150-1503945_transparent-user-png-default-user-image-png-png.png",
-                    },
+                    DEFAULT_USER,
                 )
-                blogs[i]["author"] = {
-                    "name": user.get("name", "Anonymous"),
-                    "_id": str(user["_id"]),
-                    "image": user["image"],
-                }
+                blogs[i]["author"]["_id"] = str(blogs[i]["author"]["_id"])
                 blogs[i]["is_liked"] = str(user_id) in blogs[i].get("likes", [])
             return blogs
         filter = {"_id": ObjectId(blog_id)}
