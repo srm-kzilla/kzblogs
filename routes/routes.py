@@ -104,6 +104,6 @@ async def follow_user(request: Request, user_id: str):
     return Response(response, status_code=200 if response["status"] else 400)
 
 
-@router.get("/trending/users")
-async def trending_users(request: Request, count: int = 5):
+@router.get("/trending/writers")
+async def trending_writers(request: Request, count: int = 5):
     return Response(await db.users.get_trending_users(count=count))

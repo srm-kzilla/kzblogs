@@ -3,10 +3,10 @@ import ChallengesCard from "@/components/ChallengesCard";
 import Navbar from "@/components/Navbar";
 import challengeData from "@/mock-data/ChallengeData";
 import { SearchIcon } from "lucide-react";
-import { getTrending } from "@/utils/api";
+import { getTrendingWriters } from "@/utils/api";
 
 const Explore = async () => {
-  const data = await getTrending();
+  const data = await getTrendingWriters();
   return (
     <div>
       <Navbar />
@@ -36,9 +36,9 @@ const Explore = async () => {
             <h1 className="text-kz-secondary text-left mb-4 lg:mb-7 text-2xl lg:text-3xl font-serif">
               Trending Writers
             </h1>
-            {data.map((blog: Blog, index: number) => (
-              <div key={blog._id} className="m-3">
-                <AuthorCard {...blog} index={++index} />
+            {data.map((user: User, index: number) => (
+              <div key={user._id} className="m-3">
+                <AuthorCard author={user} index={++index} />
               </div>
             ))}
           </div>

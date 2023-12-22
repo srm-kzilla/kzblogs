@@ -14,6 +14,7 @@ const API = {
       ALL: "/blogs/all",
       WITH_ID: (id: string) => `/blogs/${id}`,
       TRENDING: "/trending",
+      TRENDING_WRITERS: "/trending/writers",
       BOOKMARKS: "/bookmarks/",
       LIKES: (id: string) => `/likes/${id}`,
       CURRENT_USER: "/user",
@@ -95,6 +96,25 @@ export async function getTrending() {
     );
     return response.data;
   } catch (error) {
+    console.log(error);
+    return [];
+  }
+}
+
+export async function getTrendingWriters() {
+  const sessionToken = await getSessionToken();
+  try {
+    const response = await axios.get(
+      API.BASE_URL + API.ENDPOINTS.BLOGS.BASE + API.ENDPOINTS.BLOGS.TRENDING_WRITERS,
+      {
+        headers: {
+          "X-Session-ID": sessionToken,
+        },
+      },
+    );
+    return response.data;
+  }
+  catch (error) {
     console.log(error);
     return [];
   }

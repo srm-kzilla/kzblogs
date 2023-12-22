@@ -105,4 +105,5 @@ class User:
         )
         for i in range(len(sorted_users)):
             sorted_users[i]["_id"] = str(sorted_users[i]["_id"])
+            sorted_users[i].pop("bookmarks")
         return sorted_users
