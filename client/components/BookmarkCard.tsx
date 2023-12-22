@@ -7,7 +7,8 @@ const BookmarkCard = async () => {
   const bookmarkBlogs = await getBookmarkBlogs();
   const bookmarkNumber = bookmarkBlogs.length;
   const markdownToPlainText = (markdown: string) => {
-    return markdown.replace(/[#*_]+/g, "");};
+    return markdown.replace(/[#*_]+/g, "");
+  };
   return (
     <div>
       {bookmarkNumber === 0 ? (

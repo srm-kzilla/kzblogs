@@ -105,7 +105,9 @@ export async function getTrendingWriters() {
   const sessionToken = await getSessionToken();
   try {
     const response = await axios.get(
-      API.BASE_URL + API.ENDPOINTS.BLOGS.BASE + API.ENDPOINTS.BLOGS.TRENDING_WRITERS,
+      API.BASE_URL +
+        API.ENDPOINTS.BLOGS.BASE +
+        API.ENDPOINTS.BLOGS.TRENDING_WRITERS,
       {
         headers: {
           "X-Session-ID": sessionToken,
@@ -113,8 +115,7 @@ export async function getTrendingWriters() {
       },
     );
     return response.data;
-  }
-  catch (error) {
+  } catch (error) {
     console.log(error);
     return [];
   }
