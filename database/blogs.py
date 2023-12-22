@@ -1,4 +1,4 @@
-from helpers.constants import DB_SETTINGS
+from helpers.constants import DB_SETTINGS, DEFAULT
 from typing import Union
 from bson import ObjectId
 from motor.motor_asyncio import AsyncIOMotorClient
@@ -17,24 +17,30 @@ class Blog:
         blog_id: Union[str, None] = None,
         show_all: bool = True,
         user_id: str = None,
+        page: int = 1,
+        limit: int = 0,
     ):
         if not blog_id:
             blogs = list(
-                await self.blogs.find(
-                    {"publish_status": True} if not show_all else {}
-                ).to_list(length=None)
+                await self.blogs.find({"publish_status": True} if not show_all else {})
+                .skip((page - 1) * limit)
+                .limit(limit=limit)
+                .to_list(length=None)
             )
+            author_ids = list(set([ObjectId(i.get("author")) for i in blogs]))
+            authors = {
+                str(i["_id"]): i.update({"_id": str(i["_id"])}) or i
+                for i in await self.users.find({"_id": {"$in": author_ids}}).to_list(
+                    length=None
+                )
+            }
             for i in range(len(blogs)):
                 blogs[i]["_id"] = str(blogs[i]["_id"])
-                user = await self.users.find_one(
-                    {"_id": ObjectId(blogs[i].get("author"))}
+                blogs[i]["author"] = authors.get(
+                    blogs[i].get("author"),
+                    DEFAULT.USER,
                 )
-                blogs[i]["author"] = {
-                    "name": user.get("name"),
-                    "_id": str(user["_id"]),
-                    "image": user["image"],
-                }
-                blogs[i]["is_liked"] = user_id in blogs[i].get("likes", [])
+                blogs[i]["is_liked"] = str(user_id) in blogs[i].get("likes", [])
             return blogs
         filter = {"_id": ObjectId(blog_id)}
         filter.update({"publish_status": True} if not show_all else {})
