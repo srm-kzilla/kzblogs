@@ -85,7 +85,7 @@ async def get_blogs(
         blog_id, show_all=False, user_id=str(user["_id"]) if user else None
     )
     if isinstance(blogs, dict):
-        return Response(blogs, status_code=400 if not blogs["status"] else 200)
+        return Response(blogs, status_code=400 if not blogs.get("status", True) else 200)
     else:
         return Response(blogs)
 

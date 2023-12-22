@@ -11,3 +11,11 @@ class DB_SETTINGS:
     USERS = "users"
     COMMENTS = "comments"
     SESSIONS = "sessions"
+
+
+class DEFAULT:
+    USER = {
+        "name": "Anonymous",
+        "_id": "",
+        "image": "https://www.pngitem.com/pimgs/m/150-1503945_transparent-user-png-default-user-image-png-png.png",
+    }
