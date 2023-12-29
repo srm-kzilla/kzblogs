@@ -1,6 +1,6 @@
 import { UserCircleIcon, UserPlus } from "lucide-react";
 import Link from "next/link";
-const AuthorCard = ({ author, index }: Blog) => {
+const AuthorCard = ({ author, index }: { author: User; index: number }) => {
   return (
     <div className="p-1 px-3 bg-kz-card-light text-kz-secondary rounded-lg w-full h-fit">
       <div className="flex flex-row items-start align-top justify-between mx-1 my-3 gap-3">

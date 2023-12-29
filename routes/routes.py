@@ -102,7 +102,7 @@ async def current_user(request: Request):
 
 @router.get("/user/{user_id}")
 async def get_user(request: Request, user_id: str):
-    user = await db.users.get_user(user_id)
+    user = await db.users.get_user(user_id, show_blogs=True)
     if isinstance(user, dict):
         user["_id"] = str(user["_id"])
         user.pop("bookmarks", None)
@@ -118,3 +118,8 @@ async def follow_user(request: Request, user_id: str):
     user = await db.users.verify_session(request.headers["x-session-id"])
     response = await db.users.follow(str(user["_id"]), user_id)
     return Response(response, status_code=200 if response["status"] else 400)
+
+
+@router.get("/trending/writers")
+async def trending_writers(request: Request, count: int = 5):
+    return Response(await db.users.get_trending_users(count=count))
