@@ -1,9 +1,9 @@
-import BlogCard from "@/components/BlogCard";
 import Navbar from "@/components/Navbar";
 import DraftCard from "@/components/DraftCard";
 import TrendingCard from "@/components/TrendingCard";
 import BookmarkCard from "@/components/BookmarkCard";
 import { getAllBlogs, getCurrentUser, getSessionToken } from "@/utils/api";
+import BlogList from "@/components/BlogList";
 
 export default async function Home() {
   const blogs = await getAllBlogs();
@@ -22,11 +22,9 @@ export default async function Home() {
             <div className="font-serif text-3xl text-kz-secondary m-3">
               What’s <span className="text-kz-highlight-light">New</span>
             </div>
-            {blogs.map((blogs: Blog) => (
-              <div key={blogs._id} className="w-[80vw] mb-10 md:w-[50vw] m-3">
-                <BlogCard {...blogs} user={user} />
-              </div>
-            ))}
+            <div>
+              <BlogList blogs={blogs} user={user} />
+            </div>
           </div>
         </div>
         <div className="hidden md:flex w-3/12 justify-end mt-10">
