@@ -10,6 +10,7 @@ import Link from "next/link";
 import { useState } from "react";
 import Image from "next/image";
 import toast from "@/utils/toast";
+import { useRouter } from "next/navigation";
 
 const BlogCard = ({
   _id,
@@ -20,6 +21,7 @@ const BlogCard = ({
   comments,
   user,
 }: Blog & { user: User }) => {
+  const router = useRouter();
   const [isLiked, setIsLiked] = useState(
     user ? likes.includes(user._id) : false,
   );
@@ -69,7 +71,7 @@ const BlogCard = ({
                   setTotalLikes((prevLikes) =>
                     isLiked ? prevLikes - 1 : prevLikes + 1,
                   ),
-                  window.location.reload())
+                  router.refresh())
                 : toast.error("Please Signin to like this blog.")
             }
             className="flex flex-row gap-1 items-center"
@@ -91,7 +93,7 @@ const BlogCard = ({
               Object.keys(user).length != 0
                 ? (toggleBookmark(_id),
                   setIsBookmarked((prevState) => !prevState),
-                  window.location.reload())
+                  router.refresh())
                 : toast.error("Please Signin to bookmark this blog.")
             }
           >
