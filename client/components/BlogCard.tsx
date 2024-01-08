@@ -68,7 +68,8 @@ const BlogCard = ({
                   setIsLiked((prevState) => !prevState),
                   setTotalLikes((prevLikes) =>
                     isLiked ? prevLikes - 1 : prevLikes + 1,
-                  ))
+                  ),
+                  window.location.reload())
                 : toast.error("Please Signin to like this blog.")
             }
             className="flex flex-row gap-1 items-center"
@@ -89,7 +90,8 @@ const BlogCard = ({
             onClick={() =>
               Object.keys(user).length != 0
                 ? (toggleBookmark(_id),
-                  setIsBookmarked((prevState) => !prevState))
+                  setIsBookmarked((prevState) => !prevState),
+                  window.location.reload())
                 : toast.error("Please Signin to bookmark this blog.")
             }
           >
