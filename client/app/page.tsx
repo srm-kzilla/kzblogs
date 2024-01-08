@@ -22,9 +22,7 @@ export default async function Home() {
             <div className="font-serif text-3xl text-kz-secondary m-3">
               What’s <span className="text-kz-highlight-light">New</span>
             </div>
-            <div>
-              <BlogList blogs={blogs} user={user} />
-            </div>
+            <BlogList blogs={blogs} user={user} />
           </div>
         </div>
         <div className="hidden md:flex w-3/12 justify-end mt-10">
