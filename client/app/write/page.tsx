@@ -14,14 +14,14 @@ const CreatePage = () => {
   const [author, setAuthor] = useState("");
   const [title, setTitle] = useState("");
   const publishData = async () => {
-    const { _id } = await getCurrentUser();
+    const { _id, author_name } = await getCurrentUser();
     try {
       const dataToPublish = {
         name: title,
         content: markdownInput,
         publish_status: true,
         author: _id,
-        author_name: author,
+        author_name: author_name,
       };
 
       const res = await addBlog(dataToPublish);
@@ -75,13 +75,6 @@ const CreatePage = () => {
               placeholder="Title"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-            ></textarea>
-            <textarea
-              id="author"
-              value={author}
-              onChange={(e) => setAuthor(e.target.value)}
-              className="resize-none outline-none w-full text-kz-secondary ml-2 bg-transparent text-xs md:text-base lg:text-xl"
-              placeholder="Author Name"
             ></textarea>
           </div>
           <div className="flex flex-col lg:flex-row justify-evenly gap-20 text-white">
