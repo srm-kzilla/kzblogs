@@ -1,5 +1,5 @@
 import { LucideCircleSlash } from "lucide-react";
-import toast from "react-hot-toast";
+import toast, { ToastPosition } from "react-hot-toast";
 
 const toastBaseOptions = {
   style: {
@@ -20,10 +20,11 @@ const showToast = (message: string, style: object) => {
 export default {
   show: (message: string, icon: string) =>
     toast(message, { ...toastBaseOptions, icon }),
-  error: (message: string) =>
+  error: (message: string, position?: ToastPosition) =>
     toast.error(message, {
       ...toastBaseOptions,
       style: { ...toastBaseOptions.style, border: "1px solid #ff644e" },
+      position: position || "top-right",
     }),
   success: (message: string) =>
     toast.success(message, {

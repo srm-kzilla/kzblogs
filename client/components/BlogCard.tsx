@@ -41,7 +41,7 @@ const BlogCard = ({
         <div className="flex flex-row align-middle gap-2">
           <Image
             src={author.image}
-            alt=""
+            alt={author.name}
             className="rounded-full w-5 h-5 md:h-7 md:w-7"
             width={400}
             height={400}
@@ -72,7 +72,7 @@ const BlogCard = ({
                     isLiked ? prevLikes - 1 : prevLikes + 1,
                   ),
                   router.refresh())
-                : toast.error("Please Signin to like this blog.")
+                : toast.error("Please Signin to like this blog.", "top-center")
             }
             className="flex flex-row gap-1 items-center"
           >
@@ -94,7 +94,10 @@ const BlogCard = ({
                 ? (toggleBookmark(_id),
                   setIsBookmarked((prevState) => !prevState),
                   router.refresh())
-                : toast.error("Please Signin to bookmark this blog.")
+                : toast.error(
+                    "Please Signin to bookmark this blog.",
+                    "top-center",
+                  )
             }
           >
             {isBookmarked ? (
