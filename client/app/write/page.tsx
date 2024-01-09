@@ -11,7 +11,6 @@ import { useRouter } from "next/navigation";
 const CreatePage = () => {
   const router = useRouter();
   const [markdownInput, setMarkdownInput] = useState("");
-  const [author, setAuthor] = useState("");
   const [title, setTitle] = useState("");
   const publishData = async () => {
     const { _id, author_name } = await getCurrentUser();
