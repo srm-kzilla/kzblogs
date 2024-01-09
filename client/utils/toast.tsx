@@ -20,11 +20,10 @@ const showToast = (message: string, style: object) => {
 export default {
   show: (message: string, icon: string) =>
     toast(message, { ...toastBaseOptions, icon }),
-  error: (message: string, position?: ToastPosition) =>
+  error: (message: string) =>
     toast.error(message, {
       ...toastBaseOptions,
       style: { ...toastBaseOptions.style, border: "1px solid #ff644e" },
-      position: position || "top-right",
     }),
   success: (message: string) =>
     toast.success(message, {

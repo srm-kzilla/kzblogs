@@ -72,7 +72,7 @@ const BlogCard = ({
                     isLiked ? prevLikes - 1 : prevLikes + 1,
                   ),
                   router.refresh())
-                : toast.error("Please Signin to like this blog.", "top-center")
+                : toast.error("Please Sign In to like this blog.")
             }
             className="flex flex-row gap-1 items-center"
           >
@@ -94,10 +94,7 @@ const BlogCard = ({
                 ? (toggleBookmark(_id),
                   setIsBookmarked((prevState) => !prevState),
                   router.refresh())
-                : toast.error(
-                    "Please Signin to bookmark this blog.",
-                    "top-center",
-                  )
+                : toast.error("Please Sign In to bookmark this blog.")
             }
           >
             {isBookmarked ? (

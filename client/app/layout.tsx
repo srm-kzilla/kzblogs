@@ -19,7 +19,7 @@ export default function RootLayout({
     <html lang="en">
       <body className="font-body bg-kz-primary">
         <main>
-          <Toaster position="top-right" />
+          <Toaster position="top-center" />
           <AuthProvider>{children}</AuthProvider>
         </main>
         <Footer />
