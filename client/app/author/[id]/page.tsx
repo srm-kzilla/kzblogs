@@ -8,6 +8,7 @@ import {
   toggleFollow,
 } from "@/utils/api";
 import { notFound } from "next/navigation";
+import Image from "next/image";
 
 export default async function Page({ params }: { params: { id: string } }) {
   const blogs = await getAllBlogs();
@@ -29,7 +30,7 @@ export default async function Page({ params }: { params: { id: string } }) {
         <Navbar />
         <div className="mt-12 flex flex-col items-center gap-12">
           <div className="flex flex-wrap gap-6 items-center">
-            <img
+            <Image
               width={100}
               height={100}
               src={userData.image}

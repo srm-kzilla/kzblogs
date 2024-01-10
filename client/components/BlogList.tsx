@@ -23,7 +23,7 @@ const BlogList = ({ blogs, user }: BlogListProps) => {
     <div>
       {blogs.slice(0, visibleBlogs).map((blog: Blog) => (
         <div key={blog._id} className="w-[80vw] mb-10 md:w-[50vw] m-3">
-          <BlogCard {...blog} user={user} />
+          <BlogCard {...blog} user={user} visible={true} />
         </div>
       ))}
       <div className="flex justify-end align-middle gap-4 pb-5">

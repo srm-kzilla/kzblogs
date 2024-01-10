@@ -27,7 +27,7 @@ export default async function Page({ params }: { params: { id: string } }) {
                 <div className="flex px-2 mb-2 sm:mb-0 justify-center items-center text-sm sm:text-base">
                   <Image
                     src={blog.author.image}
-                    alt=""
+                    alt={blog.author.name}
                     className="rounded-full mr-1 w-5 h-5 sm:h-7 sm:w-7"
                     width={40}
                     height={40}
@@ -38,10 +38,11 @@ export default async function Page({ params }: { params: { id: string } }) {
               </div>
               <div className="">
                 <ReactMarkdown
-                  children={blog.content}
                   remarkPlugins={[remarkGfm]}
                   className="prose prose-invert"
-                />
+                >
+                  {blog.content}
+                </ReactMarkdown>
               </div>
             </div>
           </div>
