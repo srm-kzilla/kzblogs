@@ -83,11 +83,11 @@ export async function getBlog(_id: string) {
   }
 }
 
-export async function getTrending() {
+export async function getTrending(count:number=5) {
   const sessionToken = await getSessionToken();
   try {
     const response = await axios.get(
-      API.BASE_URL + API.ENDPOINTS.BLOGS.BASE + API.ENDPOINTS.BLOGS.TRENDING,
+      API.BASE_URL + API.ENDPOINTS.BLOGS.BASE + API.ENDPOINTS.BLOGS.TRENDING + `?count=${count}`,
       {
         headers: {
           "X-Session-ID": sessionToken,

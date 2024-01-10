@@ -1,16 +1,7 @@
 "use client";
-import {
-  Bookmark,
-  BookmarkCheck,
-  HeartIcon,
-  MessageSquare,
-} from "lucide-react";
-import { toggleBookmark, toggleLike } from "@/utils/api";
 import Link from "next/link";
-import { useState } from "react";
 import Image from "next/image";
-import toast from "@/utils/toast";
-import { useRouter } from "next/navigation";
+import Bar from "./Bar";
 
 const BlogCard = ({
   _id,
@@ -20,15 +11,8 @@ const BlogCard = ({
   likes,
   comments,
   user,
-}: Blog & { user: User }) => {
-  const router = useRouter();
-  const [isLiked, setIsLiked] = useState(
-    user ? likes.includes(user._id) : false,
-  );
-  const [totalLikes, setTotalLikes] = useState(Object.keys(likes).length);
-  const [isBookmarked, setIsBookmarked] = useState(
-    Object.keys(user).length != 0 ? user.bookmarks.includes(_id) : false,
-  );
+  visible,
+}: Blog & { user: User } & { visible: boolean }) => {
   const markdownToPlainText = (markdown: string) => {
     return markdown.replace(/[#*_]+/g, "");
   };
@@ -61,53 +45,11 @@ const BlogCard = ({
           {markdownToPlainText(content)}
         </p>
       </Link>
-      <div className="font-sans relative flex flex-row justify-between mt-2 text-xs font-extralight items-baseline">
-        <div className="flex flex-row gap-2 items-center">
-          <button
-            onClick={() =>
-              Object.keys(user).length != 0
-                ? (toggleLike(_id),
-                  setIsLiked((prevState) => !prevState),
-                  setTotalLikes((prevLikes) =>
-                    isLiked ? prevLikes - 1 : prevLikes + 1,
-                  ),
-                  router.refresh())
-                : toast.error("Please Sign In to like this blog.")
-            }
-            className="flex flex-row gap-1 items-center"
-          >
-            <HeartIcon
-              width={`${isLiked ? 16 : 14}`}
-              className={`${isLiked ? "text-red-500" : ""}`}
-            />
-            <p>{totalLikes}</p>
-          </button>
-          <button className="flex flex-row gap-1 items-center">
-            <MessageSquare width={14} />
-            <p>{comments ? comments.length : 0}</p>
-          </button>
+      {visible && (
+        <div className="font-sans relative flex flex-row justify-between mt-2 text-xs font-extralight items-baseline">
+          <Bar _id={_id} likes={likes} comments={comments} user={user} />
         </div>
-        <div>
-          <button
-            onClick={() =>
-              Object.keys(user).length != 0
-                ? (toggleBookmark(_id),
-                  setIsBookmarked((prevState) => !prevState),
-                  router.refresh())
-                : toast.error("Please Sign In to bookmark this blog.")
-            }
-          >
-            {isBookmarked ? (
-              <BookmarkCheck
-                width={16}
-                className={`${isBookmarked ? "text-kz-highlight-light" : ""}`}
-              />
-            ) : (
-              <Bookmark width={14} />
-            )}
-          </button>
-        </div>
-      </div>
+      )}
     </div>
   );
 };
