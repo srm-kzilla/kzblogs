@@ -1,5 +1,5 @@
 import { LucideCircleSlash } from "lucide-react";
-import toast from "react-hot-toast";
+import toast, { ToastPosition } from "react-hot-toast";
 
 const toastBaseOptions = {
   style: {
