@@ -1,3 +1,4 @@
+from pymongo import TEXT
 from helpers.constants import DB_SETTINGS, DEFAULT
 from typing import Union
 from bson import ObjectId
@@ -117,9 +118,9 @@ class Blog:
         return list(sorted(output, key=lambda x: len(x.get("likes", 0)), reverse=True))[
             :count
         ]
-       
+
     async def search(self, query: str):
-        result = await self.blogs.find({"$text": {"$search": query}}).to_list(length=None)
-        for i in range(len(result)):
-            result[i]["_id"] = str(result[i]["_id"])
-        return result
+        result = await self.blogs.find(
+            {"name": {"$regex": query, "$options": "i"}}
+        ).to_list(length=None)
+        return [(x.update({"_id": str(x["_id"])}) or x) for x in result]

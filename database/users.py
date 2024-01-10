@@ -59,7 +59,9 @@ class User:
                 {"_id": {"$in": [ObjectId(i) for i in user.get("bookmarks", [])]}}
             ).to_list(length=None)
         )
-        author_ids = list(set([ObjectId(i.get("author")) for i in bookmarks if i.get("author")]))
+        author_ids = list(
+            set([ObjectId(i.get("author")) for i in bookmarks if i.get("author")])
+        )
         authors = {
             str(i["_id"]): i.update({"_id": str(i["_id"])}) or i
             for i in await self.users.find({"_id": {"$in": author_ids}}).to_list(
