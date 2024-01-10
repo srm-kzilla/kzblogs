@@ -1,4 +1,5 @@
-import { UserCircleIcon, UserPlus } from "lucide-react";
+import { UserPlus } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 const AuthorCard = ({ author, index }: { author: User; index: number }) => {
   return (
@@ -6,11 +7,12 @@ const AuthorCard = ({ author, index }: { author: User; index: number }) => {
       <div className="flex flex-row items-start align-top justify-between mx-1 my-3 gap-3">
         <div className="flex flex-row gap-2">
           <p className="text-xl lg:text-xl font-medium m-1"># {index}</p>
-          <img
+          <Image
             src={author.image}
             className="rounded-full"
             width={40}
             height={32}
+            alt={author.name}
           />
           <div className="flex flex-col justify-center">
             <Link

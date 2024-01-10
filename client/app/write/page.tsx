@@ -85,10 +85,11 @@ const CreatePage = () => {
             ></textarea>
             <div className="p-5 mb-10 outline-none border-none w-[75vw] h-fit lg:h-[90vh] lg:w-[40vw] overflow-x-hidden text-base resize-none bg-kz-card-light rounded-xl">
               <ReactMarkdown
-                children={markdownInput}
                 remarkPlugins={[remarkGfm]}
                 className="prose prose-invert"
-              />
+              >
+                {markdownInput}
+              </ReactMarkdown>
             </div>
           </div>
         </form>
