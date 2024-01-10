@@ -59,7 +59,7 @@ async def get_bookmarks(request: Request):
 
 @router.get("/trending")
 async def get_trending(request: Request, count: int = 5):
-    return Response(await db.blogs.get_trending())
+    return Response(await db.blogs.get_trending(count))
 
 
 @router.get("/blogs/{blog_id}")
