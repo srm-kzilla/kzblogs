@@ -120,14 +120,24 @@ class Blog:
         ]
 
     async def search(self, query: str):
-        result = await self.blogs.aggregate([
-            {"$search": {"index": "kz_blog_index", "autocomplete": {"query": query, "path": "name"}}},
-            {"$limit": 10},
-            {"$project": {"name": 1, "author": 1, "_id": 1}}
-        ]).to_list(length=None)
-        author_ids = list(set([ObjectId(i.get("author")) for i in result if i.get("author")]))
+        result = await self.blogs.aggregate(
+            [
+                {
+                    "$search": {
+                        "index": "kz_blog_index",
+                        "autocomplete": {"query": query, "path": "name"},
+                    }
+                },
+                {"$limit": 10},
+                {"$project": {"name": 1, "author": 1, "_id": 1}},
+            ]
+        ).to_list(length=None)
+        author_ids = list(
+            set([ObjectId(i.get("author")) for i in result if i.get("author")])
+        )
         authors = {
-            str(i["_id"]): i.update({"_id": str(i["_id"])}) or {key: i[key] for key in ['name', 'image', '_id']}
+            str(i["_id"]): i.update({"_id": str(i["_id"])})
+            or {key: i[key] for key in ["name", "image", "_id"]}
             for i in await self.users.find({"_id": {"$in": author_ids}}).to_list(
                 length=None
             )
