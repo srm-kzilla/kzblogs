@@ -12,7 +12,7 @@ const BlogCard = ({
   comments,
   user,
   visible,
-}: Blog & { user: User } & { visible: boolean }) => {
+}: Blog & { user: User } & { visible?: boolean }) => {
   const markdownToPlainText = (markdown: string) => {
     return markdown.replace(/[#*_]+/g, "");
   };
