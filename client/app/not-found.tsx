@@ -17,9 +17,7 @@ export default function NotFound() {
           The page you are looking for is not available
         </p>
         <Button variant="secondary">
-          <Link legacyBehavior href="/">
-            Go back Home
-          </Link>
+          <Link href="/">Go back Home</Link>
         </Button>
       </div>
     </div>
