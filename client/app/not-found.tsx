@@ -18,7 +18,7 @@ export default function NotFound() {
         </p>
         <Button variant="secondary">
           <Link legacyBehavior href="/">
-            <a className="text-white">Go back Home</a>
+            Go back Home
           </Link>
         </Button>
       </div>
