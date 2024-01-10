@@ -148,4 +148,21 @@ class Blog:
                 result[i].get("author"),
                 DEFAULT.USER,
             )
-        return [(x.update({"_id": str(x["_id"])}) or x) for x in result]
+        blogs = [(x.update({"_id": str(x["_id"])}) or x) for x in result]
+        users = await self.users.aggregate(
+            [
+                {
+                    "$search": {
+                        "index": "kz_user_index",
+                        "autocomplete": {"query": query, "path": "name"},
+                    }
+                },
+                {"$limit": 10},
+                {"$project": {"name": 1, "image": 1, "_id": 1, "followers": 1, "following": 1}},
+            ]
+        ).to_list(length=None)
+        for i in range(len(users)):
+            users[i]["_id"] = str(users[i]["_id"])
+            users[i]["followers"] = len(users[i]["followers"])
+            users[i]["following"] = len(users[i]["following"])
+        return {"users": users, "blogs": blogs}
