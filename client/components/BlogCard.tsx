@@ -46,9 +46,7 @@ const BlogCard = ({
         </p>
       </Link>
       {visible && (
-        <div className="font-sans relative flex flex-row justify-between mt-2 text-xs font-extralight items-baseline">
-          <Bar _id={_id} likes={likes} comments={comments} user={user} />
-        </div>
+        <Bar _id={_id} likes={likes} comments={comments} user={user} />
       )}
     </div>
   );

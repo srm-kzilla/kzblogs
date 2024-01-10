@@ -26,7 +26,7 @@ const Bar = ({ _id, user, likes, comments }: BarProps) => {
     Object.keys(user).length != 0 ? user.bookmarks.includes(_id) : false,
   );
   return (
-    <div>
+    <div className="font-sans relative flex flex-row justify-between mt-2 text-xs font-extralight items-baseline">
       <div className="flex flex-row gap-2 items-center">
         <button
           onClick={() =>
