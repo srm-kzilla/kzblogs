@@ -123,3 +123,8 @@ async def follow_user(request: Request, user_id: str):
 @router.get("/trending/writers")
 async def trending_writers(request: Request, count: int = 5):
     return Response(await db.users.get_trending_users(count=count))
+
+
+@router.get("/search")
+async def search_blogs(request: Request, query: str):
+    return Response(await db.blogs.search(query))

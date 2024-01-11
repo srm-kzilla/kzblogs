@@ -1,4 +1,4 @@
-from helpers.constants import DB_SETTINGS
+from helpers.constants import DB_SETTINGS, DEFAULT
 from motor.motor_asyncio import AsyncIOMotorClient
 from bson import ObjectId
 from typing import List
@@ -54,14 +54,27 @@ class User:
         user = await self.get_user(user_id)
         if not user:
             return {"status": False, "message": "User does not exist"}
-        bookmarks = user.get("bookmarks", [])
         bookmarks: List[dict] = list(
             await self.blogs.find(
-                {"_id": {"$in": [ObjectId(i) for i in bookmarks]}}
+                {"_id": {"$in": [ObjectId(i) for i in user.get("bookmarks", [])]}}
             ).to_list(length=None)
-            if bookmarks
-            else []
         )
+        author_ids = list(
+            set([ObjectId(i.get("author")) for i in bookmarks if i.get("author")])
+        )
+        authors = {
+            str(i["_id"]): i.update({"_id": str(i["_id"])}) or i
+            for i in await self.users.find({"_id": {"$in": author_ids}}).to_list(
+                length=None
+            )
+        }
+        for i in range(len(bookmarks)):
+            bookmarks[i]["_id"] = str(bookmarks[i]["_id"])
+            bookmarks[i]["author"] = authors.get(
+                bookmarks[i].get("author"),
+                DEFAULT.USER,
+            )
+            bookmarks[i]["is_liked"] = str(user_id) in bookmarks[i].get("likes", [])
         return [(i.update({"_id": str(i["_id"])}) or i) for i in bookmarks]
 
     async def verify_session(self, session_id: str):

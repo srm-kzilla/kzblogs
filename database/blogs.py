@@ -117,3 +117,51 @@ class Blog:
         return list(sorted(output, key=lambda x: len(x.get("likes", 0)), reverse=True))[
             :count
         ]
+
+    async def search(self, query: str):
+        result = await self.blogs.aggregate(
+            [
+                {
+                    "$search": {
+                        "index": "kz_blog_index",
+                        "autocomplete": {"query": query, "path": "name"},
+                    }
+                },
+                {"$limit": 10},
+                {"$project": {"name": 1, "author": 1, "_id": 1}},
+            ]
+        ).to_list(length=None)
+        author_ids = list(
+            set([ObjectId(i.get("author")) for i in result if i.get("author")])
+        )
+        authors = {
+            str(i["_id"]): i.update({"_id": str(i["_id"])})
+            or {key: i[key] for key in ["name", "image", "_id"]}
+            for i in await self.users.find({"_id": {"$in": author_ids}}).to_list(
+                length=None
+            )
+        }
+        for i in range(len(result)):
+            result[i]["_id"] = str(result[i]["_id"])
+            result[i]["author"] = authors.get(
+                result[i].get("author"),
+                DEFAULT.USER,
+            )
+        blogs = [(x.update({"_id": str(x["_id"])}) or x) for x in result]
+        users = await self.users.aggregate(
+            [
+                {
+                    "$search": {
+                        "index": "kz_user_index",
+                        "autocomplete": {"query": query, "path": "name"},
+                    }
+                },
+                {"$limit": 10},
+                {"$project": {"name": 1, "image": 1, "_id": 1, "followers": 1, "following": 1}},
+            ]
+        ).to_list(length=None)
+        for i in range(len(users)):
+            users[i]["_id"] = str(users[i]["_id"])
+            users[i]["followers"] = len(users[i]["followers"])
+            users[i]["following"] = len(users[i]["following"])
+        return {"users": users, "blogs": blogs}
