@@ -1,4 +1,3 @@
-from pymongo import TEXT
 from helpers.constants import DB_SETTINGS, DEFAULT
 from typing import Union
 from bson import ObjectId
