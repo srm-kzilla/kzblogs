@@ -50,7 +50,7 @@ const SearchBar = () => {
       {authors.length > 0 && (
         <div className="mt-10 flex md:flex-col mb-5 items-center">
           <div className="flex flex-col ml-8 md:flex-row justify-evenly w-[80vw] md:w-[90vw]">
-            <div className="md:w-[40vw]">
+            <div className="w-[80vw] md:w-[40vw]">
               <h1 className="text-kz-secondary text-left mb-4 lg:mb-7 text-2xl lg:text-3xl font-serif">
                 Search Results: Writers
               </h1>
@@ -72,7 +72,7 @@ const SearchBar = () => {
               </h1>
               <div>
                 {blogs.map((blog: Blog) => (
-                  <div key={blog._id} className="w-[40vw] mb-3 md:w-[40vw] m-3">
+                  <div key={blog._id} className="w-[75vw] mb-3 md:w-[40vw] m-3">
                     <BlogCard {...blog} user={user[0]} visible={false} />
                   </div>
                 ))}
