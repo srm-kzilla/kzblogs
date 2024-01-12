@@ -21,6 +21,7 @@ export const options: NextAuthOptions = {
       },
       clientId: GOOGLE_CLIENT_ID,
       clientSecret: GOOGLE_CLIENT_SECRET,
+      allowDangerousEmailAccountLinking: true,
       authorization: {
         params: {
           prompt: "consent",
@@ -32,6 +33,7 @@ export const options: NextAuthOptions = {
   ],
   pages: {
     signIn: "/auth/signin",
+    signOut: '/auth/signout',
   },
   adapter: MongoDBAdapter(dbClientPromise, {
     databaseName: DB_NAME,

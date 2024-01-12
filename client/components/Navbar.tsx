@@ -5,6 +5,7 @@ import Image from "next/image";
 import { PenSquare } from "lucide-react";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { usePathname } from "next/navigation";
+import Button from "./Button";
 
 const menuItems = [
   { path: "/", name: "Home" },
@@ -65,7 +66,7 @@ const Navbar = () => {
         </Link>
 
         {loggedIn ? (
-          <div className="flex items-center invisible lg:visible">
+          <div className="flex gap-4 items-center invisible lg:visible">
             {data?.user?.image && (
               <Image
                 src={data?.user.image}
@@ -75,6 +76,13 @@ const Navbar = () => {
                 className="rounded-full"
               />
             )}
+            <Button
+              href="/api/auth/signout"
+              variant="secondary"
+              onClick={() => signOut()}
+            >
+              Log Out
+            </Button>
           </div>
         ) : (
           <Link
