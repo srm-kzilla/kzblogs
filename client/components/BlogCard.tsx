@@ -14,13 +14,15 @@ const BlogCard = ({
   visible,
 }: Blog & { user: User } & { visible?: boolean }) => {
   const markdownToPlainText = (markdown: string) => {
-    return markdown.replace(/[#*_]+/g, "");
+    return markdown?.replace(/[#*_]+/g, "");
   };
   return (
     <div className="p-3 bg-kz-card-light text-kz-secondary rounded-2xl w-full h-fit">
       <div className="flex flex-col md:flex-row justify-between gap-3">
         <div className="md:w-[60%]">
-          <h1 className="text-lg md:text-xl">{name}</h1>
+          <Link href={"/blogs/" + _id}>
+            <h1 className="text-lg md:text-xl">{name}</h1>
+          </Link>
         </div>
         <div className="flex flex-row align-middle gap-2">
           <Image

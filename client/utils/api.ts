@@ -20,6 +20,7 @@ const API = {
       CURRENT_USER: "/user",
       USER: (id: string) => `/user/${id}`,
       FOLLOW: (id: string) => `/follow/${id}`,
+      SEARCH:(query:string)=> `/search?query=${query}`
     },
   },
 };
@@ -272,6 +273,28 @@ export async function getUser(_id: string) {
     if (sessionToken !== undefined) {
       const response = await axios.get(
         API.BASE_URL + API.ENDPOINTS.BLOGS.BASE + API.ENDPOINTS.BLOGS.USER(_id),
+        {
+          headers: {
+            "X-Session-ID": sessionToken,
+          },
+        },
+      );
+      return response.data;
+    } else {
+      throw new Error("Session Id not found");
+    }
+  } catch (error) {
+    console.error(error);
+    return {};
+  }
+}
+
+export async function getSearch(query: string) {
+  try {
+    const sessionToken = await getSessionToken();
+    if (sessionToken !== undefined) {
+      const response = await axios.get(
+        API.BASE_URL + API.ENDPOINTS.BLOGS.BASE + API.ENDPOINTS.BLOGS.SEARCH(query),
         {
           headers: {
             "X-Session-ID": sessionToken,
