@@ -66,16 +66,18 @@ const Navbar = () => {
         </Link>
 
         {loggedIn ? (
-          <div className="flex gap-4 items-center invisible lg:visible">
-            {data?.user?.image && (
-              <Image
-                src={data?.user.image}
-                alt="profile"
-                width={32}
-                height={32}
-                className="rounded-full"
-              />
-            )}
+          <div className="flex mr-10 lg:mr-0 gap-4 items-center">
+            <div className="invisible lg:visible">
+              {data?.user?.image && (
+                <Image
+                  src={data?.user.image}
+                  alt="profile"
+                  width={32}
+                  height={32}
+                  className="rounded-full"
+                />
+              )}
+            </div>
             <Button
               href="/api/auth/signout"
               variant="secondary"
