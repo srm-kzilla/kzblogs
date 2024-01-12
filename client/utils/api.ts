@@ -20,7 +20,7 @@ const API = {
       CURRENT_USER: "/user",
       USER: (id: string) => `/user/${id}`,
       FOLLOW: (id: string) => `/follow/${id}`,
-      SEARCH:(query:string)=> `/search?query=${query}`
+      SEARCH: (query: string) => `/search?query=${query}`,
     },
   },
 };
@@ -84,11 +84,14 @@ export async function getBlog(_id: string) {
   }
 }
 
-export async function getTrending(count:number=5) {
+export async function getTrending(count: number = 5) {
   const sessionToken = await getSessionToken();
   try {
     const response = await axios.get(
-      API.BASE_URL + API.ENDPOINTS.BLOGS.BASE + API.ENDPOINTS.BLOGS.TRENDING + `?count=${count}`,
+      API.BASE_URL +
+        API.ENDPOINTS.BLOGS.BASE +
+        API.ENDPOINTS.BLOGS.TRENDING +
+        `?count=${count}`,
       {
         headers: {
           "X-Session-ID": sessionToken,
@@ -291,12 +294,12 @@ export async function getUser(_id: string) {
 
 export async function getSearch(query: string) {
   try {
-  
-      const response = await axios.get(
-        API.BASE_URL + API.ENDPOINTS.BLOGS.BASE + API.ENDPOINTS.BLOGS.SEARCH(query),
-      );
-      return response.data;
-   
+    const response = await axios.get(
+      API.BASE_URL +
+        API.ENDPOINTS.BLOGS.BASE +
+        API.ENDPOINTS.BLOGS.SEARCH(query),
+    );
+    return response.data;
   } catch (error) {
     console.error(error);
     return {};
