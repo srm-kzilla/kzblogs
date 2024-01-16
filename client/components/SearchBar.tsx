@@ -1,9 +1,25 @@
 "use client";
 import { getCurrentUser, getSearch } from "@/utils/api";
-import { Divide, SearchIcon } from "lucide-react";
-import { useState } from "react";
+import { SearchIcon } from "lucide-react";
+import { useEffect, useState } from "react";
 import BlogCard from "./BlogCard";
 import AuthorCard from "./AuthorCard";
+
+function useDebounce(value: string, delay: number) {
+  const [debouncedValue, setDebouncedValue] = useState(value);
+
+  useEffect(() => {
+    const debounce = setTimeout(() => {
+      setDebouncedValue(value);
+    }, delay);
+
+    return () => {
+      clearTimeout(debounce);
+    };
+  }, [value, delay]);
+
+  return debouncedValue;
+}
 
 const SearchBar = () => {
   const [query, setQuery] = useState("");
@@ -11,6 +27,8 @@ const SearchBar = () => {
   const [authors, setAuthors] = useState<User[]>([]);
   const [user, setUser] = useState<User[]>([]);
   const [searchPerformed, setSearchPerformed] = useState(false);
+  const debouncedValue = useDebounce(query, 500);
+
 
   const handleSearch = async () => {
     try {
@@ -30,6 +48,20 @@ const SearchBar = () => {
       handleSearch();
     }
   };
+
+  useEffect(() => {
+    if (debouncedValue.length === 0) {
+      setBlogs([]);
+      setAuthors([]);
+      setSearchPerformed(false);
+    } else {
+      getSearch(debouncedValue).then((response) => {
+        setBlogs(response.blogs);
+        setAuthors(response.users);
+        setSearchPerformed(true);
+      });
+    }
+  }, [debouncedValue]);
 
   return (
     <div className="flex flex-col items-center mt-10 lg:mt-20">

@@ -302,6 +302,6 @@ export async function getSearch(query: string) {
     return response.data;
   } catch (error) {
     console.error(error);
-    return {};
+    return {"users": [], "blogs": []};
   }
 }
