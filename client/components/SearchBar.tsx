@@ -29,7 +29,6 @@ const SearchBar = () => {
   const [searchPerformed, setSearchPerformed] = useState(false);
   const debouncedValue = useDebounce(query, 500);
 
-
   const handleSearch = async () => {
     try {
       const response = await getSearch(query);
