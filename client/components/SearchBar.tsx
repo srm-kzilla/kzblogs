@@ -27,13 +27,11 @@ const SearchBar = () => {
   const [authors, setAuthors] = useState<User[]>([]);
   const [user, setUser] = useState<User[]>([]);
   const [searchPerformed, setSearchPerformed] = useState(false);
-  const debouncedValue = useDebounce(query, 500);
+  const debouncedValue = useDebounce(query, 700);
 
   const handleSearch = async () => {
     try {
       const response = await getSearch(query);
-      const user = await getCurrentUser();
-      setUser(user);
       setBlogs(response.blogs);
       setAuthors(response.users);
       setSearchPerformed(true);
@@ -41,12 +39,11 @@ const SearchBar = () => {
       console.error("Error fetching search results:", error);
     }
   };
-
-  const handleKeyPress = (e: { key: string }) => {
-    if (e.key === "Enter") {
-      handleSearch();
-    }
-  };
+  useEffect(() => {
+    getCurrentUser().then((user) => {
+      setUser(user);
+    });
+  }, []); // one time user setting
 
   useEffect(() => {
     if (debouncedValue.length === 0) {
@@ -58,6 +55,10 @@ const SearchBar = () => {
         setBlogs(response.blogs);
         setAuthors(response.users);
         setSearchPerformed(true);
+      }).catch((error) => {
+        setBlogs([]);
+        setAuthors([]);
+        setSearchPerformed(false);
       });
     }
   }, [debouncedValue]);
@@ -69,7 +70,6 @@ const SearchBar = () => {
           <SearchIcon className="h-9" />
         </button>
         <input
-          onKeyDown={handleKeyPress}
           onChange={(e) => setQuery(e.target.value)}
           type="text"
           name="Search"
