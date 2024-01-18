@@ -51,15 +51,17 @@ const SearchBar = () => {
       setAuthors([]);
       setSearchPerformed(false);
     } else {
-      getSearch(debouncedValue).then((response) => {
-        setBlogs(response.blogs);
-        setAuthors(response.users);
-        setSearchPerformed(true);
-      }).catch((error) => {
-        setBlogs([]);
-        setAuthors([]);
-        setSearchPerformed(false);
-      });
+      getSearch(debouncedValue)
+        .then((response) => {
+          setBlogs(response.blogs);
+          setAuthors(response.users);
+          setSearchPerformed(true);
+        })
+        .catch((error) => {
+          setBlogs([]);
+          setAuthors([]);
+          setSearchPerformed(false);
+        });
     }
   }, [debouncedValue]);
 
