@@ -157,7 +157,15 @@ class Blog:
                     }
                 },
                 {"$limit": 10},
-                {"$project": {"name": 1, "image": 1, "_id": 1, "followers": 1, "following": 1}},
+                {
+                    "$project": {
+                        "name": 1,
+                        "image": 1,
+                        "_id": 1,
+                        "followers": 1,
+                        "following": 1,
+                    }
+                },
             ]
         ).to_list(length=None)
         for i in range(len(users)):
