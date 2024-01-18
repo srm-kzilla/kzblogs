@@ -182,7 +182,7 @@ export async function toggleFollow(id: string): Promise<boolean> {
           },
         },
       );
-      return result.data.message === "Followed successfully";
+      return result.data.following;
     } catch (error) {
       console.log(error);
     }

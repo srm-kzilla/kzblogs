@@ -97,7 +97,7 @@ class User:
                 {"_id": ObjectId(follow_id)},
                 {"$push": {"followers": user_id}},
             )
-            return {"status": True, "message": "Followed successfully"}
+            return {"status": True, "message": "Followed successfully", "following": True}
         else:
             await self.users.update_one(
                 {"_id": ObjectId(user_id)},
@@ -107,7 +107,7 @@ class User:
                 {"_id": ObjectId(follow_id)},
                 {"$pull": {"followers": user_id}},
             )
-            return {"status": True, "message": "Unfollowed successfully"}
+            return {"status": True, "message": "Unfollowed successfully", "following": False}
 
     async def get_trending_users(self, count: int = 5):
         sorted_users = (

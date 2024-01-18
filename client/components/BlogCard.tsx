@@ -33,12 +33,12 @@ const BlogCard = ({
             height={400}
           />
           <div className="flex flex-col">
-            <a
+            <Link
               href={`/author/${author._id}`}
               className="text-sm md:text-base font-sans"
             >
               {author.name}
-            </a>
+            </Link>
           </div>
         </div>
       </div>
