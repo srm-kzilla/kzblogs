@@ -1,9 +1,25 @@
 "use client";
 import { getCurrentUser, getSearch } from "@/utils/api";
-import { Divide, SearchIcon } from "lucide-react";
-import { useState } from "react";
+import { SearchIcon } from "lucide-react";
+import { useEffect, useState } from "react";
 import BlogCard from "./BlogCard";
 import AuthorCard from "./AuthorCard";
+
+function useDebounce(value: string, delay: number) {
+  const [debouncedValue, setDebouncedValue] = useState(value);
+
+  useEffect(() => {
+    const debounce = setTimeout(() => {
+      setDebouncedValue(value);
+    }, delay);
+
+    return () => {
+      clearTimeout(debounce);
+    };
+  }, [value, delay]);
+
+  return debouncedValue;
+}
 
 const SearchBar = () => {
   const [query, setQuery] = useState("");
@@ -11,12 +27,11 @@ const SearchBar = () => {
   const [authors, setAuthors] = useState<User[]>([]);
   const [user, setUser] = useState<User[]>([]);
   const [searchPerformed, setSearchPerformed] = useState(false);
+  const debouncedValue = useDebounce(query, 700);
 
   const handleSearch = async () => {
     try {
       const response = await getSearch(query);
-      const user = await getCurrentUser();
-      setUser(user);
       setBlogs(response.blogs);
       setAuthors(response.users);
       setSearchPerformed(true);
@@ -24,12 +39,31 @@ const SearchBar = () => {
       console.error("Error fetching search results:", error);
     }
   };
+  useEffect(() => {
+    getCurrentUser().then((user) => {
+      setUser(user);
+    });
+  }, []);
 
-  const handleKeyPress = (e: { key: string }) => {
-    if (e.key === "Enter") {
-      handleSearch();
+  useEffect(() => {
+    if (debouncedValue.length === 0) {
+      setBlogs([]);
+      setAuthors([]);
+      setSearchPerformed(false);
+    } else {
+      getSearch(debouncedValue)
+        .then((response) => {
+          setBlogs(response.blogs);
+          setAuthors(response.users);
+          setSearchPerformed(true);
+        })
+        .catch((error) => {
+          setBlogs([]);
+          setAuthors([]);
+          setSearchPerformed(false);
+        });
     }
-  };
+  }, [debouncedValue]);
 
   return (
     <div className="flex flex-col items-center mt-10 lg:mt-20">
@@ -38,7 +72,6 @@ const SearchBar = () => {
           <SearchIcon className="h-9" />
         </button>
         <input
-          onKeyDown={handleKeyPress}
           onChange={(e) => setQuery(e.target.value)}
           type="text"
           name="Search"
