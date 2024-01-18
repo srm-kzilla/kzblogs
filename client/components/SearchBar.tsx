@@ -43,7 +43,7 @@ const SearchBar = () => {
     getCurrentUser().then((user) => {
       setUser(user);
     });
-  }, []); // one time user setting
+  }, []);
 
   useEffect(() => {
     if (debouncedValue.length === 0) {
