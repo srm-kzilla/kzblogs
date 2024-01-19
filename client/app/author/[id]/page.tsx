@@ -2,7 +2,6 @@ import BlogCard from "@/components/BlogCard";
 import Button from "@/components/Button";
 import Navbar from "@/components/Navbar";
 import {
-  getAllBlogs,
   getCurrentUser,
   getUser,
   toggleFollow,
@@ -11,13 +10,15 @@ import { notFound } from "next/navigation";
 import Image from "next/image";
 
 export default async function Page({ params }: { params: { id: string } }) {
-  const blogs = await getAllBlogs();
   const currentUser = await getCurrentUser();
   try {
     const userData = await getUser(params.id);
-    const authorBlogs = blogs.filter(
-      (blog: Blog) => blog.author._id === userData._id,
-    );
+    const authorBlogs = userData.blogs.map((blog: Blog) => {
+      return {
+        ...blog,
+        author: userData,
+      };
+    });
     if (!userData) {
       throw new Error("Blog not found");
     }
@@ -48,7 +49,7 @@ export default async function Page({ params }: { params: { id: string } }) {
             </div>
             <div>
               <form action={follow}>
-                <Button variant="secondary">Follow</Button>
+                <Button variant="primary">Follow</Button>
               </form>
             </div>
           </div>

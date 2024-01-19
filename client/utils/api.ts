@@ -166,11 +166,11 @@ export async function toggleLike(id: string) {
   }
 }
 
-export async function toggleFollow(id: string) {
+export async function toggleFollow(id: string): Promise<boolean> {
   const sessionToken = await getSessionToken();
   if (sessionToken !== undefined) {
     try {
-      await axios.put(
+      const result = await axios.put(
         API.BASE_URL +
           API.ENDPOINTS.BLOGS.BASE +
           API.ENDPOINTS.BLOGS.CURRENT_USER +
@@ -182,10 +182,12 @@ export async function toggleFollow(id: string) {
           },
         },
       );
+      return result.data.following;
     } catch (error) {
       console.log(error);
     }
   }
+  return false;
 }
 
 export async function getBookmarkBlogs() {

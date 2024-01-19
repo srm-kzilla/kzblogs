@@ -17,7 +17,7 @@ const BlogCard = ({
     return markdown?.replace(/[#*_]+/g, "");
   };
   return (
-    <div className="p-3 bg-kz-card-light text-kz-secondary rounded-2xl w-full h-fit">
+    <div className="p-3 bg-kz-card-light text-kz-secondary rounded-2xl w-full h-fit transition ease-in-out duration-500 hover:scale-105">
       <div className="flex flex-col md:flex-row justify-between gap-3">
         <div className="md:w-[60%]">
           <Link href={"/blogs/" + _id}>
@@ -33,12 +33,12 @@ const BlogCard = ({
             height={400}
           />
           <div className="flex flex-col">
-            <a
+            <Link
               href={`/author/${author._id}`}
               className="text-sm md:text-base font-sans"
             >
               {author.name}
-            </a>
+            </Link>
           </div>
         </div>
       </div>
