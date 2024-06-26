@@ -1,4 +1,5 @@
-import { getAllBlogs, getAllBlogsAdmin } from "@/utils/api";
+import { getAllBlogsAdmin } from "@/utils/api";
+import { encrypt } from "@/utils/crypto";
 import { PenLine, PlusCircleIcon } from "lucide-react";
 import Link from "next/link";
 
@@ -35,7 +36,7 @@ const DraftCard = async () => {
                   <h1>{name}</h1>
                   <p className="text-xs">{author.name}</p>
                 </div>
-                <Link href={`/write?id=${_id}`}>
+                <Link href={`/write?id=${encrypt(_id)}`}>
                   <PenLine width={18} height={18} />
                 </Link>
               </div>

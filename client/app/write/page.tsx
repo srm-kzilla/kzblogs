@@ -7,11 +7,13 @@ import remarkGfm from "remark-gfm";
 import { addBlog, getCurrentUser, getBlog } from "@/utils/api";
 import toast from "@/utils/toast";
 import { useRouter, useSearchParams } from "next/navigation";
+import { decrypt } from "@/utils/crypto";
 
 const CreatePage = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const draftId = searchParams.get("id");
+  const encryptedDraftId = searchParams.get("id");
+  const draftId = encryptedDraftId ? decrypt(encryptedDraftId) : null;
   const [markdownInput, setMarkdownInput] = useState("");
   const [title, setTitle] = useState("");
 
