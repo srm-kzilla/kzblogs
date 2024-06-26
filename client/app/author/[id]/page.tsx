@@ -22,6 +22,10 @@ export default async function Page({ params }: { params: { id: string } }) {
       "use server";
       toggleFollow(userData._id);
     };
+    const publishedBlogs = authorBlogs.filter(
+      (blog: Blog) => blog.publish_status === true,
+    );
+
     return (
       <div className="min-h-screen h-full">
         <Navbar />
@@ -50,7 +54,7 @@ export default async function Page({ params }: { params: { id: string } }) {
             </div>
           </div>
           <div>
-            {authorBlogs.map((blogs: Blog) => (
+            {publishedBlogs.map((blogs: Blog) => (
               <div key={blogs._id} className="my-6 m-3 w-[80vw] lg:w-[60vw]">
                 <BlogCard {...blogs} user={currentUser} />
               </div>
