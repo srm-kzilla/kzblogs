@@ -17,7 +17,7 @@ export default function Page({ params }: { params: { id: string } }) {
       const { _id } = await getCurrentUser();
 
       return (
-        <div className="w-screen min-h-screen h-full mb-10">
+        <div className="min-h-screen h-full mb-10">
           <Navbar />
           <div className="flex flex-col justify-start items-center mt-10 prose prose-invert w-[90vw] mx-auto">
             <h1 className="text-3xl text-center sm:text-5xl mb-3">
