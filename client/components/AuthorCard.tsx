@@ -23,13 +23,13 @@ const AuthorCard = ({ author, index }: { author: User; index: number }) => {
             </Link>
           </div>
         </div>
-        <div>
+        {/* <div>
           <UserPlus
             className="text-kz-highlight-light mt-5 w-5 h-5 md:mt-0 lg:w-6 lg:h-6 lg:mt-4"
             width={32}
             height={32}
           />
-        </div>
+        </div> */}
       </div>
     </div>
   );
