@@ -14,7 +14,7 @@ export default async function Home() {
     is_admin = user?.is_admin;
   }
   return (
-    <div>
+    <div className="min-h-screen h-full">
       <Navbar />
       <div className="flex w-full md:px-10 lg:px-32 mt-12 lg:mt-24 justify-between">
         <div className="w-full md:w-9/12 flex justify-center md:justify-start">

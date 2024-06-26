@@ -6,7 +6,7 @@ export default async function Home() {
   const bookmarkBlogs = await getBookmarkBlogs();
   const user = await getCurrentUser();
   return (
-    <div>
+    <div className="min-h-screen h-full">
       <Navbar />
       <div className="flex w-full p-6 mt-8 lg:mt-18 justify-center">
         <div className="md:max-w-2xl">

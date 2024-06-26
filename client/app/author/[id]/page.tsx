@@ -1,11 +1,7 @@
 import BlogCard from "@/components/BlogCard";
 import Button from "@/components/Button";
 import Navbar from "@/components/Navbar";
-import {
-  getCurrentUser,
-  getUser,
-  toggleFollow,
-} from "@/utils/api";
+import { getCurrentUser, getUser, toggleFollow } from "@/utils/api";
 import { notFound } from "next/navigation";
 import Image from "next/image";
 
@@ -27,7 +23,7 @@ export default async function Page({ params }: { params: { id: string } }) {
       toggleFollow(userData._id);
     };
     return (
-      <div>
+      <div className="min-h-screen h-full">
         <Navbar />
         <div className="mt-12 flex flex-col items-center gap-12">
           <div className="flex flex-wrap gap-6 items-center">

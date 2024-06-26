@@ -9,7 +9,7 @@ const Explore = async () => {
   const blogs = await getTrending(4);
   const user = await getCurrentUser();
   return (
-    <div>
+    <div className="min-h-screen h-full">
       <Navbar />
       <div className="flex flex-col items-center mt-12">
         <div className="text-kz-secondary text-2xl md:text-4xl lg:text-6xl font-serif text-center w-[60vw]">
