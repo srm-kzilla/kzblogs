@@ -1,10 +1,12 @@
 FROM python:3.9-slim-buster
 
 WORKDIR /app
-COPY ./ /app
+COPY pyproject.toml /app
+COPY poetry.lock /app
 RUN pip install poetry
 RUN poetry config virtualenvs.create false
 RUN poetry install --no-interaction
+COPY ./ /app
 
 ENV PYTHONPATH=/app
 EXPOSE 8000
