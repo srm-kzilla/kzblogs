@@ -9,6 +9,18 @@ router = Router()
 db = Database()
 
 
+@router.get("/drafts/get")
+@middleware
+async def get_drafts(request: Request):
+    user = await db.users.verify_session(request.headers["x-session-id"])
+    if not user:
+        return Response(
+            {"status": False, "message": "User does not exist"}, status_code=403
+        )
+    drafts = await db.blogs.get_drafts(user_id=str(user["_id"]))
+    return Response({"drafts": drafts})
+
+
 @router.get("/{id}")
 @middleware
 async def get_admin(request: Request, id: str = "all", page: int = 1, limit: int = 0):
