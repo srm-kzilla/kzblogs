@@ -173,3 +173,11 @@ class Blog:
             users[i]["followers"] = len(users[i]["followers"])
             users[i]["following"] = len(users[i]["following"])
         return {"users": users, "blogs": blogs}
+
+    async def get_drafts(self, user_id: str):
+        drafts = await self.blogs.find(
+            {"author": user_id, "publish_status": False}
+        ).to_list(length=None)
+        for i in range(len(drafts)):
+            drafts[i]["_id"] = str(drafts[i]["_id"])
+        return drafts
