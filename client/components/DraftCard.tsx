@@ -1,11 +1,9 @@
 import { getDraftBlogs } from "@/utils/api";
-import { encrypt } from "@/utils/crypto";
 import { PenLine, PlusCircleIcon } from "lucide-react";
 import Link from "next/link";
 
 const DraftCard = async () => {
   const draftBlogs = await getDraftBlogs();
-  console.log(draftBlogs);
   const draftNumber = draftBlogs.length;
   const draftsShown = draftBlogs.slice(0, 3);
 

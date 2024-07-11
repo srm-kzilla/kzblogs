@@ -7,7 +7,6 @@ import remarkGfm from "remark-gfm";
 import { addBlog, getCurrentUser, getBlogAdmin } from "@/utils/api";
 import toast from "@/utils/toast";
 import { useRouter, useSearchParams } from "next/navigation";
-import { decrypt } from "@/utils/crypto";
 
 const CreatePage = () => {
   const router = useRouter();
@@ -40,8 +39,6 @@ const CreatePage = () => {
 
       const res = await addBlog(dataToPublish);
       router.push("/");
-      console.log(res);
-
       toast.success("Your blog is live !");
     } catch (error) {
       console.error(error);
@@ -60,7 +57,6 @@ const CreatePage = () => {
       };
 
       const res = await addBlog(draft);
-      console.log(res);
       toast.success("Your blog has been saved as draft.");
     } catch (error) {
       console.error(error);
