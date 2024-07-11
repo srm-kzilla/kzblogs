@@ -11,7 +11,7 @@ const envSchema = z.object({
     return MONGODB_URI_REGEX_PATTERN.test(value);
   }, "Invalid MongoDB URI"),
   DB_NAME: z.string(),
-  NEXT_PUBLIC_SECRET_KEY:z.string(),
+  NEXT_PUBLIC_SECRET_KEY: z.string(),
 });
 
 export const {

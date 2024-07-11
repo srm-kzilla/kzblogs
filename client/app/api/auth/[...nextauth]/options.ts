@@ -33,7 +33,7 @@ export const options: NextAuthOptions = {
   ],
   pages: {
     signIn: "/auth/signin",
-    signOut: '/auth/signout',
+    signOut: "/auth/signout",
   },
   adapter: MongoDBAdapter(dbClientPromise, {
     databaseName: DB_NAME,

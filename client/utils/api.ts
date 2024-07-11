@@ -90,8 +90,8 @@ export async function getBlog(_id: string) {
   try {
     const response = await axios.get(
       API.BASE_URL +
-      API.ENDPOINTS.BLOGS.BASE +
-      API.ENDPOINTS.BLOGS.WITH_ID(_id),
+        API.ENDPOINTS.BLOGS.BASE +
+        API.ENDPOINTS.BLOGS.WITH_ID(_id),
       {
         headers: {
           "X-Session-ID": sessionToken,
@@ -129,9 +129,9 @@ export async function getTrending(count: number = 5) {
   try {
     const response = await axios.get(
       API.BASE_URL +
-      API.ENDPOINTS.BLOGS.BASE +
-      API.ENDPOINTS.BLOGS.TRENDING +
-      `?count=${count}`,
+        API.ENDPOINTS.BLOGS.BASE +
+        API.ENDPOINTS.BLOGS.TRENDING +
+        `?count=${count}`,
       {
         headers: {
           "X-Session-ID": sessionToken,
@@ -150,8 +150,8 @@ export async function getTrendingWriters() {
   try {
     const response = await axios.get(
       API.BASE_URL +
-      API.ENDPOINTS.BLOGS.BASE +
-      API.ENDPOINTS.BLOGS.TRENDING_WRITERS,
+        API.ENDPOINTS.BLOGS.BASE +
+        API.ENDPOINTS.BLOGS.TRENDING_WRITERS,
       {
         headers: {
           "X-Session-ID": sessionToken,
@@ -171,9 +171,9 @@ export async function toggleBookmark(id: string) {
     try {
       await axios.post(
         API.BASE_URL +
-        API.ENDPOINTS.BLOGS.BASE +
-        API.ENDPOINTS.BLOGS.BOOKMARKS +
-        id,
+          API.ENDPOINTS.BLOGS.BASE +
+          API.ENDPOINTS.BLOGS.BOOKMARKS +
+          id,
         null,
         {
           headers: {
@@ -212,9 +212,9 @@ export async function toggleFollow(id: string): Promise<boolean> {
     try {
       const result = await axios.put(
         API.BASE_URL +
-        API.ENDPOINTS.BLOGS.BASE +
-        API.ENDPOINTS.BLOGS.CURRENT_USER +
-        API.ENDPOINTS.BLOGS.FOLLOW(id),
+          API.ENDPOINTS.BLOGS.BASE +
+          API.ENDPOINTS.BLOGS.CURRENT_USER +
+          API.ENDPOINTS.BLOGS.FOLLOW(id),
         null,
         {
           headers: {
@@ -338,12 +338,12 @@ export async function getSearch(query: string) {
   try {
     const response = await axios.get(
       API.BASE_URL +
-      API.ENDPOINTS.BLOGS.BASE +
-      API.ENDPOINTS.BLOGS.SEARCH(query),
+        API.ENDPOINTS.BLOGS.BASE +
+        API.ENDPOINTS.BLOGS.SEARCH(query),
     );
     return response.data;
   } catch (error) {
     console.error(error);
-    return { "users": [], "blogs": [] };
+    return { users: [], blogs: [] };
   }
 }

@@ -5,7 +5,7 @@ import Link from "next/link";
 
 const DraftCard = async () => {
   const draftBlogs = await getDraftBlogs();
-  console.log(draftBlogs)
+  console.log(draftBlogs);
   const draftNumber = draftBlogs.length;
   const draftsShown = draftBlogs.slice(0, 3);
 
@@ -41,7 +41,10 @@ const DraftCard = async () => {
             ))}
           </div>
           <div className="text-kz-primary font-sans text-xs flex justify-center">
-            <Link href={"/me"} className="bg-kz-secondary px-2 py-0.5 rounded-3xl">
+            <Link
+              href={"/me"}
+              className="bg-kz-secondary px-2 py-0.5 rounded-3xl"
+            >
               See All
             </Link>
           </div>
