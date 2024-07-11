@@ -6,50 +6,50 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { notFound } from "next/navigation";
 
-export default async function Page({ params }: { params: { id: string } }) {
-  try {
-    const blog: Blog = await getBlog(params.id);
-    if (!blog) {
-      throw new Error("Blog not found");
-    }
+export default function Page({ params }: { params: { id: string } }) {
+  const fetchBlog = async () => {
+    try {
+      const blog: Blog = await getBlog(params.id);
+      if (!blog) {
+        throw new Error("Blog not found");
+      }
 
-    const { _id } = await getCurrentUser();
-    return (
-      <div className="w-full">
-        <Navbar />
-        <div className="flex-col justify-center py-10">
-          <div className="flex justify-center">
-            <div className="prose prose-invert px-4 overflow-auto max-w-[86ch] xl:mx-auto">
-              <h1 className="text-3xl text-center sm:text-5xl mb-3">
-                {blog.name}
-              </h1>
-              <div className="flex text-lg m-1 flex-col  sm:flex-row justify-center items-center">
-                <div className="flex px-2 mb-2 sm:mb-0 justify-center items-center text-sm sm:text-base">
-                  <Image
-                    src={blog.author.image}
-                    alt={blog.author.name}
-                    className="rounded-full mr-1 w-5 h-5 sm:h-7 sm:w-7"
-                    width={40}
-                    height={40}
-                  />
-                  {blog.author.name}
-                </div>
+      const { _id } = await getCurrentUser();
+
+      return (
+        <div className="min-h-screen h-full mb-10">
+          <Navbar />
+          <div className="flex flex-col justify-start items-center mt-10 prose prose-invert w-[90vw] mx-auto">
+            <h1 className="text-3xl text-center sm:text-5xl mb-3">
+              {blog.name}
+            </h1>
+            <div className="flex items-center justify-center text-lg mb-3">
+              <div className="flex items-center">
+                <Image
+                  src={blog.author.image}
+                  alt={blog.author.name}
+                  className="rounded-full mr-2 w-8 h-8 sm:w-10 sm:h-10"
+                  width={40}
+                  height={40}
+                />
+                <span className="text-sm sm:text-base">{blog.author.name}</span>
+              </div>
+              <div className="ml-4">
                 <LikeButton {...blog} userId={_id} />
               </div>
-              <div className="">
-                <ReactMarkdown
-                  remarkPlugins={[remarkGfm]}
-                  className="prose prose-invert"
-                >
-                  {blog.content}
-                </ReactMarkdown>
-              </div>
+            </div>
+            <div className="prose prose-invert">
+              <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                {blog.content}
+              </ReactMarkdown>
             </div>
           </div>
         </div>
-      </div>
-    );
-  } catch (e) {
-    notFound();
-  }
+      );
+    } catch (error) {
+      notFound();
+    }
+  };
+
+  return fetchBlog();
 }

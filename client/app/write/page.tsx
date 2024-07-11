@@ -1,17 +1,31 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Button from "@/components/Button";
 import Navbar from "@/components/Navbar";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import { addBlog, getCurrentUser } from "@/utils/api";
+import { addBlog, getCurrentUser, getBlogAdmin } from "@/utils/api";
 import toast from "@/utils/toast";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 const CreatePage = () => {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const draftId = searchParams.get("id");
   const [markdownInput, setMarkdownInput] = useState("");
   const [title, setTitle] = useState("");
+
+  useEffect(() => {
+    const fetchDraft = async () => {
+      if (draftId) {
+        const draft = await getBlogAdmin(draftId);
+        setTitle(draft.name);
+        setMarkdownInput(draft.content);
+      }
+    };
+    fetchDraft();
+  }, [draftId]);
+
   const publishData = async () => {
     const { _id, author_name } = await getCurrentUser();
     try {
@@ -25,8 +39,6 @@ const CreatePage = () => {
 
       const res = await addBlog(dataToPublish);
       router.push("/");
-      console.log(res);
-
       toast.success("Your blog is live !");
     } catch (error) {
       console.error(error);
@@ -45,7 +57,6 @@ const CreatePage = () => {
       };
 
       const res = await addBlog(draft);
-      console.log(res);
       toast.success("Your blog has been saved as draft.");
     } catch (error) {
       console.error(error);

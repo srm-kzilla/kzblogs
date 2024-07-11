@@ -8,6 +8,7 @@ const API = {
     ADMIN: {
       BASE: "/admin",
       GET: "/all",
+      DRAFTS: "/drafts/get",
     },
     BLOGS: {
       BASE: "/api",
@@ -52,6 +53,26 @@ export async function getAllBlogsAdmin() {
   }
 }
 
+export async function getBlogAdmin(id: string) {
+  const sessionToken = await getSessionToken();
+  try {
+    if (sessionToken !== undefined) {
+      const response = await axios.get(
+        API.BASE_URL + API.ENDPOINTS.ADMIN.BASE + `/${id}`,
+        {
+          headers: {
+            "X-Session-ID": sessionToken,
+          },
+        },
+      );
+      return response.data;
+    }
+  } catch (error) {
+    console.log(error);
+    return [];
+  }
+}
+
 export async function getAllBlogs() {
   try {
     const response = await axios.get(
@@ -80,6 +101,25 @@ export async function getBlog(_id: string) {
     return response.data;
   } catch (error) {
     console.log(error);
+    return {};
+  }
+}
+
+export async function getDraftBlogs() {
+  const sessionToken = await getSessionToken();
+
+  try {
+    const response = await axios.get(
+      `${API.BASE_URL}${API.ENDPOINTS.ADMIN.BASE}${API.ENDPOINTS.ADMIN.DRAFTS}`,
+      {
+        headers: {
+          "X-Session-ID": sessionToken,
+        },
+      },
+    );
+    return response.data.drafts;
+  } catch (error) {
+    console.error(error);
     return {};
   }
 }
@@ -304,6 +344,6 @@ export async function getSearch(query: string) {
     return response.data;
   } catch (error) {
     console.error(error);
-    return {"users": [], "blogs": []};
+    return { users: [], blogs: [] };
   }
 }

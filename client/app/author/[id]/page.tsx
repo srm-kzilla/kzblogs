@@ -1,11 +1,7 @@
 import BlogCard from "@/components/BlogCard";
 import Button from "@/components/Button";
 import Navbar from "@/components/Navbar";
-import {
-  getCurrentUser,
-  getUser,
-  toggleFollow,
-} from "@/utils/api";
+import { getCurrentUser, getUser, toggleFollow } from "@/utils/api";
 import { notFound } from "next/navigation";
 import Image from "next/image";
 
@@ -26,8 +22,12 @@ export default async function Page({ params }: { params: { id: string } }) {
       "use server";
       toggleFollow(userData._id);
     };
+    const publishedBlogs = authorBlogs.filter(
+      (blog: Blog) => blog.publish_status === true,
+    );
+
     return (
-      <div>
+      <div className="min-h-screen h-full">
         <Navbar />
         <div className="mt-12 flex flex-col items-center gap-12">
           <div className="flex flex-wrap gap-6 items-center">
@@ -54,7 +54,7 @@ export default async function Page({ params }: { params: { id: string } }) {
             </div>
           </div>
           <div>
-            {authorBlogs.map((blogs: Blog) => (
+            {publishedBlogs.map((blogs: Blog) => (
               <div key={blogs._id} className="my-6 m-3 w-[80vw] lg:w-[60vw]">
                 <BlogCard {...blogs} user={currentUser} />
               </div>

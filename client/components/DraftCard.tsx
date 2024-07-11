@@ -1,12 +1,9 @@
-import { getAllBlogs, getAllBlogsAdmin } from "@/utils/api";
+import { getDraftBlogs } from "@/utils/api";
 import { PenLine, PlusCircleIcon } from "lucide-react";
 import Link from "next/link";
 
 const DraftCard = async () => {
-  const blogs = await getAllBlogsAdmin();
-  const draftBlogs = blogs.filter(
-    (blog: Blog) => blog.publish_status === false,
-  );
+  const draftBlogs = await getDraftBlogs();
   const draftNumber = draftBlogs.length;
   const draftsShown = draftBlogs.slice(0, 3);
 
@@ -35,16 +32,19 @@ const DraftCard = async () => {
                   <h1>{name}</h1>
                   <p className="text-xs">{author.name}</p>
                 </div>
-                <button>
+                <Link href={`/write?id=${_id}`}>
                   <PenLine width={18} height={18} />
-                </button>
+                </Link>
               </div>
             ))}
           </div>
           <div className="text-kz-primary font-sans text-xs flex justify-center">
-            <button className="bg-kz-secondary px-2 py-0.5 rounded-3xl">
+            <Link
+              href={"/me"}
+              className="bg-kz-secondary px-2 py-0.5 rounded-3xl"
+            >
               See All
-            </button>
+            </Link>
           </div>
         </div>
       )}
