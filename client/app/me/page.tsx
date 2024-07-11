@@ -1,8 +1,6 @@
 import BlogCard from "@/components/BlogCard";
-import Button from "@/components/Button";
 import Navbar from "@/components/Navbar";
-import { getCurrentUser, getDraftBlogs, getUser, toggleFollow } from "@/utils/api";
-import { notFound } from "next/navigation";
+import { getAllBlogsAdmin, getCurrentUser, getDraftBlogs} from "@/utils/api";
 import Image from "next/image";
 import Link from "next/link";
 import Drafts from "@/components/Draft";
@@ -10,25 +8,8 @@ import Drafts from "@/components/Draft";
 export default async function Page() {
   const currentUser = await getCurrentUser();
   const draftBlogs = await getDraftBlogs();
-//   try {
-//     const userData = await getUser(params.id);
-//     const authorBlogs = userData.blogs.map((blog: Blog) => {
-//       return {
-//         ...blog,
-//         author: userData,
-//       };
-//     });
-//     if (!userData) {
-//       throw new Error("Blog not found");
-//     }
-//     const follow = async () => {
-//       "use server";
-//       toggleFollow(userData._id);
-//     };
-//     const publishedBlogs = authorBlogs.filter(
-//       (blog: Blog) => blog.publish_status === true,
-//     );
-
+  const blogs=await getAllBlogsAdmin()
+  const publishedBlogs=blogs.filter((blog:Blog)=>blog.publish_status===true);
     return (
       <div className="min-h-screen h-full">
         <Navbar />
@@ -52,16 +33,31 @@ export default async function Page() {
             </div>
            
           </div>
+          <div className="flex flex-col lg:flex-row gap-5">
           <div>
-            <h1 className="text-kz-secondary text-3xl ml-5">Draft Blogs</h1>
-            {draftBlogs.map((blogs: Blog) => (
-              <div key={blogs._id} className="my-6 m-3 w-[80vw] lg:w-[60vw]">
-                <Link href={`/write?id=${blogs._id}`}>
-                <Drafts {...blogs}  />
-                </Link>
+              <h1 className="text-kz-secondary text-3xl ml-5">Published Blogs</h1>
+              {publishedBlogs.map((blogs: Blog) => (
+                <div key={blogs._id} className="my-6 m-3 w-[80vw] lg:w-[40vw]">
+              
+              <BlogCard {...blogs} user={currentUser} />
                
-              </div>
-            ))}
+                
+                </div>
+              ))}
+            </div>
+            <div>
+              <h1 className="text-kz-secondary text-3xl ml-5">Draft Blogs</h1>
+              {draftBlogs.map((blogs: Blog) => (
+                <div key={blogs._id} className="my-6 m-3 w-[80vw] lg:w-[40vw]">
+                  <Link href={`/write?id=${blogs._id}`}>
+                  <Drafts {...blogs}  />
+                  </Link>
+                
+                </div>
+              ))}
+            </div>
+            
+           
           </div>
         </div>
       </div>
