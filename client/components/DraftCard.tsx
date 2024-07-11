@@ -41,9 +41,9 @@ const DraftCard = async () => {
             ))}
           </div>
           <div className="text-kz-primary font-sans text-xs flex justify-center">
-            <button className="bg-kz-secondary px-2 py-0.5 rounded-3xl">
+            <Link href={"/me"} className="bg-kz-secondary px-2 py-0.5 rounded-3xl">
               See All
-            </button>
+            </Link>
           </div>
         </div>
       )}
