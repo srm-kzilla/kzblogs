@@ -34,7 +34,7 @@ const DraftCard = async () => {
                   <h1>{name}</h1>
                   <p className="text-xs">{author.name}</p>
                 </div>
-                <Link href={`/write?id=${encrypt(_id)}`}>
+                <Link href={`/write?id=${_id}`}>
                   <PenLine width={18} height={18} />
                 </Link>
               </div>

@@ -4,7 +4,7 @@ import Button from "@/components/Button";
 import Navbar from "@/components/Navbar";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import { addBlog, getCurrentUser, getBlog } from "@/utils/api";
+import { addBlog, getCurrentUser, getBlogAdmin } from "@/utils/api";
 import toast from "@/utils/toast";
 import { useRouter, useSearchParams } from "next/navigation";
 import { decrypt } from "@/utils/crypto";
@@ -12,15 +12,14 @@ import { decrypt } from "@/utils/crypto";
 const CreatePage = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const encryptedDraftId = searchParams.get("id");
-  const draftId = encryptedDraftId ? decrypt(encryptedDraftId) : null;
+  const draftId = searchParams.get("id");
   const [markdownInput, setMarkdownInput] = useState("");
   const [title, setTitle] = useState("");
 
   useEffect(() => {
     const fetchDraft = async () => {
       if (draftId) {
-        const draft = await getBlog(draftId);
+        const draft = await getBlogAdmin(draftId);
         setTitle(draft.name);
         setMarkdownInput(draft.content);
       }
