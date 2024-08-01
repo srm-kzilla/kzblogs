@@ -6,7 +6,7 @@ const envSchema = z.object({
   GOOGLE_CLIENT_ID: z.string(),
   GOOGLE_CLIENT_SECRET: z.string(),
   NEXTAUTH_SECRET: z.string(),
-  NEXTAUTH_URL: z.string().url(),
+  // NEXTAUTH_URL: z.string().url(),
   MONGODB_URI: z.string().refine((value) => {
     return MONGODB_URI_REGEX_PATTERN.test(value);
   }, "Invalid MongoDB URI"),
@@ -18,7 +18,7 @@ export const {
   GOOGLE_CLIENT_ID,
   GOOGLE_CLIENT_SECRET,
   NEXTAUTH_SECRET,
-  NEXTAUTH_URL,
+  // NEXTAUTH_URL,
   MONGODB_URI,
   DB_NAME,
   NEXT_PUBLIC_SECRET_KEY,
