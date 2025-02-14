@@ -14,6 +14,6 @@ jobs:
         env: 
           ENVIRONMENT: "test"
       - name: Installing poetry
-        run: pip3 install poetry
+        run: pip3 install poetry==1.8.1
       - name: Poetry install
         run: poetry install --no-interaction
